@@ -9,7 +9,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   return (
-    <header>
+    <motion.header initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6 }} className="fixed top-0 left-0 right-0 w-full bg-white/95 backdrop-blur-sm border-b border-gray-100 z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* logo */}
@@ -34,12 +34,12 @@ const Header = () => {
             {isAuthenticated ? (
               <div className="flex items-center space-x-3">
                 <span className="text-gray-700 ">Welcome {user?.fullName}</span>
-                <Link
-                  to={user?.role === "employer" ? "/employer-dashboard" : "/find-jobs"}
+                <a
+                  onClick={() => navigate(user?.role === "employer" ? "/employer-dashboard" : "/find-jobs")}
                   className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg front-medium hover:to-purple-700 transition-all duration-300 shadow-sm hover:shadow-md"
                 >
                   Dashboard
-                </Link>
+                </a>
               </div>
             ) : (
               <>
@@ -54,7 +54,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 };
 
