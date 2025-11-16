@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, Eye, EyeOff, Loader, AlertCircle, CheckCircle, Hand } from "lucide-react";
 import { useState } from "react";
+import { validateEmail } from "../../utils/helper";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -18,13 +19,6 @@ const Login = () => {
   });
 
   // --- VALIDATION FUNCTIONS ---
-
-  const validateEmail = (email) => {
-    if (!email.trim()) return "Email is required";
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) return "Please enter a valid email address";
-    return "";
-  };
 
   const validatePassword = (password) => {
     if (!password) return "Password is required";
