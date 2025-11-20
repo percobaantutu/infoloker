@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { User, Mail, Lock, Upload, Eye, EyeOff, UserCheck, Building2, CheckCircle, AlertCircle, Loader, Link } from "lucide-react";
+import { User, Mail, Lock, Upload, Eye, EyeOff, UserCheck, Building2, CheckCircle, AlertCircle, Loader } from "lucide-react";
 import { useState } from "react";
 import { validateEmail, validatePassword, validateAvatar } from "../../utils/helper";
 import { Link } from "react-router-dom";
