@@ -1,17 +1,19 @@
 const multer = require("multer");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinary = require("../config/cloudinary");
 
 // Configure storage
-const storage = multer.diskStorage({
-  // Destination specifies where the file should be saved on the disk
-  destination: (req, file, cb) => {
-    // cb(error, destination_path)
-    cb(null, "./uploads/");
-  },
-
-  // Filename specifies how the file should be named
-  filename: (req, file, cb) => {
-    // Prepend the current timestamp to the original filename to prevent collisions
-    cb(null, `${Date.now()}-${file.originalname}`);
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "infoloker_uploads", // Folder name in your Cloudinary dashboard
+    allowed_formats: ["jpg", "png", "jpeg", "pdf"], // Allow images and PDFs
+    // Cloudinary usually auto-detects resource type, but for PDFs creating a unique filename is good
+    public_id: (req, file) => {
+      // Remove extension from original name and add timestamp
+      const name = file.originalname.split(".")[0];
+      return `${Date.now()}-${name}`;
+    },
   },
 });
 

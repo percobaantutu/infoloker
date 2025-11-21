@@ -12,6 +12,14 @@ exports.register = async (req, res) => {
     // Destructure required data from the request body
     const { name, email, password, avatar, role } = req.body;
 
+    let avatarUrl = "";
+    if (req.file && req.file.path) {
+      avatarUrl = req.file.path; // This is the Cloudinary URL
+    } else if (req.body.avatar) {
+      // Fallback if avatar is sent as a string/url
+      avatarUrl = req.body.avatar;
+    }
+
     // 1. Check if user already exists
     const userExists = await User.findOne({ email });
     if (userExists) {
@@ -27,7 +35,7 @@ exports.register = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        avatar: user.avatar,
+        avatar: avatarUrl,
         role: user.role,
 
         // Generate and send the authentication token
