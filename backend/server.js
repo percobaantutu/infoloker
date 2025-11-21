@@ -4,7 +4,7 @@ const cors = require("cors");
 const path = require("path");
 const connectDB = require("./config/db"); // Assumed path
 
-const authRoutes = require("./routes/authRoutes"); // Assumed path
+const authRoute = require("./route/authRoute"); // Assumed path
 
 const app = express();
 
@@ -24,7 +24,7 @@ connectDB(); // Assumed function call
 app.use(express.json());
 
 // Routes
-app.use("/api/auth", authRoutes); // Attaches authRoutes to the base URL /api/auth
+app.use("/api/auth", authRoute); // Attaches authRoutes to the base URL /api/auth
 
 // serve uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads"), {}));
