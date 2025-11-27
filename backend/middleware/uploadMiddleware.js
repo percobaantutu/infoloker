@@ -5,15 +5,14 @@ const cloudinary = require("../config/cloudinary");
 // Configure storage
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  params: {
-    folder: "infoloker_uploads", // Folder name in your Cloudinary dashboard
-    allowed_formats: ["jpg", "png", "jpeg", "pdf"], // Allow images and PDFs
-    // Cloudinary usually auto-detects resource type, but for PDFs creating a unique filename is good
-    public_id: (req, file) => {
-      // Remove extension from original name and add timestamp
-      const name = file.originalname.split(".")[0];
-      return `${Date.now()}-${name}`;
-    },
+  params: async (req, file) => {
+    // async allows dynamic params
+    return {
+      folder: "infoloker_uploads",
+      // "auto" lets Cloudinary decide if it's image, video, or raw (PDF)
+      resource_type: "auto",
+      public_id: `${Date.now()}-${file.originalname.split(".")[0]}`,
+    };
   },
 });
 

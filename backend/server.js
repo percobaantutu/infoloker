@@ -5,6 +5,7 @@ const path = require("path");
 const connectDB = require("./config/db"); // Assumed path
 
 const authRoute = require("./route/authRoute"); // Assumed path
+const userRoute = require("./route/userRoute");
 
 const app = express();
 
@@ -28,6 +29,8 @@ app.use("/api/auth", authRoute); // Attaches authRoutes to the base URL /api/aut
 
 // serve uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads"), {}));
+
+app.use("/api/users", userRoute);
 
 // Start Server
 const PORT = process.env.PORT || 5000;

@@ -4,6 +4,7 @@ import { User, Mail, Lock, Upload, Eye, EyeOff, UserCheck, Building2, CheckCircl
 import { useState } from "react";
 import { validateEmail, validatePassword, validateAvatar } from "../../utils/helper";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -104,10 +105,49 @@ const SignUp = () => {
 
     setFormState((prev) => ({ ...prev, loading: true }));
 
+    // 1. Create FormData object
+    const data = new FormData();
+    data.append("name", formData.fullName); // Backend expects 'name'
+    data.append("email", formData.email);
+    data.append("password", formData.password);
+    data.append("role", formData.role);
+
+    // Only append avatar if it exists
+    if (formData.avatar) {
+      data.append("avatar", formData.avatar);
+    }
+
     try {
-      // API call logic would go here
+      // 2. Send POST request
+      // Adjust the URL if your backend port is different (e.g., 5000)
+      const response = await axios.post("http://localhost:8000/api/auth/register", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // 3. Handle Success
+      console.log("Registration success:", response.data);
+
+      // Store user data in localStorage
+      localStorage.setItem("userInfo", JSON.stringify(response.data));
+
+      setFormState((prev) => ({
+        ...prev,
+        loading: false,
+        success: true,
+      }));
+
+      // Redirect after short delay
+      setTimeout(() => {
+        if (formData.role === "employer") {
+          navigate("/employer-dashboard");
+        } else {
+          navigate("/find-jobs");
+        }
+      }, 2000);
     } catch (error) {
-      console.log("error", error);
+      console.error("Registration Error:", error);
       setFormState((prev) => ({
         ...prev,
         loading: false,
