@@ -67,9 +67,16 @@ exports.updateProfile = async (req, res) => {
       companyLogo: user.companyLogo,
     });
   } catch (err) {
-    console.error("❌ UPDATE PROFILE ERROR:", JSON.stringify(err, null, 2)); // This forces the object to print fully
-    console.error("Standard Error:", err);
-    res.status(500).json({ message: err.message || "An error occurred" });
+    // --- DEBUGGING LOGS ---
+    console.log("❌ ERROR OCCURRED IN UPDATE PROFILE");
+    // This prints the error object as a readable string
+    console.log("👇 ERROR DETAILS:", JSON.stringify(err, null, 2));
+
+    // If it's a standard Error object, print the stack trace
+    if (err.stack) console.log("👇 STACK TRACE:", err.stack);
+    // ---------------------
+
+    res.status(500).json({ message: err.message || "Server Error" });
   }
 };
 

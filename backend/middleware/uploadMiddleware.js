@@ -10,7 +10,7 @@ const storage = new CloudinaryStorage({
     return {
       folder: "infoloker_uploads",
       // "auto" lets Cloudinary decide if it's image, video, or raw (PDF)
-      resource_type: "auto",
+      allowed_formats: ["jpg", "png", "jpeg", "pdf"],
       public_id: `${Date.now()}-${file.originalname.split(".")[0]}`,
     };
   },
