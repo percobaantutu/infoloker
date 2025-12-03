@@ -16,6 +16,9 @@ const getPublicIdFromUrl = (url) => {
 // @desc Update user profile
 exports.updateProfile = async (req, res) => {
   try {
+    console.log("🔍 REQUEST CONTENT-TYPE:", req.headers["content-type"]);
+    console.log("🔍 REQ.BODY:", req.body);
+    console.log("🔍 REQ.FILES:", req.files);
     const user = await User.findById(req.user._id);
     if (!user) return res.status(404).json({ message: "User not found" });
 

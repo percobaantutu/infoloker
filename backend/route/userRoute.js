@@ -1,35 +1,27 @@
 const express = require("express");
 const { updateProfile, deleteResume, getPublicProfile } = require("../controllers/userController");
-// FIXED: path is "../middleware/..." not "../middlewares/..."
 const { protect } = require("../middleware/authMiddleware");
-const upload = require("../middleware/uploadMiddleware");
+const upload = require("../middleware/uploadMiddleware"); // <--- Ensure this is imported
 
 const router = express.Router();
 
 // Protected Routes
 
-// Update Profile: Allow uploading avatar, resume, AND companyLogo
-const uploadHandler = (req, res, next) => {
-  const uploadMiddleware = upload.fields([
+// 🚨 CRITICAL FIX: The 'upload.fields' middleware MUST be here.
+// It parses the file data. Without it, req.body is undefined.
+router.put(
+  "/profile",
+  protect,
+  upload.fields([
     { name: "avatar", maxCount: 1 },
     { name: "resume", maxCount: 1 },
     { name: "companyLogo", maxCount: 1 },
-  ]);
-
-  uploadMiddleware(req, res, (err) => {
-    if (err) {
-      console.log("❌ UPLOAD MIDDLEWARE ERROR:", JSON.stringify(err, null, 2));
-      return res.status(500).json({ message: "File Upload Failed", error: err });
-    }
-    next();
-  });
-};
-
-// Update user profile data using the wrapper
-router.put("/profile", protect, uploadHandler, updateProfile);
+  ]),
+  updateProfile
+);
 
 // Delete Resume
-router.delete("/resume", protect, deleteResume); // Changed POST to DELETE (Standard practice)
+router.delete("/resume", protect, deleteResume);
 
 // Public Route
 router.get("/:id", getPublicProfile);
