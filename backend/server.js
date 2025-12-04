@@ -8,6 +8,7 @@ const authRoute = require("./route/authRoute");
 const userRoute = require("./route/userRoute");
 const jobRoute = require("./route/jobRoute");
 const applicationRoute = require("./route/applicationRoute");
+const savedJobRoute = require("./route/savedJobRoute");
 
 const app = express();
 
@@ -34,7 +35,8 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads"), {}));
 
 app.use("/api/users", userRoute);
 app.use("/api/jobs", jobRoute);
-app.use("/api/applications", applicationRoute); // Assumed path
+app.use("/api/applications", applicationRoute);
+app.use("/api/save-jobs", savedJobRoute);
 
 // Start Server
 const PORT = process.env.PORT || 5000;
