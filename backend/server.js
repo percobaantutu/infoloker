@@ -9,6 +9,7 @@ const userRoute = require("./route/userRoute");
 const jobRoute = require("./route/jobRoute");
 const applicationRoute = require("./route/applicationRoute");
 const savedJobRoute = require("./route/savedJobRoute");
+const analyticsRoute = require("./route/analyticsRoute");
 
 const app = express();
 
@@ -37,7 +38,7 @@ app.use("/api/users", userRoute);
 app.use("/api/jobs", jobRoute);
 app.use("/api/applications", applicationRoute);
 app.use("/api/save-jobs", savedJobRoute);
-
+app.use("/api/analytics", analyticsRoute);
 // Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
