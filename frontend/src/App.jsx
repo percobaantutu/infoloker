@@ -14,10 +14,11 @@ import ManageJobs from "./pages/Employer/ManageJobs";
 import ApplicationViewer from "./pages/Employer/ApplicationViewer";
 import EmployerProfilePage from "./pages/Employer/EmployerProfilePage";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
-    <div>
+    <AuthProvider>
       <Router>
         <Routes>
           {/* Public Routes */}
@@ -42,7 +43,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Router>
-    </div>
+    </AuthProvider>
   );
 }
 

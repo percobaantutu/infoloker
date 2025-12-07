@@ -77,4 +77,4 @@ export const JOB_TYPES = [
   { value: "Internship", label: "Internship" },
 ];
 
-export const SALARY_RANGES = ["Less than 3.000.000", "3.000.000 - 7.000.000", "More than 7.000.000"];
+export const SALARY_RANGES = ["Less than Rp 3.000.000", "Rp 3.000.000 - Rp 7.000.000", "More than Rp 7.000.000"];
