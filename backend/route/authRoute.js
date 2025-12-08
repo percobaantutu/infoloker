@@ -8,7 +8,6 @@ const router = express.Router();
 router.post("/register", upload.single("avatar"), register);
 
 // Public routes (no authentication needed)
-router.post("/register", register);
 router.post("/login", login);
 
 // Protected route (authentication required)

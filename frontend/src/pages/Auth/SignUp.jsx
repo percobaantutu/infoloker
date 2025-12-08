@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState } from "react"; // Consolidated imports
 import { motion } from "framer-motion";
 import { User, Mail, Lock, Upload, Eye, EyeOff, UserCheck, Building2, CheckCircle, AlertCircle, Loader } from "lucide-react";
-import { useState } from "react";
 import { validateEmail, validatePassword, validateAvatar } from "../../utils/helper";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom"; // Added useNavigate
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPaths";
+// 1. FIX: Import useAuth
+import { useAuth } from "../../context/AuthContext";
 
 const SignUp = () => {
+  const { login } = useAuth();
+  const navigate = useNavigate(); // Use hook for navigation
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -23,42 +28,24 @@ const SignUp = () => {
     success: false,
   });
 
+  // ... (handleRoleChange, handleAvatarChange, validateForm, handleInputChange remain the same) ...
   const handleRoleChange = (role) => {
     setFormData((prev) => ({ ...prev, role }));
-
-    // Clear error when user makes a selection
-    if (formState.errors.role) {
-      setFormState((prev) => ({
-        ...prev,
-        errors: { ...prev.errors, role: "" },
-      }));
-    }
+    if (formState.errors.role) setFormState((prev) => ({ ...prev, errors: { ...prev.errors, role: "" } }));
   };
 
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
-
     if (file) {
       const error = validateAvatar(file);
-
       if (error) {
-        setFormState((prev) => ({
-          ...prev,
-          errors: { ...prev.errors, avatar: error },
-        }));
+        setFormState((prev) => ({ ...prev, errors: { ...prev.errors, avatar: error } }));
         return;
       }
-
       setFormData((prev) => ({ ...prev, avatar: file }));
-
-      // Create preview
       const reader = new FileReader();
       reader.onload = (e) => {
-        setFormState((prev) => ({
-          ...prev,
-          avatarPreview: e.target.result,
-          errors: { ...prev.errors, avatar: "" },
-        }));
+        setFormState((prev) => ({ ...prev, avatarPreview: e.target.result, errors: { ...prev.errors, avatar: "" } }));
       };
       reader.readAsDataURL(file);
     }
@@ -72,32 +59,20 @@ const SignUp = () => {
       role: !formData.role ? "Please select a role" : "",
       avatar: "",
     };
-
-    // Remove empty errors
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) delete errors[key];
     });
-
     setFormState((prev) => ({ ...prev, errors }));
     return Object.keys(errors).length === 0;
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-
-    // Clear error when user starts typing
-    if (formState.errors[name]) {
-      setFormState((prev) => ({
-        ...prev,
-        errors: { ...prev.errors, [name]: "" },
-      }));
-    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (formState.errors[name]) setFormState((prev) => ({ ...prev, errors: { ...prev.errors, [name]: "" } }));
   };
 
+  // --- 2. FIX: UPDATED SUBMIT LOGIC ---
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -105,9 +80,9 @@ const SignUp = () => {
 
     setFormState((prev) => ({ ...prev, loading: true }));
 
-    // 1. Create FormData object
+    // Create FormData object to send everything (Text + File) in one request
     const data = new FormData();
-    data.append("name", formData.fullName); // Backend expects 'name'
+    data.append("name", formData.fullName); // Match backend 'name'
     data.append("email", formData.email);
     data.append("password", formData.password);
     data.append("role", formData.role);
@@ -118,28 +93,25 @@ const SignUp = () => {
     }
 
     try {
-      // 2. Send POST request
-      // Adjust the URL if your backend port is different (e.g., 5000)
-      const response = await axios.post("http://localhost:8000/api/auth/register", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      // 3. Handle Success
-      console.log("Registration success:", response.data);
-
-      // Store user data in localStorage
-      localStorage.setItem("userInfo", JSON.stringify(response.data));
+      // Send directly to register endpoint.
+      // Do NOT set Content-Type header manually here; Axios does it automatically for FormData.
+      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, data);
 
       setFormState((prev) => ({
         ...prev,
         loading: false,
         success: true,
+        errors: {},
       }));
 
-      // Redirect after short delay
+      const { token, ...userData } = response.data;
+
+      // 3. FIX: Pass the whole user object (which usually includes the token)
+      // Your AuthContext should handle saving the token from this object
+      login(response.data, token);
+
       setTimeout(() => {
+        // Use navigate hook instead of window.location for smoother SPA transition
         if (formData.role === "employer") {
           navigate("/employer-dashboard");
         } else {
@@ -158,18 +130,16 @@ const SignUp = () => {
     }
   };
 
+  // ... (Render Logic remains the same) ...
   if (formState.success) {
     return (
+      // ... success UI ...
       <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }} className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-center text-center">
+        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }} className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-center ">
           <CheckCircle className="w-16 h-16 text-green-500 mb-4 mx-auto" />
-
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Account created!</h2>
-
           <p className="text-gray-600 mb-4">Welcome to infoloker! Your account has been successfully created</p>
-
           <div className="w-6 h-6 border-2 border-blue-500 mx-auto border-t-transparent rounded-full animate-spin mb-4" />
-
           <p className="text-gray-500 text-sm mt-2">Redirecting to your dashboard...</p>
         </motion.div>
       </div>
@@ -177,6 +147,7 @@ const SignUp = () => {
   }
 
   return (
+    // ... form UI ...
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="bg-white p-8 rounded-xl shadow-lg max-w-md w-full">
         <div className="text-center mb-8">
@@ -185,6 +156,9 @@ const SignUp = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* INPUTS HERE (No changes needed to JSX below) */}
+
+          {/* ... Full Name ... */}
           <div className="relative">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
@@ -206,8 +180,9 @@ const SignUp = () => {
                 )}
               </div>
             </div>
+
             {/* Email */}
-            <div>
+            <div className="mt-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -231,7 +206,7 @@ const SignUp = () => {
             </div>
 
             {/* password */}
-            <div>
+            <div className="mt-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">Password *</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -266,7 +241,7 @@ const SignUp = () => {
             </div>
 
             {/* avatar upload */}
-            <div>
+            <div className="mt-6">
               <label className="block text-sm font-medium text-gray-700 mb-2">Profile Picture (optional)</label>
               <div className="flex items-center space-x-4">
                 <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
@@ -291,8 +266,9 @@ const SignUp = () => {
                 </div>
               </div>
             </div>
+
             {/* Role selection */}
-            <div>
+            <div className="mt-6">
               <label htmlFor="">I am a *</label>
               <div className="grid grid-cols-2 gap-4">
                 <button
@@ -320,9 +296,10 @@ const SignUp = () => {
                   </p>
                 )}
               </div>
+
               {/* Submit Error */}
               {formState.errors.submit && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                <div className="bg-red-50 border border-red-200 rounded-lg p-3 mt-4">
                   <p className="text-red-700 text-sm flex items-center">
                     <AlertCircle className="w-4 h-4 mr-2" />
                     {formState.errors.submit}
@@ -347,6 +324,7 @@ const SignUp = () => {
               </button>
             </div>
           </div>
+
           {/* Login Link */}
           <div className="text-center">
             <p className="text-gray-600">

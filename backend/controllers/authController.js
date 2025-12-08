@@ -9,48 +9,48 @@ const generateToken = (id) => {
 // @desc Register new user
 exports.register = async (req, res) => {
   try {
-    // Destructure required data from the request body
-    const { name, email, password, avatar, role } = req.body;
+    // 1. FIX: Do NOT destructure 'avatar' from req.body here.
+    // If you do, it captures the "{}" object sent by FormData.
+    const { name, email, password, role } = req.body;
 
+    // 2. Logic to determine the Avatar URL
     let avatarUrl = "";
+
     if (req.file && req.file.path) {
-      avatarUrl = req.file.path; // This is the Cloudinary URL
-    } else if (req.body.avatar) {
-      // Fallback if avatar is sent as a string/url
-      avatarUrl = req.body.avatar;
+      avatarUrl = req.file.path; // Cloudinary URL
     }
 
-    // 1. Check if user already exists
+    // 3. FIX: Check if user already exists
     const userExists = await User.findOne({ email });
     if (userExists) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // 2. Create the new user (password is automatically hashed by the schema pre-save hook)
-    const user = await User.create({ name, email, password, role, avatar });
+    // 4. FIX: Use 'avatarUrl' here, NOT 'req.body.avatar'
+    const user = await User.create({
+      name,
+      email,
+      password,
+      role,
+      avatar: avatarUrl,
+    });
 
-    // 3. Respond with the new user's data and a JWT token
     if (user) {
       res.status(201).json({
         _id: user._id,
         name: user.name,
         email: user.email,
-        avatar: avatarUrl,
+        avatar: user.avatar, // Return the saved URL
         role: user.role,
-
-        // Generate and send the authentication token
         token: generateToken(user._id),
-
-        // Include employer-specific fields, defaulting to empty string if not present
         companyName: user.companyName || "",
         companyDescription: user.companyDescription || "",
         companyLogo: user.companyLogo || "",
-
-        // Include jobseeker-specific field
         resume: user.resume || "",
       });
     }
   } catch (err) {
+    console.error("Register Error:", err); // Added console log for easier debugging
     res.status(500).json({ message: err.message });
   }
 };
