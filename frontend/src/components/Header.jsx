@@ -2,10 +2,10 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Briefcase } from "lucide-react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Header = () => {
-  const isAuthenticated = true;
-  const user = { fullName: "John Doe", role: "employer" };
+  const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   return (
@@ -33,7 +33,7 @@ const Header = () => {
           <div className="flex items-center space-x-3">
             {isAuthenticated ? (
               <div className="flex items-center space-x-3">
-                <span className="text-gray-700 ">Welcome {user?.fullName}</span>
+                <span className="text-gray-700 ">Welcome, {user?.name}</span>
                 <a
                   onClick={() => navigate(user?.role === "employer" ? "/employer-dashboard" : "/find-jobs")}
                   className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg front-medium hover:to-purple-700 transition-all duration-300 shadow-sm hover:shadow-md"

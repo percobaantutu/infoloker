@@ -13,23 +13,15 @@ const axiosInstance = axios.create({
 // Request Interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
-    // 1. Get the string from storage
-    const userInfoString = localStorage.getItem("userInfo");
+    const token = localStorage.getItem("token");
 
-    if (userInfoString) {
-      // 2. Parse it to get the token object
-      const userInfo = JSON.parse(userInfoString);
-
-      // 3. Attach token if it exists
-      if (userInfo && userInfo.token) {
-        config.headers.Authorization = `Bearer ${userInfo.token}`;
-      }
+    if (token) {
+      config.headers.Authorization = `Bearer ${JSON.parse(token)}`;
     }
+
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 // Response Interceptor
@@ -42,7 +34,10 @@ axiosInstance.interceptors.response.use(
       if (error.response.status === 401) {
         // Optional: Clear storage on 401 to prevent loops
         localStorage.removeItem("userInfo");
-        window.location.href = "/login"; // Redirect specifically to login
+        if (error.response?.status === 401) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+        }
       } else if (error.response.status === 500) {
         console.error("Server error. Please try again later.");
       }
