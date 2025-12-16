@@ -1,3 +1,5 @@
+import React from "react";
+
 const NavigationItem = ({ item, isActive, onClick, isCollapsed }) => {
   const Icon = item.icon;
   return (
@@ -12,3 +14,5 @@ const NavigationItem = ({ item, isActive, onClick, isCollapsed }) => {
     </button>
   );
 };
+
+export default NavigationItem;
