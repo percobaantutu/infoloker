@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { NAVIGATION_MENU } from "../../utils/data";
 import NavigationItem from "./NavigationItem";
+import ProfileDropdown from "./ProfileDropdown";
 
 const DashboardLayout = ({ activeMenu, children }) => {
   const { user, logout } = useAuth();
@@ -11,7 +12,7 @@ const DashboardLayout = ({ activeMenu, children }) => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeNavItem, setActiveNavItem] = useState(activeMenu || "employer-dashboard");
-  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+
   const [isMobile, setIsMobile] = useState(false);
 
   // Resize handler
@@ -55,7 +56,7 @@ const DashboardLayout = ({ activeMenu, children }) => {
             <div className="h-8 w-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center text-white">
               <Briefcase size={20} />
             </div>
-            {!isCollapsed && <span className="text-xl font-bold text-gray-900">JobPortal</span>}
+            {!isCollapsed && <span className="text-xl font-bold text-gray-900">infoloker</span>}
           </Link>
           {/* Close button for mobile */}
           {isMobile && (
@@ -82,7 +83,7 @@ const DashboardLayout = ({ activeMenu, children }) => {
       </aside>
 
       {/* 2. MAIN CONTENT AREA */}
-      <div className={`flex-1 flex flex-col min-h-screen transition-all duration-300 ${!isMobile && (isCollapsed ? "ml-20" : "ml-64")}`}>
+      <div className={`flex-1 flex flex-col min-h-screen min-w-0 transition-all duration-300 ${!isMobile && (isCollapsed ? "ml-20" : "ml-64")}`}>
         {/* TOP HEADER */}
         <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-40">
           <div className="flex items-center">
@@ -95,35 +96,7 @@ const DashboardLayout = ({ activeMenu, children }) => {
           </div>
 
           {/* User Profile Dropdown */}
-          <div className="relative">
-            <button onClick={() => setProfileDropdownOpen(!profileDropdownOpen)} className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded-lg transition-colors">
-              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold border border-blue-200">{user?.name?.[0]?.toUpperCase() || <UserIcon size={18} />}</div>
-              <div className="hidden md:block text-left">
-                <p className="text-sm font-medium text-gray-700">{user?.name || "User"}</p>
-                <p className="text-xs text-gray-500">{user?.role || "Employer"}</p>
-              </div>
-              <ChevronDown size={16} className="text-gray-400" />
-            </button>
-
-            {/* Dropdown Menu */}
-            {profileDropdownOpen && (
-              <>
-                <div className="fixed inset-0 z-30" onClick={() => setProfileDropdownOpen(false)} />
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-40">
-                  <div className="px-4 py-3 border-b border-gray-50">
-                    <p className="text-sm font-medium text-gray-900">{user?.name}</p>
-                    <p className="text-xs text-gray-500 truncate">{user?.email}</p>
-                  </div>
-                  <button onClick={() => navigate("/company-profile")} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                    Profile Settings
-                  </button>
-                  <button onClick={handleLogout} className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">
-                    Sign Out
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
+          <ProfileDropdown profileRoute={user?.role === "Employer" ? "/company-profile" : "/profile"} showRole={true} />
         </header>
 
         {/* PAGE CONTENT */}

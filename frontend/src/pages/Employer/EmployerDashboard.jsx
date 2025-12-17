@@ -6,6 +6,12 @@ import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import StatCard from "../../components/layout/Statcard";
+import LoadingSpinner from "../../components/layout/LoadingSpinner";
+import JobDashboardCard from "../../components/layout/JobDashboardCard";
+import Card from "../../components/Card";
+import ApplicantDashboardCard from "../../components/layout/ApplicantDashboardCard";
+import RecentApplicationsTable from "../../components/layout/RecentApplicationsTable";
+import QuickActions from "../../components/layout/QuickActions";
 
 const EmployerDashboard = () => {
   const navigate = useNavigate();
@@ -35,9 +41,7 @@ const EmployerDashboard = () => {
   if (isLoading) {
     return (
       <DashboardLayout activeMenu="employer-dashboard">
-        <div className="flex items-center justify-center h-96">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        </div>
+        <LoadingSpinner />
       </DashboardLayout>
     );
   }
@@ -64,77 +68,90 @@ const EmployerDashboard = () => {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <StatCard title="Total Active Jobs" value={counts.totalJobs} icon={Briefcase} color="bg-blue-500" trend={trends.activeJobs} />
-          <StatCard title="Total Applications" value={counts.totalApplications} icon={Users} color="bg-purple-500" trend={trends.totalApplicants} />
-          <StatCard title="Hired Candidates" value={counts.totalHired} icon={CheckCircle2} color="bg-green-500" trend={trends.totalHired} />
+          <StatCard
+            bg={"bg-gradient-to-br from-blue-500 to-blue-600 text-white"}
+            title="Total Active Jobs"
+            value={counts.totalJobs}
+            icon={Briefcase}
+            color=""
+            trend={trends.activeJobs}
+            trendValue={`${dashboardData?.counts?.trends?.activeJobs || 0}%`}
+          />
+          <StatCard
+            bg={"bg-gradient-to-br from-violet-500 to-violet-600 text-white"}
+            title="Total Applications"
+            value={counts.totalApplications}
+            icon={Users}
+            color="green"
+            trend={trends.totalApplicants}
+            trendValue={`${dashboardData?.counts?.trends?.totalApplicants}`}
+          />
+          <StatCard bg={"bg-gradient-to-br from-emerald-500 to-emerald-500 text-white"} title="Hired Candidates" value={counts.totalHired} icon={CheckCircle2} trend={trends.totalHired} />
         </div>
 
         {/* Recent Applications Table */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-            <h2 className="text-lg font-bold text-gray-900">Recent Applications</h2>
-            <button onClick={() => navigate("/applicants")} className="text-blue-600 hover:text-blue-700 text-sm font-medium">
-              View All
-            </button>
-          </div>
-
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-gray-50 text-gray-600 font-medium">
-                <tr>
-                  <th className="px-6 py-3">Candidate</th>
-                  <th className="px-6 py-3">Applied For</th>
-                  <th className="px-6 py-3">Date</th>
-                  <th className="px-6 py-3">Status</th>
-                  <th className="px-6 py-3 text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {recentApplications.length > 0 ? (
-                  recentApplications.map((app) => (
-                    <tr key={app._id} className="hover:bg-gray-50 transition-colors">
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-                            {app.applicant?.avatar ? <img src={app.applicant.avatar} alt="" className="w-full h-full object-cover" /> : <span className="text-xs font-bold text-gray-500">{app.applicant?.name?.charAt(0)}</span>}
-                          </div>
-                          <div>
-                            <p className="font-medium text-gray-900">{app.applicant?.name}</p>
-                            <p className="text-xs text-gray-500">{app.applicant?.email}</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-gray-600 font-medium">{app.job?.title}</td>
-                      <td className="px-6 py-4 text-gray-500">{moment(app.createdAt).fromNow()}</td>
-                      <td className="px-6 py-4">
-                        <span
-                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                          ${app.status === "Accepted" ? "bg-green-100 text-green-800" : app.status === "Rejected" ? "bg-red-100 text-red-800" : "bg-blue-100 text-blue-800"}`}
-                        >
-                          {app.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        <button
-                          onClick={() => navigate(`/applicants/${app._id}`)} // Or verify your route path
-                          className="text-gray-400 hover:text-blue-600 transition-colors"
-                        >
-                          View Details
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="5" className="px-6 py-8 text-center text-gray-500">
-                      No applications received yet.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <Card
+            title="Recent Job Posts"
+            subtitle="Your latest job postings"
+            headerAction={
+              <button className="text-sm text-blue-600 hover:text-blue-700 font-medium" onClick={() => navigate("/manage-jobs")}>
+                View all
+              </button>
+            }
+          >
+            <div className="space-y-3">
+              {dashboardData?.data?.recentJobs?.slice(0, 3)?.map((job, index) => (
+                <JobDashboardCard key={index} job={job} />
+              ))}
+            </div>
+          </Card>
+          <Card
+            title="Recent Applications"
+            subtitle="Latest candidates who applied"
+            headerAction={
+              <button onClick={() => navigate("/applicants")} className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                View All
+              </button>
+            }
+            // Optional: You can remove padding from the card body for tables to go edge-to-edge
+            className="overflow-hidden"
+          >
+            <RecentApplicationsTable applications={recentApplications} />
+          </Card>
         </div>
+        {/* <Card title="Quick Actions" subtitle="Common tasks to get you started">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              {
+                title: "Post New Job",
+                icon: Plus,
+                color: "bg-blue-50 text-blue-700",
+                path: "/post-job",
+              },
+              {
+                title: "Review Applications",
+                icon: Users,
+                color: "bg-green-50 text-green-700",
+                path: "/manage-jobs",
+              },
+              {
+                title: "Company Settings",
+                icon: Building2,
+                color: "bg-orange-50 text-orange-700",
+                path: "/company-profile",
+              },
+            ].map((action, index) => (
+              <button key={index} onClick={() => navigate(action.path)} className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-200 transition hover:cursor-pointer">
+                <div className={`p-2 rounded-lg  ${action.color}`}>
+                  <action.icon className="w-5 h-5" />
+                </div>
+                <span className="text-sm font-medium text-gray-800">{action.title}</span>
+              </button>
+            ))}
+          </div>
+        </Card> */}
+        <QuickActions />
       </div>
     </DashboardLayout>
   );
