@@ -17,7 +17,21 @@ const ProfileDropdown = ({ profileRoute = "/company-profile", showRole = true })
     <div className="relative">
       {/* Trigger */}
       <button onClick={() => setOpen(!open)} className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded-lg transition-colors">
-        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold border border-blue-200">{user?.name?.[0]?.toUpperCase() || <UserIcon size={18} />}</div>
+        <div className="w-8 h-8 rounded-full overflow-hidden bg-blue-100 flex items-center justify-center border border-blue-200">
+          {user?.avatar ? (
+            <img
+              src={user.avatar}
+              alt={user?.name || "Profile"}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "";
+              }}
+            />
+          ) : (
+            <span className="text-blue-600 font-semibold">{user?.name?.[0]?.toUpperCase()}</span>
+          )}
+        </div>
 
         <div className="hidden md:block text-left">
           <p className="text-sm font-medium text-gray-700">{user?.name || "User"}</p>
