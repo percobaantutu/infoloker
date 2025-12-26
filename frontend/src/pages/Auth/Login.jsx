@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Mail, Lock, Eye, EyeOff, Loader, AlertCircle, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLogin } from "../../hooks/useLogin";
+import Header from "../../components/Header";
 
 const Login = () => {
   // Use the Custom Hook
@@ -26,6 +27,7 @@ const Login = () => {
   // 2. Form View
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+      <Header />
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <div className="text-center mb-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome Back</h2>
