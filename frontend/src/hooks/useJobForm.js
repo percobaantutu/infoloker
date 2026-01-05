@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import { validateJobForm } from "../utils/jobValidator";
 import { createJob, updateJob } from "../utils/jobService";
+import axiosInstance from "../utils/axiosInstance";
+import { API_PATHS } from "../utils/apiPaths";
 
 export const useJobForm = () => {
   const navigate = useNavigate();
@@ -52,8 +54,8 @@ export const useJobForm = () => {
       location: formData.location,
       category: formData.category,
       type: formData.jobType,
-      salaryMin: formData.salaryMin,
-      salaryMax: formData.salaryMax,
+      salaryMin: Number(formData.salaryMin),
+      salaryMax: Number(formData.salaryMax),
     };
 
     // 3. Call API
@@ -77,6 +79,36 @@ export const useJobForm = () => {
   };
 
   const isFormValid = () => Object.keys(validateJobForm(formData)).length === 0;
+
+  useEffect(() => {
+    const fetchJobDetails = async () => {
+      if (jobId) {
+        try {
+          const response = await axiosInstance.get(API_PATHS.JOBS.GET_JOB_BY_ID(jobId));
+          const jobData = response.data;
+          if (jobData) {
+            setFormData({
+              jobTitle: jobData.title,
+              location: jobData.location,
+              category: jobData.category,
+              jobType: jobData.type,
+              description: jobData.description,
+              requirements: jobData.requirements,
+              salaryMin: jobData.salaryMin,
+              salaryMax: jobData.salaryMax,
+            });
+          }
+        } catch (error) {
+          console.error("Error fetching job details:", error);
+          if (error.response) {
+            console.error("API Error:", error.response.data.message);
+          }
+        }
+      }
+    };
+    fetchJobDetails();
+    return () => {};
+  }, []);
 
   return {
     formData,

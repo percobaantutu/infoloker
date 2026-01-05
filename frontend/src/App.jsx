@@ -15,11 +15,12 @@ import ApplicationViewer from "./pages/Employer/ApplicationViewer";
 import EmployerProfilePage from "./pages/Employer/EmployerProfilePage";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
-
+import { Toaster } from "react-hot-toast";
 function App() {
   return (
     <AuthProvider>
       <Router>
+        <Toaster position="top-center" />
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />

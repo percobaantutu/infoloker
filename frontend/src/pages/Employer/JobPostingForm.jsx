@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import { AlertCircle, MapPin, DollarSign, Briefcase, Users, Eye, Send } from "lucide-react";
 import { CATEGORIES, JOB_TYPES } from "../../utils/data";
