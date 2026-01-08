@@ -1,12 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import { Edit, Trash2, Users, Plus, X } from "lucide-react";
+import { Edit, Trash2, Users, Plus, X, Loader } from "lucide-react";
 
-const JobRow = ({ job, onStatusToggle, onDelete }) => {
+const JobRow = ({ job, onStatusToggle, onDelete, actionLoading }) => {
   const navigate = useNavigate();
 
+  // Check if THIS specific job is doing an action
+  const isToggling = actionLoading[job.id] === "status";
+  const isDeleting = actionLoading[job.id] === "delete";
+  const isBusy = isToggling || isDeleting;
+
   return (
-    <tr className="hover:bg-blue-50/30 transition-all duration-200 border-b border-gray-200">
-      {/* Title & Company */}
+    <tr className={`hover:bg-blue-50/30 transition-all duration-200 border-b border-gray-200 ${isBusy ? "opacity-50" : ""}`}>
       <td className="px-6 py-4 whitespace-nowrap min-w-[200px] sm:min-w-0">
         <div>
           <div className="text-sm font-semibold text-gray-900">{job.title}</div>
@@ -14,7 +18,6 @@ const JobRow = ({ job, onStatusToggle, onDelete }) => {
         </div>
       </td>
 
-      {/* Status Badge */}
       <td className="px-6 py-4 whitespace-nowrap min-w-[120px] sm:min-w-0">
         <span
           className={`px-3 py-1.5 inline-flex text-xs font-semibold rounded-full 
@@ -24,35 +27,44 @@ const JobRow = ({ job, onStatusToggle, onDelete }) => {
         </span>
       </td>
 
-      {/* Applicant Count */}
       <td className="px-6 py-4 whitespace-nowrap min-w-[130px] sm:min-w-0">
-        <button className="flex items-center text-sm text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-200 hover:bg-blue-50 px-2 py-1 rounded-lg" onClick={() => navigate(`/applicants/${job.id}`)}>
+        <button
+          disabled={isBusy}
+          className="flex items-center text-sm text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-200 hover:bg-blue-50 px-2 py-1 rounded-lg disabled:opacity-50"
+          onClick={() => navigate(`/applicants/${job.id}`)}
+        >
           <Users className="w-4 h-4 mr-1.5" />
           {job.applicants}
         </button>
       </td>
 
-      {/* Actions */}
       <td className="px-6 py-4 whitespace-nowrap min-w-[130px] sm:min-w-0">
         <div className="flex space-x-2">
-          {/* Edit Button - FIXED ROUTING */}
-          <button className="text-blue-600 hover:text-blue-800 p-2 rounded-lg hover:bg-blue-50 transition-colors" onClick={() => navigate(`/edit-job/${job.id}`)}>
+          {/* Edit */}
+          <button disabled={isBusy} className="text-blue-600 hover:text-blue-800 p-2 rounded-lg hover:bg-blue-50 transition-colors disabled:opacity-50" onClick={() => navigate(`/edit-job/${job.id}`)}>
             <Edit className="w-4 h-4" />
           </button>
 
           {/* Status Toggle */}
           <button
+            disabled={isBusy}
             onClick={() => onStatusToggle(job.id)}
-            className={`flex items-center gap-2 p-2 rounded-lg transition-colors
+            className={`flex items-center gap-2 p-2 rounded-lg transition-colors disabled:opacity-50 min-w-[90px] justify-center
               ${job.status === "Active" ? "text-red-600 hover:bg-red-50" : "text-green-600 hover:bg-green-50"}`}
           >
-            {job.status === "Active" ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-            <span className="hidden sm:inline">{job.status === "Active" ? "Close" : "Activate"}</span>
+            {isToggling ? (
+              <Loader className="w-4 h-4 animate-spin" />
+            ) : (
+              <>
+                {job.status === "Active" ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                <span className="hidden sm:inline">{job.status === "Active" ? "Close" : "Open"}</span>
+              </>
+            )}
           </button>
 
-          {/* Delete Button */}
-          <button onClick={() => onDelete(job.id)} className="flex items-center gap-2 text-red-600 hover:text-red-800 p-2 rounded-lg hover:bg-red-50 transition-colors">
-            <Trash2 className="w-4 h-4" />
+          {/* Delete */}
+          <button disabled={isBusy} onClick={() => onDelete(job.id)} className="flex items-center gap-2 text-red-600 hover:text-red-800 p-2 rounded-lg hover:bg-red-50 transition-colors disabled:opacity-50">
+            {isDeleting ? <Loader className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
             <span className="hidden sm:inline">Delete</span>
           </button>
         </div>

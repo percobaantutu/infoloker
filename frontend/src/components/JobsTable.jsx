@@ -8,7 +8,7 @@ const SortIcon = ({ active, direction }) => {
   return direction === "asc" ? <ChevronUp className="w-4 h-4 text-blue-600" /> : <ChevronDown className="w-4 h-4 text-blue-600" />;
 };
 
-const JobsTable = ({ jobs, isLoading, sortField, sortDirection, onSort, onStatusToggle, onDelete }) => {
+const JobsTable = ({ jobs, isLoading, sortField, actionLoading, sortDirection, onSort, onStatusToggle, onDelete }) => {
   const renderSortHeader = (label, field) => (
     <TableHead className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors" onClick={() => onSort(field)}>
       <div className="flex items-center space-x-1">
@@ -34,7 +34,7 @@ const JobsTable = ({ jobs, isLoading, sortField, sortDirection, onSort, onStatus
             {isLoading ? (
               Array.from({ length: 5 }).map((_, i) => <LoadingRow key={i} />)
             ) : jobs.length > 0 ? (
-              jobs.map((job) => <JobRow key={job.id} job={job} onStatusToggle={onStatusToggle} onDelete={onDelete} />)
+              jobs.map((job) => <JobRow key={job.id} job={job} onStatusToggle={onStatusToggle} actionLoading={actionLoading} onDelete={onDelete} />)
             ) : (
               <tr>
                 <td colSpan="4" className="px-6 py-12 text-center text-gray-500">

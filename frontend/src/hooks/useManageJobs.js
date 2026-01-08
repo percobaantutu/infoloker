@@ -1,27 +1,27 @@
 import { useState, useEffect, useMemo } from "react";
 import toast from "react-hot-toast";
 import moment from "moment";
-import { toggleJobStatus, deleteJob, getJobsEmployer } from "../utils/jobService";
-
+import { getJobsEmployer, toggleJobStatus, deleteJob } from "../utils/jobService";
+import { useDebounce } from "./useDebounce";
 export const useManageJobs = () => {
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [actionLoading, setActionLoading] = useState({});
 
-  // Filters & Sort State
   const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
   const [statusFilter, setStatusFilter] = useState("All");
   const [sortField, setSortField] = useState("title");
   const [sortDirection, setSortDirection] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  // 1. Fetch Jobs
   const fetchJobs = async () => {
     setIsLoading(true);
     try {
       const data = await getJobsEmployer();
       if (data) {
-        // Normalize data structure
         const formatted = data.map((job) => ({
           id: job._id,
           title: job.title,
@@ -45,15 +45,13 @@ export const useManageJobs = () => {
     fetchJobs();
   }, []);
 
-  // 2. Critical Fix: Reset Pagination on Filter Change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm, statusFilter]);
+  }, [debouncedSearchTerm, statusFilter]);
 
-  // 3. Filtering & Sorting Logic
   const filteredAndSortedJobs = useMemo(() => {
     let result = jobs.filter((job) => {
-      const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSearch = job.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
       const matchesStatus = statusFilter === "All" || job.status === statusFilter;
       return matchesSearch && matchesStatus;
     });
@@ -61,26 +59,21 @@ export const useManageJobs = () => {
     result.sort((a, b) => {
       let aVal = a[sortField];
       let bVal = b[sortField];
-
-      // Handle numeric sorting for applicants
       if (sortField === "applicants") {
         aVal = Number(aVal);
         bVal = Number(bVal);
       }
-
       if (aVal < bVal) return sortDirection === "asc" ? -1 : 1;
       if (aVal > bVal) return sortDirection === "asc" ? 1 : -1;
       return 0;
     });
 
     return result;
-  }, [jobs, searchTerm, statusFilter, sortField, sortDirection]);
+  }, [jobs, debouncedSearchTerm, statusFilter, sortField, sortDirection]);
 
-  // 4. Pagination Logic
   const totalPages = Math.ceil(filteredAndSortedJobs.length / itemsPerPage);
   const paginatedJobs = filteredAndSortedJobs.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-  // 5. Actions
   const handleSort = (field) => {
     if (sortField === field) {
       setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
@@ -91,7 +84,8 @@ export const useManageJobs = () => {
   };
 
   const handleStatusToggle = async (jobId) => {
-    // Optimistic Update
+    setActionLoading((prev) => ({ ...prev, [jobId]: "status" }));
+
     const originalJobs = [...jobs];
     setJobs((prev) => prev.map((job) => (job.id === jobId ? { ...job, status: job.status === "Active" ? "Closed" : "Active" } : job)));
 
@@ -99,16 +93,22 @@ export const useManageJobs = () => {
       await toggleJobStatus(jobId);
       toast.success("Job status updated");
     } catch (error) {
-      setJobs(originalJobs); // Revert on fail
+      setJobs(originalJobs);
       toast.error("Failed to update status");
+    } finally {
+      setActionLoading((prev) => {
+        const next = { ...prev };
+        delete next[jobId];
+        return next;
+      });
     }
   };
 
   const handleDelete = async (jobId) => {
-    // Critical Fix: Confirmation
-    if (!window.confirm("Are you sure you want to delete this job? This cannot be undone.")) return;
+    if (!window.confirm("Are you sure you want to delete this job?")) return;
 
-    // Optimistic Update
+    setActionLoading((prev) => ({ ...prev, [jobId]: "delete" }));
+
     const originalJobs = [...jobs];
     setJobs((prev) => prev.filter((job) => job.id !== jobId));
 
@@ -118,21 +118,26 @@ export const useManageJobs = () => {
     } catch (error) {
       setJobs(originalJobs);
       toast.error("Failed to delete job");
+    } finally {
+      setActionLoading((prev) => {
+        const next = { ...prev };
+        delete next[jobId];
+        return next;
+      });
     }
   };
 
   return {
-    // Data
     jobs: paginatedJobs,
-    totalJobs: filteredAndSortedJobs.length,
+    totalCount: filteredAndSortedJobs.length,
+    totalJobsUnfiltered: jobs.length,
     isLoading,
+    actionLoading,
 
-    // Pagination
     currentPage,
     totalPages,
     setCurrentPage,
 
-    // Filters & Sort
     searchTerm,
     setSearchTerm,
     statusFilter,
@@ -141,7 +146,6 @@ export const useManageJobs = () => {
     sortDirection,
     handleSort,
 
-    // Actions
     handleStatusToggle,
     handleDelete,
   };

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import DashboardLayout from "../../components/layout/DashboardLayout";
-import { AlertCircle, MapPin, DollarSign, Briefcase, Users, Eye, Send } from "lucide-react";
+import { AlertCircle, MapPin, DollarSign, Briefcase, Users, Eye, Send, Loader } from "lucide-react";
 import { CATEGORIES, JOB_TYPES } from "../../utils/data";
 import InputField from "../../components/Input/InputField";
 import SelectField from "../../components/Input/SelectField";
@@ -10,9 +10,19 @@ import { formatRupiah } from "../../utils/formatRupiah";
 import { useJobForm } from "../../hooks/useJobForm";
 
 const JobPostingForm = () => {
-  const { formData, errors, isSubmitting, handleInputChange, handleSubmit, isFormValid } = useJobForm();
+  const { formData, errors, isSubmitting, handleInputChange, handleSubmit, isFormValid, isLoading, isEditMode } = useJobForm();
 
   const [isPreview, setIsPreview] = useState(false);
+
+  if (isLoading) {
+    return (
+      <DashboardLayout activeMenu="post-job">
+        <div className="min-h-screen flex items-center justify-center">
+          <Loader className="w-10 h-10 animate-spin text-blue-600" />
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   return (
     <DashboardLayout activeMenu="post-job">
