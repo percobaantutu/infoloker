@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { validateJobForm } from "../utils/jobValidator";
 import { createJob, updateJob } from "../utils/jobService";
@@ -8,8 +8,7 @@ import { API_PATHS } from "../utils/apiPaths";
 
 export const useJobForm = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const jobId = location.state?.jobId || null;
+  const { jobId } = useParams();
 
   const [formData, setFormData] = useState({
     jobTitle: "",
@@ -24,11 +23,41 @@ export const useJobForm = () => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Handle Text/Select Inputs
+  useEffect(() => {
+    if (jobId) {
+      const fetchJobDetails = async () => {
+        setIsLoading(true);
+        try {
+          const response = await axiosInstance.get(API_PATHS.JOBS.GET_JOB_BY_ID(jobId));
+          const job = response.data;
+
+          setFormData({
+            jobTitle: job.title,
+            location: job.location,
+            category: job.category,
+            jobType: job.type,
+            description: job.description,
+            requirements: job.requirements,
+            salaryMin: String(job.salaryMin),
+            salaryMax: String(job.salaryMax),
+          });
+        } catch (error) {
+          console.error("Fetch error:", error);
+          toast.error("Failed to load job details");
+          navigate("/employer-dashboard");
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      fetchJobDetails();
+    }
+  }, [jobId, navigate]);
+
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-    // Clear specific error when user types
     if (errors[field] || errors.salary) {
       setErrors((prev) => ({ ...prev, [field]: undefined, salary: undefined }));
     }
@@ -37,7 +66,6 @@ export const useJobForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 1. Validate
     const validationErrors = validateJobForm(formData);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -46,7 +74,6 @@ export const useJobForm = () => {
 
     setIsSubmitting(true);
 
-    // 2. Prepare Payload
     const jobPayload = {
       title: formData.jobTitle,
       description: formData.description,
@@ -54,11 +81,10 @@ export const useJobForm = () => {
       location: formData.location,
       category: formData.category,
       type: formData.jobType,
-      salaryMin: Number(formData.salaryMin),
-      salaryMax: Number(formData.salaryMax),
+      salaryMin: formData.salaryMin,
+      salaryMax: formData.salaryMax,
     };
 
-    // 3. Call API
     try {
       if (jobId) {
         await updateJob(jobId, jobPayload);
@@ -67,11 +93,9 @@ export const useJobForm = () => {
         await createJob(jobPayload);
         toast.success("Job Posted Successfully!");
       }
-
       navigate("/employer-dashboard");
     } catch (error) {
-      const msg = error.response?.data?.message || "Failed to save job. Please try again.";
-      console.error("Job Submit Error:", error);
+      const msg = error.response?.data?.message || "Failed to save job.";
       toast.error(msg);
     } finally {
       setIsSubmitting(false);
@@ -80,42 +104,14 @@ export const useJobForm = () => {
 
   const isFormValid = () => Object.keys(validateJobForm(formData)).length === 0;
 
-  useEffect(() => {
-    const fetchJobDetails = async () => {
-      if (jobId) {
-        try {
-          const response = await axiosInstance.get(API_PATHS.JOBS.GET_JOB_BY_ID(jobId));
-          const jobData = response.data;
-          if (jobData) {
-            setFormData({
-              jobTitle: jobData.title,
-              location: jobData.location,
-              category: jobData.category,
-              jobType: jobData.type,
-              description: jobData.description,
-              requirements: jobData.requirements,
-              salaryMin: jobData.salaryMin,
-              salaryMax: jobData.salaryMax,
-            });
-          }
-        } catch (error) {
-          console.error("Error fetching job details:", error);
-          if (error.response) {
-            console.error("API Error:", error.response.data.message);
-          }
-        }
-      }
-    };
-    fetchJobDetails();
-    return () => {};
-  }, []);
-
   return {
     formData,
     errors,
     isSubmitting,
+    isLoading,
     handleInputChange,
     handleSubmit,
     isFormValid,
+    isEditMode: !!jobId,
   };
 };
