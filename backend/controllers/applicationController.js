@@ -139,3 +139,21 @@ exports.updateStatus = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.getAllEmployerApplications = async (req, res) => {
+  try {
+    // 1. Find all jobs posted by this employer
+    const jobs = await Job.find({ company: req.user._id }).select("_id").lean();
+    const jobIds = jobs.map((job) => job._id);
+
+    // 2. Find all applications for those jobs
+    const applications = await Application.find({ job: { $in: jobIds } })
+      .populate("applicant", "name email avatar resume")
+      .populate("job", "title type location category salaryMin salaryMax")
+      .sort({ createdAt: -1 });
+
+    res.json(applications);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

@@ -46,6 +46,7 @@ export const API_PATHS = {
 
     // Update Status
     UPDATE_STATUS: (id) => `/api/applications/${id}/status`,
+    GET_ALL_EMPLOYER_APPLICATIONS: "/api/applications/employer/all",
   },
 
   IMAGE: {

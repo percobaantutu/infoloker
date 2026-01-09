@@ -17,6 +17,7 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 import { Toaster } from "react-hot-toast";
 import EditProfileDetails from "./pages/Employer/EditProfileDetails";
+import AllApplicants from "./pages/Employer/AllApplicants";
 function App() {
   return (
     <AuthProvider>
@@ -37,6 +38,7 @@ function App() {
             <Route path="/employer-dashboard" element={<EmployerDashboard />} />
             <Route path="/post-job" element={<JobPostingForm />} />
             <Route path="/manage-jobs" element={<ManageJobs />} />
+            <Route path="/applicants" element={<AllApplicants />} />
             <Route path="/applicants/:jobId" element={<ApplicationViewer />} />
             <Route path="/company-profile" element={<EmployerProfilePage />} />
             <Route path="/company-profile/edit" element={<EditProfileDetails />} />
