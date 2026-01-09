@@ -14,7 +14,7 @@ const applicationSchema = new mongoose.Schema(
     // Application status tracker
     status: {
       type: String,
-      enum: ["Applied", "In Review", "Rejected", "Accepted"],
+      enum: ["Applied", "In Review", "Rejected", "Accepted", "Interview"],
       default: "Applied",
     },
   },
