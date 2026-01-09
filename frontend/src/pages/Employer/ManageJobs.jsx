@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Plus, Briefcase } from "lucide-react"; // Import Briefcase icon
+import { Plus, Briefcase } from "lucide-react";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import PaginationComponent from "../../components/PaginationComponent";
 import JobFilters from "../../components/JobFilters";
@@ -8,26 +8,9 @@ import { useManageJobs } from "../../hooks/useManageJobs";
 
 const ManageJobs = () => {
   const navigate = useNavigate();
-  const {
-    jobs,
-    isLoading,
-    actionLoading, // Get this
-    totalJobsUnfiltered, // Get this for empty state check
-    searchTerm,
-    setSearchTerm,
-    statusFilter,
-    setStatusFilter,
-    sortField,
-    sortDirection,
-    handleSort,
-    handleStatusToggle,
-    handleDelete,
-    currentPage,
-    setCurrentPage,
-    totalPages,
-  } = useManageJobs();
+  const { jobs, isLoading, actionLoading, totalJobsUnfiltered, searchTerm, setSearchTerm, statusFilter, setStatusFilter, sortField, sortDirection, handleSort, handleStatusToggle, handleDelete, currentPage, setCurrentPage, totalPages } =
+    useManageJobs();
 
-  // 1. True Empty State: User has NEVER posted a job
   if (!isLoading && totalJobsUnfiltered === 0) {
     return (
       <DashboardLayout activeMenu="manage-jobs">
@@ -64,7 +47,6 @@ const ManageJobs = () => {
 
           <JobFilters searchTerm={searchTerm} setSearchTerm={setSearchTerm} statusFilter={statusFilter} setStatusFilter={setStatusFilter} />
 
-          {/* Table (Pass actionLoading down) */}
           <JobsTable jobs={jobs} isLoading={isLoading} actionLoading={actionLoading} sortField={sortField} sortDirection={sortDirection} onSort={handleSort} onStatusToggle={handleStatusToggle} onDelete={handleDelete} />
 
           {!isLoading && jobs.length > 0 && (
