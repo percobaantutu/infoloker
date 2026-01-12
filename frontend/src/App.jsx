@@ -18,6 +18,8 @@ import { AuthProvider } from "./context/AuthContext";
 import { Toaster } from "react-hot-toast";
 import EditProfileDetails from "./pages/Employer/EditProfileDetails";
 import AllApplicants from "./pages/Employer/AllApplicants";
+import MyApplications from "./pages/JobSeeker/MyApplications";
+import EditUserProfile from "./pages/JobSeeker/EditUserProfile";
 function App() {
   return (
     <AuthProvider>
@@ -43,6 +45,14 @@ function App() {
             <Route path="/company-profile" element={<EmployerProfilePage />} />
             <Route path="/company-profile/edit" element={<EditProfileDetails />} />
             <Route path="/edit-job/:jobId" element={<JobPostingForm />} />
+          </Route>
+           <Route element={<ProtectedRoute />}> 
+            <Route path="/profile" element={<UserProfile />} />
+            <Route path="/profile/edit" element={<EditUserProfile />} />
+            <Route path="/saved-jobs" element={<SavedJobs />} />
+            
+       
+            <Route path="/applications/my" element={<MyApplications />} /> 
           </Route>
 
           {/* Catch All Routes */}
