@@ -11,39 +11,42 @@ export const useProfile = () => {
   const initialFormData = {
     name: user?.name || "",
     email: user?.email || "",
+    
     companyName: user?.companyName || "",
     companyDescription: user?.companyDescription || "",
   };
 
   const updateProfile = async (formData, fileData) => {
     setIsSubmitting(true);
-
-    // 1. Create FormData (Crucial for File Uploads)
+    
     const data = new FormData();
+    
 
-    // 2. Append Text Fields
-    Object.keys(formData).forEach((key) => {
-      data.append(key, formData[key]);
+    Object.keys(formData).forEach(key => {
+        data.append(key, formData[key]);
     });
 
-    // 3. Append Files ONLY if they exist
-    // Note: We check if it is technically a 'File' or 'Blob' to avoid sending empty objects
+   
     if (fileData.avatar instanceof File) {
-      data.append("avatar", fileData.avatar);
+        data.append("avatar", fileData.avatar);
     }
     if (fileData.companyLogo instanceof File) {
-      data.append("companyLogo", fileData.companyLogo);
+        data.append("companyLogo", fileData.companyLogo);
+    }
+    
+  
+    if (fileData.resume instanceof File) {
+        data.append("resume", fileData.resume);
     }
 
     try {
-      // 4. Send Request with EXPLICIT Header
-      // We set Content-Type to "multipart/form-data" to override the default JSON setting
       const response = await axiosInstance.put(API_PATHS.USER.UPDATE_PROFILE, data, {
         headers: {
-          "Content-Type": "multipart/form-data",
+            "Content-Type": "multipart/form-data",
         },
+        timeout: 60000,
       });
-
+      
       updateUser(response.data);
       toast.success("Profile updated successfully!");
       return true;
