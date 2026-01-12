@@ -1,71 +1,95 @@
 import { useState } from "react";
-import { ChevronDown, User as UserIcon } from "lucide-react";
+import { ChevronDown, User as UserIcon, LogOut, FileText, Heart, UserCircle, LayoutDashboard } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
-const ProfileDropdown = ({ profileRoute = "/company-profile", showRole = true }) => {
+const ProfileDropdown = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
   const handleLogout = () => {
+    setOpen(false);
     logout();
     navigate("/login");
   };
 
+  const handleNavigate = (path) => {
+    setOpen(false);
+    navigate(path);
+  };
+
+  if (!user) return null;
+
   return (
     <div className="relative">
-      {/* Trigger */}
-      <button onClick={() => setOpen(!open)} className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded-lg transition-colors">
-        <div className="w-8 h-8 rounded-full overflow-hidden bg-blue-100 flex items-center justify-center border border-blue-200">
+      {/* Trigger Button */}
+      <button 
+        onClick={() => setOpen(!open)} 
+        className="flex items-center space-x-2 p-1.5 rounded-full hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-200"
+      >
+        <div className="w-9 h-9 rounded-full overflow-hidden bg-blue-100 flex items-center justify-center border border-blue-200">
           {user?.avatar ? (
             <img
               src={user.avatar}
-              alt={user?.name || "Profile"}
+              alt={user?.name}
               className="w-full h-full object-cover"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = "";
-              }}
             />
           ) : (
-            <span className="text-blue-600 font-semibold">{user?.name?.[0]?.toUpperCase()}</span>
+            <span className="text-blue-600 font-semibold text-sm">
+              {user?.name?.[0]?.toUpperCase()}
+            </span>
           )}
         </div>
-
-        <div className="hidden md:block text-left">
-          <p className="text-sm font-medium text-gray-700">{user?.name || "User"}</p>
-          {showRole && <p className="text-xs text-gray-500">{user?.role || "User"}</p>}
-        </div>
-
-        <ChevronDown size={16} className="text-gray-400" />
+        
+        {/* Desktop only arrow */}
+        <ChevronDown size={16} className="text-gray-400 hidden md:block" />
       </button>
 
-      {/* Dropdown */}
+      {/* Dropdown Menu */}
       {open && (
         <>
-          {/* Click outside */}
-          <div className="fixed inset-0 z-30" onClick={() => setOpen(false)} />
-
-          <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-40">
-            <div className="px-4 py-3 border-b border-gray-50">
-              <p className="text-sm font-medium text-gray-900">{user?.name}</p>
-              <p className="text-xs text-gray-500 truncate">{user?.email}</p>
+          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
+          <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50 animate-in fade-in zoom-in-95 duration-100">
+            
+            {/* User Header */}
+            <div className="px-4 py-3 border-b border-gray-50 mb-1">
+              <p className="text-sm font-semibold text-gray-900 truncate">{user.name}</p>
+              <p className="text-xs text-gray-500 truncate">{user.email}</p>
             </div>
 
-            <button
-              onClick={() => {
-                setOpen(false);
-                navigate(profileRoute);
-              }}
-              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-            >
-              Profile Settings
-            </button>
+            {/* Menu Items based on Role */}
+            <div className="space-y-1">
+              {user.role === 'employer' ? (
+                <>
+                  <button onClick={() => handleNavigate("/employer-dashboard")} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center">
+                    <LayoutDashboard className="w-4 h-4 mr-2" /> Dashboard
+                  </button>
+                  <button onClick={() => handleNavigate("/company-profile")} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center">
+                    <UserCircle className="w-4 h-4 mr-2" /> Company Profile
+                  </button>
+                </>
+              ) : (
+                /* JOB SEEKER LINKS */
+                <>
+                  <button onClick={() => handleNavigate("/profile")} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center">
+                    <UserCircle className="w-4 h-4 mr-2" /> My Profile
+                  </button>
+                  <button onClick={() => handleNavigate("/applications/my")} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center">
+                    <FileText className="w-4 h-4 mr-2" /> My Applications
+                  </button>
+                  <button onClick={() => handleNavigate("/saved-jobs")} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center">
+                    <Heart className="w-4 h-4 mr-2" /> Saved Jobs
+                  </button>
+                </>
+              )}
+            </div>
 
-            <button onClick={handleLogout} className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">
-              Sign Out
-            </button>
+            <div className="border-t border-gray-50 mt-1 pt-1">
+              <button onClick={handleLogout} className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center">
+                <LogOut className="w-4 h-4 mr-2" /> Sign Out
+              </button>
+            </div>
           </div>
         </>
       )}
