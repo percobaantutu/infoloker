@@ -3,6 +3,7 @@ import { Briefcase, Menu, X, LogOut } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ProfileDropdown from "./layout/ProfileDropdown";
+import NotificationDropdown from "./layout/NotificationDropdown";
 
 const Header = () => {
   const { user, isAuthenticated, logout } = useAuth();
@@ -35,7 +36,13 @@ const Header = () => {
             
             {/* If logged in, show Profile Dropdown. If not, show Login/Signup */}
             {isAuthenticated ? (
-              <ProfileDropdown />
+              <div className="flex items-center space-x-2">
+           
+                <NotificationDropdown />
+                
+              
+                <ProfileDropdown />
+              </div>
             ) : (
               <div className="flex items-center space-x-3">
                 <Link to="/login" className="text-sm font-medium text-gray-600 hover:text-gray-900 px-3 py-2">
@@ -49,7 +56,8 @@ const Header = () => {
           </div>
 
           {/* 3. Mobile Hamburger (Right) */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center space-x-2">
+            <NotificationDropdown />
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg"

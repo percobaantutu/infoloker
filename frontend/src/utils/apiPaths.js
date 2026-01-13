@@ -53,6 +53,11 @@ export const API_PATHS = {
     GET_ALL_EMPLOYER_APPLICATIONS: "/api/applications/employer/all",
   },
 
+NOTIFICATIONS: {
+    GET_ALL: "/api/notifications",
+    MARK_READ: "/api/notifications/read",
+  },
+
   IMAGE: {
     UPLOAD: "/api/auth/upload-image",
   },

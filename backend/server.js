@@ -10,7 +10,7 @@ const jobRoute = require("./route/jobRoute");
 const applicationRoute = require("./route/applicationRoute");
 const savedJobRoute = require("./route/savedJobRoute");
 const analyticsRoute = require("./route/analyticsRoute");
-
+const notificationRoute = require("./route/notificationRoute");
 const app = express();
 
 // Middleware to handle CORS
@@ -39,6 +39,7 @@ app.use("/api/jobs", jobRoute);
 app.use("/api/applications", applicationRoute);
 app.use("/api/save-jobs", savedJobRoute);
 app.use("/api/analytics", analyticsRoute);
+app.use("/api/notifications", notificationRoute);
 // Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

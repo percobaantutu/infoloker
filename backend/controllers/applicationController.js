@@ -1,6 +1,7 @@
 const Application = require("../models/Application");
 const Job = require("../models/Job");
 const sendEmail = require("../utils/sendEmail");
+const Notification = require("../models/Notification");
 
 // @desc    Apply to a job
 // @route   POST /api/applications/:jobId
@@ -59,6 +60,12 @@ exports.applyToJob = async (req, res) => {
         subject: `New Applicant for ${job.title}`,
         message,
       });
+      await Notification.create({
+  user: job.company._id, // Send to Employer
+  message: `New applicant: ${req.user.name} for ${job.title}`,
+  type: "new_applicant",
+  relatedId: application._id
+});
     } catch (emailError) {
       console.error("New Applicant Email Failed:", emailError);
     }
@@ -178,6 +185,12 @@ exports.updateStatus = async (req, res) => {
         subject: `Application Update: ${application.job.title}`,
         message,
       });
+      await Notification.create({
+  user: application.applicant._id,
+  message: `Status Update: Your application for ${application.job.title} is now ${status}`,
+  type: "status_update",
+  relatedId: application._id
+});
     } catch (emailError) {
       console.error("Status Email Failed:", emailError);
       // We don't stop the request here, just log the error
