@@ -1,13 +1,18 @@
 import React, { useState } from "react";
-import { Briefcase, Menu, X } from "lucide-react";
+import { Briefcase, Menu, X, LogOut } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ProfileDropdown from "./layout/ProfileDropdown";
 
 const Header = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+   const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 w-full bg-white/95 backdrop-blur-sm border-b border-gray-100 z-50 h-16">
@@ -85,6 +90,9 @@ const Header = () => {
                   <Link to="/profile" onClick={() => setMobileMenuOpen(false)} className="block text-gray-600 py-2">My Profile</Link>
                   <Link to="/applications/my" onClick={() => setMobileMenuOpen(false)} className="block text-gray-600 py-2">My Applications</Link>
                   <Link to="/saved-jobs" onClick={() => setMobileMenuOpen(false)} className="block text-gray-600 py-2">Saved Jobs</Link>
+                   <button onClick={handleLogout} className="w-full text-center py-2.5 text-sm text-red-600 hover:bg-red-50 flex items-center">
+                <LogOut className="w-4 h-4 mr-2" /> Sign Out
+              </button>
                 </>
               )}
             </div>
@@ -96,6 +104,8 @@ const Header = () => {
               <Link to="/signup" onClick={() => setMobileMenuOpen(false)} className="w-full text-center py-2.5 bg-blue-600 text-white rounded-lg font-medium">
                 Sign Up
               </Link>
+              
+               
             </div>
           )}
         </div>
