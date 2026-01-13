@@ -3,10 +3,31 @@ import { motion } from "framer-motion";
 import { User, Mail, Lock, Upload, Eye, EyeOff, UserCheck, Building2, CheckCircle, AlertCircle, Loader } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useSignUp } from "../../hooks/useSignUp";
+import { GoogleLogin } from "@react-oauth/google";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const { formData, status, handleChange, handleRoleChange, handleAvatarChange, togglePassword, submitSignUp } = useSignUp();
 
+ const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const res = await axiosInstance.post(API_PATHS.AUTH.GOOGLE, {
+        token: credentialResponse.credential,
+    
+      });
+
+      const { token, ...userData } = res.data;
+      login(userData, token);
+      
+      toast.success("Account created successfully!");
+      
+      
+      const target = res.data.role === "employer" ? "/employer-dashboard" : "/find-jobs";
+      navigate(target);
+    } catch (error) {
+      toast.error("Google Signup Failed");
+    }
+  };
   // 1. Success View
   if (status.success) {
     return (
@@ -149,6 +170,27 @@ const SignUp = () => {
               <span>Create Account</span>
             )}
           </button>
+
+           <div className="mt-6">
+                      <div className="relative">
+                          <div className="absolute inset-0 flex items-center">
+                              <div className="w-full border-t border-gray-300"></div>
+                          </div>
+                          <div className="relative flex justify-center text-sm">
+                              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                          </div>
+                      </div>
+          
+                      <div className="mt-6 flex justify-center">
+                          <GoogleLogin
+                              onSuccess={handleGoogleSuccess}
+                              onError={() => toast.error("Google Login Failed")}
+                              theme="outline"
+                              size="large"
+                              width="100%"
+                          />
+                      </div>
+                  </div>
 
           {/* Footer Link */}
           <div className="text-center">

@@ -9,6 +9,7 @@ export const API_PATHS = {
     RESET_PASSWORD: (token) => `/api/auth/reset-password/${token}`,
     VERIFY_EMAIL: "/api/auth/verify-email",
     RESEND_OTP: "/api/auth/resend-otp",
+    GOOGLE: "/api/auth/google",
   },
 
   USER: {

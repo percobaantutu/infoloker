@@ -1,6 +1,6 @@
 const express = require("express");
 const { register, login, getMe, testEmail, forgotPassword, resetPassword, verifyEmail, 
-  resendOtp  } = require("../controllers/authController");
+  resendOtp, googleLogin  } = require("../controllers/authController");
 const { protect } = require("../middleware/authMiddleware");
 const upload = require("../middleware/uploadMiddleware");
 
@@ -27,5 +27,5 @@ router.post("/verify-email", verifyEmail);
 router.post("/resend-otp", resendOtp);   
 router.post("/forgot-password", forgotPassword);
 router.put("/reset-password/:resetToken", resetPassword);
-
+router.post("/google", googleLogin);
 module.exports = router;

@@ -1,12 +1,39 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, Eye, EyeOff, Loader, AlertCircle, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "../../hooks/useLogin";
 import Header from "../../components/Header";
+import { GoogleLogin } from "@react-oauth/google";
+import { useAuth } from "../../context/AuthContext";
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPaths";
+import toast from "react-hot-toast";
 
 const Login = () => {
-  // Use the Custom Hook
+
+  const { login } = useAuth(); 
+  const navigate = useNavigate();
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const res = await axiosInstance.post(API_PATHS.AUTH.GOOGLE, {
+        token: credentialResponse.credential,
+      });
+
+      const { token, ...userData } = res.data;
+      login(userData, token);
+
+      toast.success("Login successful!");
+      
+      const target = res.data.role === "employer" ? "/employer-dashboard" : "/find-jobs";
+      navigate(target);
+    } catch (error) {
+      console.error("Google Login Error:", error);
+      toast.error("Google Login Failed");
+    }
+  };
+
   const { formData, status, handleChange, togglePassword, submitLogin } = useLogin();
 
   // 1. Success View
@@ -98,6 +125,27 @@ const Login = () => {
               <span>Sign In</span>
             )}
           </button>
+
+          <div className="mt-6">
+            <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-gray-300"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                    <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                </div>
+            </div>
+
+            <div className="mt-6 flex justify-center">
+                <GoogleLogin
+                    onSuccess={handleGoogleSuccess}
+                    onError={() => toast.error("Google Login Failed")}
+                    theme="outline"
+                    size="large"
+                    width="100%"
+                />
+            </div>
+        </div>
 
           {/* Sign Up Link */}
           <div className="text-center mt-6">

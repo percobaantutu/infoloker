@@ -1,3 +1,5 @@
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
@@ -285,5 +287,71 @@ exports.resetPassword = async (req, res) => {
     res.status(200).json({ success: true, message: "Password updated successfully" });
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+};
+
+// @desc    Login/Register with Google
+// @route   POST /api/auth/google
+exports.googleLogin = async (req, res) => {
+  try {
+    const { token, role } = req.body; // Role is optional (only needed for new users)
+
+    // 1. Verify Google Token
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const { name, email, picture } = ticket.getPayload();
+
+    // 2. Check if user exists
+    let user = await User.findOne({ email });
+
+    if (user) {
+      // --- USER EXISTS (LOGIN) ---
+      // If user exists but used a different provider, just log them in
+      res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        avatar: user.avatar,
+        token: generateToken(user._id),
+        // Add other fields needed for context
+        companyName: user.companyName || "",
+        companyLogo: user.companyLogo || "",
+        resume: user.resume || "",
+      });
+    } else {
+      // --- USER NEW (REGISTER) ---
+      
+      // Generate a random password (since they use Google)
+      const randomPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
+
+      user = await User.create({
+        name,
+        email,
+        password: randomPassword,
+        role: role || "jobseeker", // Default to jobseeker if not specified
+        avatar: picture,
+        isVerified: true, // Google emails are already verified
+      });
+
+      res.status(201).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        avatar: user.avatar,
+        token: generateToken(user._id),
+        // Defaults for new user
+        companyName: "",
+        companyLogo: "",
+        resume: "",
+      });
+    }
+  } catch (error) {
+    console.error("Google Auth Error:", error);
+    res.status(400).json({ message: "Google authentication failed" });
   }
 };
