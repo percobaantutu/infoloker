@@ -1,5 +1,6 @@
 const Application = require("../models/Application");
 const Job = require("../models/Job");
+const sendEmail = require("../utils/sendEmail");
 
 // @desc    Apply to a job
 // @route   POST /api/applications/:jobId
@@ -11,8 +12,9 @@ exports.applyToJob = async (req, res) => {
       return res.status(403).json({ message: "Only job seekers can apply" });
     }
 
-    // 2. Check if Job exists
-    const job = await Job.findById(req.params.jobId);
+    // 2. Check if Job exists AND populate company to get email
+    const job = await Job.findById(req.params.jobId).populate("company", "name email");
+    
     if (!job) {
       return res.status(404).json({ message: "Job not found" });
     }
@@ -38,6 +40,28 @@ exports.applyToJob = async (req, res) => {
       applicant: req.user._id,
       resume: req.user.resume,
     });
+
+    // 6. Send Email to Employer
+    const message = `
+      Hello ${job.company.name},
+
+      Good news! You have received a new application for the position of "${job.title}".
+
+      Applicant: ${req.user.name}
+      Email: ${req.user.email}
+
+      Log in to your dashboard to review their resume and details.
+    `;
+
+    try {
+      await sendEmail({
+        email: job.company.email, // Send to the Employer
+        subject: `New Applicant for ${job.title}`,
+        message,
+      });
+    } catch (emailError) {
+      console.error("New Applicant Email Failed:", emailError);
+    }
 
     res.status(201).json(application);
   } catch (err) {
@@ -117,24 +141,49 @@ exports.getApplicationById = async (req, res) => {
 // @access  Private (Employer)
 exports.updateStatus = async (req, res) => {
   try {
-    const { status } = req.body; // e.g., "In Review", "Accepted", "Rejected"
+    const { status } = req.body;
 
-    // Find application and populate job to check ownership
-    const application = await Application.findById(req.params.id).populate("job");
+    // 2. Populate 'job' AND 'applicant' to get email and title
+    const application = await Application.findById(req.params.id)
+      .populate("job", "title company") 
+      .populate("applicant", "email name");
 
     if (!application) {
       return res.status(404).json({ message: "Application not found" });
     }
 
-    // SECURITY: Check if logged-in user is the job owner
+    // Security Check
     if (application.job.company.toString() !== req.user._id.toString()) {
       return res.status(403).json({ message: "Not authorized to update this application" });
     }
 
+    // Update Status
     application.status = status;
     await application.save();
 
-    res.json({ message: "Application status updated", status });
+    // 3. Send Email Notification
+    const message = `
+      Hello ${application.applicant.name},
+
+      Your application status for the position of "${application.job.title}" has been updated.
+
+      New Status: ${status}
+
+      Log in to your dashboard to view more details.
+    `;
+
+    try {
+      await sendEmail({
+        email: application.applicant.email,
+        subject: `Application Update: ${application.job.title}`,
+        message,
+      });
+    } catch (emailError) {
+      console.error("Status Email Failed:", emailError);
+      // We don't stop the request here, just log the error
+    }
+
+    res.json({ message: "Application status updated and email sent", status });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

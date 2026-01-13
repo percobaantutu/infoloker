@@ -1,3 +1,4 @@
+const crypto = require("crypto");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
@@ -16,7 +17,16 @@ const userSchema = new mongoose.Schema(
     companyName: String,
     companyDescription: String,
     companyLogo: String,
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
+     isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    otp: String,
+    otpExpire: Date,
   },
+  
   { timestamps: true }
 );
 
@@ -35,5 +45,24 @@ userSchema.methods.matchPassword = function (enteredPassword) {
   // Compare the plaintext password with the stored hash
   return bcrypt.compare(enteredPassword, this.password);
 };
+
+// Generate Password Reset Token
+userSchema.methods.getResetPasswordToken = function () {
+  // 1. Generate token
+  const resetToken = crypto.randomBytes(20).toString("hex");
+
+  // 2. Hash token and set to resetPasswordToken field
+  this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  // 3. Set expire (10 minutes)
+  this.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
+
+  return resetToken;
+};
+
+module.exports = mongoose.model("User", userSchema);
 
 module.exports = mongoose.model("User", userSchema);

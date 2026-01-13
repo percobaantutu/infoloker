@@ -1,15 +1,19 @@
-export const BASE_URL = "http://localhost:8000"; // Ensure your backend runs on 8000
+export const BASE_URL = "http://localhost:8000"; 
 
 export const API_PATHS = {
   AUTH: {
     REGISTER: "/api/auth/register",
     LOGIN: "/api/auth/login",
-    GET_PROFILE: "/api/auth/me", // Fixed: Backend usually uses /me, check authController
+    GET_PROFILE: "/api/auth/me", 
+    FORGOT_PASSWORD: "/api/auth/forgot-password", 
+    RESET_PASSWORD: (token) => `/api/auth/reset-password/${token}`,
+    VERIFY_EMAIL: "/api/auth/verify-email",
+    RESEND_OTP: "/api/auth/resend-otp",
   },
 
   USER: {
-    UPDATE_PROFILE: "/api/users/profile", // Fixed: 'users' plural
-    DELETE_RESUME: "/api/users/resume", // Fixed: 'users' plural
+    UPDATE_PROFILE: "/api/users/profile", 
+    DELETE_RESUME: "/api/users/resume", 
     GET_PUBLIC_PROFILE: (id) => `/api/users/${id}`,
   },
 
@@ -30,15 +34,15 @@ export const API_PATHS = {
 
     // Saved Jobs
     SAVE_JOB: (id) => `/api/save-jobs/${id}`,
-    UNSAVE_JOB: (id) => `/api/save-jobs/${id}`, // DELETE method in axios
-    GET_SAVED_JOBS: "/api/save-jobs", // Fixed: Backend route is likely just /
+    UNSAVE_JOB: (id) => `/api/save-jobs/${id}`, 
+    GET_SAVED_JOBS: "/api/save-jobs", 
   },
 
   APPLICATIONS: {
-    // Fixed: Backend is POST /api/applications/:jobId
+    // Backend is POST /api/applications/:jobId
     APPLY_TO_JOB: (jobId) => `/api/applications/${jobId}`,
 
-    // Fixed: Logic to get applicants for a job (Employer)
+    // Logic to get applicants for a job (Employer)
     GET_APPLICANTS_FOR_JOB: (jobId) => `/api/applications/job/${jobId}`,
 
     // Get My Applications (Job Seeker)

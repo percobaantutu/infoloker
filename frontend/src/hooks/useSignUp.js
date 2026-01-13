@@ -108,9 +108,8 @@ export const useSignUp = () => {
 
       // Redirect
       setTimeout(() => {
-        const target = formData.role === "employer" ? "/employer-dashboard" : "/find-jobs";
-        window.location.href = target;
-      }, 2000);
+        navigate("/verify-email", { state: { email: formData.email } });
+      }, 1500);
     } catch (error) {
       const msg = error.response?.data?.message || "Registration failed. Please try again.";
       setStatus((prev) => ({ ...prev, loading: false, error: msg }));

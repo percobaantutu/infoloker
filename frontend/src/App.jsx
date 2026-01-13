@@ -20,6 +20,9 @@ import EditProfileDetails from "./pages/Employer/EditProfileDetails";
 import AllApplicants from "./pages/Employer/AllApplicants";
 import MyApplications from "./pages/JobSeeker/MyApplications";
 import EditUserProfile from "./pages/JobSeeker/EditUserProfile";
+import ForgotPassword from "./pages/Auth/ForgotPassword";
+import ResetPassword from "./pages/Auth/ResetPassword";
+import VerifyEmail from "./pages/Auth/VerifyEmail";
 function App() {
   return (
     <AuthProvider>
@@ -34,6 +37,9 @@ function App() {
           <Route path="/job/:jobId" element={<JobDetails />} />
           <Route path="/saved-jobs" element={<SavedJobs />} />
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+<Route path="/reset-password/:token" element={<ResetPassword />} />
+<Route path="/verify-email" element={<VerifyEmail />} />
 
           {/* Protected Routes */}
           <Route element={<ProtectedRoute requiredRole="employer" />}>
