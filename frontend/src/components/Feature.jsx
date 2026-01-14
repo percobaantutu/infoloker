@@ -8,7 +8,7 @@ const Feature = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             Everything You Need to
-            <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Succeed</span>
+            <span className="block bg-gradient-to-r from-blue-600 to-gray-900 bg-clip-text text-transparent">Succeed</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">Whether you're looking for your next opportunity or the perfect candidate, we have the tools and features to make it happen.</p>
         </div>
@@ -41,7 +41,7 @@ const Feature = () => {
             <div>
               <div className="text-center mb-12">
                 <h3 className="text-3xl font-bold text-gray-900 mb-4">For Employers</h3>
-                <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-purple-600 mx-auto rounded-full"></div>
+                <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-gray-900 mx-auto rounded-full"></div>
               </div>
             </div>
             <div className="space-y-8">
@@ -49,7 +49,7 @@ const Feature = () => {
                 <div key={index} className="group flex items-start space-x-4 p-6 rounded-2xl hover:bg-purple-50 transition-colors duration-300">
                   {/* Icon Wrapper */}
                   <div className="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center group-hover:bg-purple-200 transition-colors">
-                    <feature.icon className="w-6 h-6 text-purple-600" />
+                    <feature.icon className="w-6 h-6 text-gray-900" />
                   </div>
 
                   {/* Text Content */}

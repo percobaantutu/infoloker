@@ -22,7 +22,7 @@ const Header = () => {
           
           {/* 1. Logo (Left) */}
           <div className="flex items-center cursor-pointer" onClick={() => navigate("/")}>
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg flex mr-2 items-center justify-center shadow-md">
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-gray-900 p-2 rounded-lg flex mr-2 items-center justify-center shadow-md">
               <Briefcase className="text-white w-6 h-6" />
             </div>
             <span className="text-xl font-bold text-gray-800 tracking-tight">infoloker</span>

@@ -17,7 +17,7 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto text-center">
           {/* Main Heading */}
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="text-4xl md:text-6xl font-bold text-gray-800 mb-6 loading-tight pt-10">
-            Discover Your Dream Job with <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mt-2">infoloker</span>
+            Discover Your Dream Job with <span className="block bg-gradient-to-r from-blue-600 to-gray-900 bg-clip-text text-transparent mt-2">infoloker</span>
           </motion.h1>
           {/* Sub Heading */}
           <motion.p initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="text-xl md:text-xl text-gray-600 mb-12 leading-tigt mx-auto">
@@ -29,7 +29,7 @@ const Hero = () => {
               whileHover={{ scale: 1.05 }}
               onClick={() => navigate("/find-jobs")}
               whileTap={{ scale: 0.95 }}
-              className="group bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center space-x-2 cursor-pointer"
+              className="group bg-gradient-to-r from-blue-600 to-gray-900 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center space-x-2 cursor-pointer"
             >
               <Search className="w-5 h-5" /> Find Jobs Now <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transfrom" />
             </motion.button>

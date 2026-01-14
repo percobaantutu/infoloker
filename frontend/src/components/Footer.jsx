@@ -10,7 +10,7 @@ export const Footer = () => {
             {/* Logo/Brand */}
             <div className="space-y-4">
               <div className="flex items-center justify-center space-x-2 mb-6">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center rounded-lg">
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-gray-900 flex items-center justify-center rounded-lg">
                   <Briefcase className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold text-gray-800">infoloker</h3>

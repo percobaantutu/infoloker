@@ -17,7 +17,7 @@ const EmployerProfilePage = () => {
           {/* 1. Header Card */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative">
             {/* Decorative Background */}
-            <div className="h-32 bg-gradient-to-r from-blue-600 to-purple-600"></div>
+            <div className="h-32 bg-gradient-to-r from-blue-600 to-gray-900"></div>
 
             <div className="px-8 pb-8">
               <div className="relative flex justify-between items-end -mt-12 mb-6">
@@ -86,7 +86,7 @@ const EmployerProfilePage = () => {
 
                   <div className="flex items-start">
                     <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center mr-3 shrink-0">
-                      <Globe className="w-4 h-4 text-purple-600" />
+                      <Globe className="w-4 h-4 text-gray-900" />
                     </div>
                     <div>
                       <p className="text-xs text-gray-500">Role</p>
