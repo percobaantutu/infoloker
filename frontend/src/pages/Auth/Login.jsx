@@ -114,7 +114,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={status.loading}
-            className="w-full bg-gradient-to-r from-blue-600 to-gray-900 text-white py-3 rounded-lg font-semibold flex items-center justify-center hover:from-blue-700 hover:to-purple-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed space-x-2 mt-6"
+            className="w-full bg-gradient-to-r from-blue-600 to-gray-900 text-white py-3 rounded-lg font-semibold flex items-center justify-center hover:from-blue-700 hover:to-blue-500 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed space-x-2 mt-6"
           >
             {status.loading ? (
               <>
