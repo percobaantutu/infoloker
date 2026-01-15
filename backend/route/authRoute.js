@@ -3,22 +3,33 @@ const { register, login, getMe, testEmail, forgotPassword, resetPassword, verify
   resendOtp, googleLogin  } = require("../controllers/authController");
 const { protect } = require("../middleware/authMiddleware");
 const upload = require("../middleware/uploadMiddleware");
+const { authLimiter } = require("../middleware/rateLimitMiddleware");
 
 const router = express.Router();
 
+router.post("/register", authLimiter, upload.single("avatar"), register);
+router.post("/login", authLimiter, login);
+router.post("/google", authLimiter, googleLogin);
+router.post("/forgot-password", authLimiter, forgotPassword);
+router.put("/reset-password/:resetToken", authLimiter, resetPassword);
+router.post("/verify-email", authLimiter, verifyEmail);
+router.post("/resend-otp", authLimiter, resendOtp);
+
+router.get("/me", protect, getMe); 
+
 router.post("/register", upload.single("avatar"), register);
 
-// Public routes (no authentication needed)
+
 router.post("/login", login);
 
-// Protected route (authentication required)
+
 router.get("/me", protect, getMe);
 
 router.post("/upload-image", upload.single("image"), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: "No file uploaded" });
   }
-  // Cloudinary returns the URL in req.file.path
+  
   res.status(200).json({ imageUrl: req.file.path });
 });
 

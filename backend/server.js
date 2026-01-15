@@ -1,8 +1,9 @@
-require("dotenv").config(); // Load environment variables from .env file
+require("dotenv").config(); 
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const connectDB = require("./config/db");
+const { globalLimiter } = require("./middleware/rateLimitMiddleware");
 
 const authRoute = require("./route/authRoute");
 const userRoute = require("./route/userRoute");
@@ -13,25 +14,26 @@ const analyticsRoute = require("./route/analyticsRoute");
 const notificationRoute = require("./route/notificationRoute");
 const app = express();
 
-// Middleware to handle CORS
+
 app.use(
   cors({
-    origin: "*", // Allows requests from any domain (for development)
+    origin: "*", 
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-// Connect Database
-connectDB(); // Assumed function call
 
-// Middleware to parse JSON in request body
+connectDB(); 
+
+
 app.use(express.json());
 
-// Routes
-app.use("/api/auth", authRoute); // Attaches authRoutes to the base URL /api/auth
+app.use("/api", globalLimiter);
 
-// serve uploads folder
+
+app.use("/api/auth", authRoute); 
+
 app.use("/uploads", express.static(path.join(__dirname, "uploads"), {}));
 
 app.use("/api/users", userRoute);
@@ -40,7 +42,7 @@ app.use("/api/applications", applicationRoute);
 app.use("/api/save-jobs", savedJobRoute);
 app.use("/api/analytics", analyticsRoute);
 app.use("/api/notifications", notificationRoute);
-// Start Server
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
