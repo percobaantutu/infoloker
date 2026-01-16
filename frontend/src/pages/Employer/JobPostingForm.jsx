@@ -8,6 +8,7 @@ import TextAreaField from "../../components/Input/TextAreaField";
 import JobPostingPreview from "../../components/layout/JobPostingPreview";
 import { formatRupiah } from "../../utils/formatRupiah";
 import { useJobForm } from "../../hooks/useJobForm";
+import LocationSelect from "../../components/Input/LocationSelect";
 
 const JobPostingForm = () => {
   const { formData, errors, isSubmitting, handleInputChange, handleSubmit, isFormValid, isLoading, isEditMode } = useJobForm();
@@ -59,7 +60,12 @@ const JobPostingForm = () => {
               />
 
               <div className="flex-1">
-                <InputField label="Location" id="location" placeholder="e.g., New York, NY" value={formData.location} onChange={(e) => handleInputChange("location", e.target.value)} error={errors.location} required icon={MapPin} />
+                <LocationSelect
+                  value={formData.location}
+                  onChange={(value) => handleInputChange("location", value)}
+                  error={errors.location}
+                  placeholder="e.g., Jakarta, Bandung, Surabaya"
+                />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

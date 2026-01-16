@@ -1,6 +1,7 @@
 import React from "react";
 import { CATEGORIES, JOB_TYPES } from "../../utils/data";
 import { formatRupiah } from "../../utils/formatRupiah";
+import LocationSelect from "../Input/LocationSelect";
 
 const FilterSidebar = ({ filters, setFilters, onCloseMobile }) => {
   
@@ -28,6 +29,13 @@ const FilterSidebar = ({ filters, setFilters, onCloseMobile }) => {
             Clear All
         </button>
       </div>
+
+      <LocationSelect
+  value={filters.location}
+  onChange={(value) => setFilters({ ...filters, location: value })}
+  placeholder="Search city..."
+  className="mb-8"
+/>
 
       {/* Salary Range (New Requirement) */}
       <div className="mb-8">
