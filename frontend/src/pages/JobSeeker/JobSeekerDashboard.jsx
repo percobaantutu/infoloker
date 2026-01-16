@@ -7,10 +7,14 @@ import FilterSidebar from "../../components/find-jobs/FilterSidebar";
 import JobCard from "../../components/cards/JobCard";
 import LoadingSpinner from "../../components/layout/LoadingSpinner";
 import { useFindJobs } from "../../hooks/useFindJobs";
+import { useAuth } from "../../context/AuthContext";
 
 const JobSeekerDashboard = () => {
+    const { user} = useAuth();
   const { jobs, isLoading, error, filters, setFilters, toggleSaveJob } = useFindJobs();
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+
+   
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">

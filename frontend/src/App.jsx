@@ -23,6 +23,7 @@ import EditUserProfile from "./pages/JobSeeker/EditUserProfile";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import ResetPassword from "./pages/Auth/ResetPassword";
 import VerifyEmail from "./pages/Auth/VerifyEmail";
+import PublicJobRoute from "./routes/PublicJobRoute";
 function App() {
   return (
     <AuthProvider>
@@ -33,13 +34,28 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/find-jobs" element={<JobSeekerDashboard />} />
-          <Route path="/job/:jobId" element={<JobDetails />} />
-          <Route path="/saved-jobs" element={<SavedJobs />} />
-          <Route path="/profile" element={<UserProfile />} />
+         
+        
           <Route path="/forgot-password" element={<ForgotPassword />} />
 <Route path="/reset-password/:token" element={<ResetPassword />} />
 <Route path="/verify-email" element={<VerifyEmail />} />
+
+<Route 
+            path="/find-jobs" 
+            element={
+              <PublicJobRoute>
+                <JobSeekerDashboard />
+              </PublicJobRoute>
+            } 
+          />
+          <Route 
+            path="/job/:jobId" 
+            element={
+              <PublicJobRoute>
+                <JobDetails />
+              </PublicJobRoute>
+            } 
+          />
 
           {/* Protected Routes */}
           <Route element={<ProtectedRoute requiredRole="employer" />}>

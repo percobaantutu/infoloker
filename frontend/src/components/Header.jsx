@@ -30,9 +30,11 @@ const Header = () => {
 
           {/* 2. Desktop Navigation (Right) */}
           <div className="hidden md:flex items-center space-x-6">
-            <Link to="/find-jobs" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">
-              Find Jobs
-            </Link>
+          {(!user || user.role !== "employer") && (
+    <Link to="/find-jobs" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">
+      Find Jobs
+    </Link>
+  )}
             
             {/* If logged in, show Profile Dropdown. If not, show Login/Signup */}
             {isAuthenticated ? (
@@ -92,7 +94,13 @@ const Header = () => {
               </div>
               
               {user.role === 'employer' ? (
+                <>
                  <Link to="/employer-dashboard" onClick={() => setMobileMenuOpen(false)} className="block text-gray-600 py-2">Dashboard</Link>
+                 <Link to="/company-profile" onClick={() => setMobileMenuOpen(false)} className="block text-gray-600 py-2">Company Profile</Link>
+                 <button onClick={handleLogout} className="w-full text-center py-2.5 text-sm text-red-600 hover:bg-red-50 flex items-center">
+                <LogOut className="w-4 h-4 mr-2" /> Sign Out
+              </button>
+              </>
               ) : (
                 <>
                   <Link to="/profile" onClick={() => setMobileMenuOpen(false)} className="block text-gray-600 py-2">My Profile</Link>
