@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import moment from "moment";
+import { Mail } from "lucide-react";
 import { 
   MapPin, 
   Briefcase, 
@@ -32,6 +33,23 @@ const JobDetails = () => {
     toggleSave,
     user 
   } = useJobDetails();
+
+
+
+  const handleEmailApply = () => {
+    if (!job?.company?.email) {
+      toast.error("Employer email not available");
+      return;
+    }
+
+    const subject = encodeURIComponent(`Application for ${job.title}`);
+    const body = encodeURIComponent(
+      `Dear Hiring Team at ${job.company.companyName || "the company"},\n\nI am writing to express my interest in the ${job.title} position found on Infoloker.\n\nPlease find my attached resume.\n\nBest regards,\n[Your Name]`
+    );
+
+    
+    window.location.href = `mailto:${job.company.email}?subject=${subject}&body=${body}`;
+  };
 
   if (loading) return <LoadingSpinner />;
 
@@ -180,6 +198,16 @@ const JobDetails = () => {
                       className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-200 transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
                     >
                       {isApplying ? "Applying..." : "Apply Now"}
+                    </button>
+                  )}
+
+                  {!hasApplied && !isOwner && (
+                    <button 
+                      onClick={handleEmailApply}
+                      className="w-full mt-3 py-3.5 bg-white border-2 border-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all flex items-center justify-center"
+                    >
+                      <Mail className="w-5 h-5 mr-2" />
+                      Apply via Email
                     </button>
                   )}
 
