@@ -1,22 +1,32 @@
 import React from "react";
 import { jobSeekerFeatures, employerFeatures } from "../utils/data";
+import { useTranslation } from "react-i18next";
 
 const Feature = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="feature-section py-20 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Everything You Need to
-            <span className="block bg-gradient-to-r from-blue-600 to-gray-900 bg-clip-text text-transparent">Succeed</span>
+            {/* Using the single key ensures grammar is correct across languages, 
+                rather than splitting "Everything You Need to" and "Succeed" manually */}
+            <span className="bg-gradient-to-r from-blue-600 to-gray-900 bg-clip-text text-transparent">
+              {t('landing.features.title')}
+            </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">Whether you're looking for your next opportunity or the perfect candidate, we have the tools and features to make it happen.</p>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            {t('landing.features.subtitle')}
+          </p>
         </div>
         <div className="grid md:grid-cols-2 gap-16 lg:gap-24">
-          {/* Job Seeker Setion */}
+          {/* Job Seeker Section */}
           <div>
             <div className="text-center mb-12">
-              <h3 className="text-3xl font-bold text-gray-900 mb-4">For Job Seekers</h3>
+              <h3 className="text-3xl font-bold text-gray-900 mb-4">
+                {t('landing.features.forJobSeekers')}
+              </h3>
               <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
             </div>
             <div className="space-y-8">
@@ -29,8 +39,9 @@ const Feature = () => {
 
                   {/* Text Content */}
                   <div>
-                    <h4 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h4>
-                    <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                    {/* Wrapped in t() so it looks for these strings in your translation.json */}
+                    <h4 className="text-xl font-semibold text-gray-900 mb-2">{t(feature.title)}</h4>
+                    <p className="text-gray-600 leading-relaxed">{t(feature.description)}</p>
                   </div>
                 </div>
               ))}
@@ -40,7 +51,9 @@ const Feature = () => {
           <div>
             <div>
               <div className="text-center mb-12">
-                <h3 className="text-3xl font-bold text-gray-900 mb-4">For Employers</h3>
+                <h3 className="text-3xl font-bold text-gray-900 mb-4">
+                  {t('landing.features.forEmployers')}
+                </h3>
                 <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-gray-900 mx-auto rounded-full"></div>
               </div>
             </div>
@@ -54,8 +67,8 @@ const Feature = () => {
 
                   {/* Text Content */}
                   <div>
-                    <h4 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h4>
-                    <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                    <h4 className="text-xl font-semibold text-gray-900 mb-2">{t(feature.title)}</h4>
+                    <p className="text-gray-600 leading-relaxed">{t(feature.description)}</p>
                   </div>
                 </div>
               ))}

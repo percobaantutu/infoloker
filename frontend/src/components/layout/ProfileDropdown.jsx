@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ChevronDown, User as UserIcon, LogOut, FileText, Heart, UserCircle, LayoutDashboard } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { useTranslation } from "react-i18next";
 
 const ProfileDropdown = () => {
   const { user, logout } = useAuth();
@@ -18,6 +19,8 @@ const ProfileDropdown = () => {
     setOpen(false);
     navigate(path);
   };
+
+     const { t } = useTranslation();
 
   if (!user) return null;
 
@@ -63,23 +66,23 @@ const ProfileDropdown = () => {
               {user.role === 'employer' ? (
                 <>
                   <button onClick={() => handleNavigate("/employer-dashboard")} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center">
-                    <LayoutDashboard className="w-4 h-4 mr-2" /> Dashboard
+                    <LayoutDashboard className="w-4 h-4 mr-2" /> {t('nav.dashboard')}
                   </button>
                   <button onClick={() => handleNavigate("/company-profile")} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center">
-                    <UserCircle className="w-4 h-4 mr-2" /> Company Profile
+                    <UserCircle className="w-4 h-4 mr-2" /> {t('nav.companyProfile')}
                   </button>
                 </>
               ) : (
                 /* JOB SEEKER LINKS */
                 <>
                   <button onClick={() => handleNavigate("/profile")} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center">
-                    <UserCircle className="w-4 h-4 mr-2" /> My Profile
+                    <UserCircle className="w-4 h-4 mr-2" /> {t('nav.profile')}
                   </button>
                   <button onClick={() => handleNavigate("/applications/my")} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center">
-                    <FileText className="w-4 h-4 mr-2" /> My Applications
+                    <FileText className="w-4 h-4 mr-2" /> {t('nav.myApplications')}
                   </button>
                   <button onClick={() => handleNavigate("/saved-jobs")} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center">
-                    <Heart className="w-4 h-4 mr-2" /> Saved Jobs
+                    <Heart className="w-4 h-4 mr-2" /> {t('nav.savedJobs')}
                   </button>
                 </>
               )}
@@ -87,7 +90,7 @@ const ProfileDropdown = () => {
 
             <div className="border-t border-gray-50 mt-1 pt-1">
               <button onClick={handleLogout} className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center">
-                <LogOut className="w-4 h-4 mr-2" /> Sign Out
+                <LogOut className="w-4 h-4 mr-2" /> {t('nav.logout')}
               </button>
             </div>
           </div>

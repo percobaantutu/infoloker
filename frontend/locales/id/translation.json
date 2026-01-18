@@ -1,0 +1,309 @@
+{
+  "common": {
+    "appName": "infoloker",
+    "loading": "Memuat...",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "delete": "Hapus",
+    "edit": "Ubah",
+    "submit": "Kirim",
+    "search": "Cari",
+    "filter": "Filter",
+    "apply": "Lamar",
+    "back": "Kembali",
+    "next": "Selanjutnya",
+    "previous": "Sebelumnya",
+    "viewAll": "Lihat Semua",
+    "noData": "Tidak ada data",
+    "error": "Terjadi kesalahan",
+    "success": "Berhasil!",
+    "required": "Wajib diisi"
+  },
+  
+  "nav": {
+    "home": "Beranda",
+    "findJobs": "Cari Lowongan",
+    "login": "Masuk",
+    "signup": "Daftar",
+    "logout": "Keluar",
+    "profile": "Profil Saya",
+    "dashboard": "Dasbor",
+    "myApplications": "Lamaran Saya",
+    "savedJobs": "Lowongan Tersimpan"
+  },
+  
+  "auth": {
+    "welcomeBack": "Selamat Datang Kembali",
+    "createAccount": "Buat Akun",
+    "email": "Alamat Email",
+    "password": "Kata Sandi",
+    "fullName": "Nama Lengkap",
+    "forgotPassword": "Lupa kata sandi?",
+    "accountCreated": "Akun berhasil dibuat!",
+  "accountCreatedDesc": "Selamat datang di infoloker! Akun Anda telah berhasil dibuat",
+  "redirectingDashboard": "Mengalihkan ke dasbor Anda...",
+  "signupSubtitle": "Bergabunglah dengan ribuan profesional yang menemukan pekerjaan impian mereka",
+  "enterFullName": "Masukkan nama lengkap Anda",
+  "createPasswordPlaceholder": "Buat kata sandi yang kuat",
+  "profilePictureOptional": "Foto Profil (opsional)",
+  "fileConstraints": "JPG, PNG hingga 5MB",
+  "creatingAccount": "Membuat Akun...",
+  "googleSignupFailed": "Daftar Google Gagal",
+    "dontHaveAccount": "Belum punya akun?",
+    "alreadyHaveAccount": "Sudah punya akun?",
+    "signInHere": "Masuk di sini",
+    "createOne": "Buat di sini",
+    "loginSuccess": "Login berhasil!",
+    "registerSuccess": "Akun berhasil dibuat!",
+    "verifyEmail": "Verifikasi Email Anda",
+    "verifyEmailDesc": "Kami telah mengirim kode 6 digit ke {{email}}. Masukkan kode di bawah untuk mengonfirmasi akun Anda.",
+    "resendCode": "Kirim Ulang Kode",
+    "verifyAccount": "Verifikasi Akun",
+    "role": {
+      "label": "Saya adalah",
+      "jobseeker": "Pencari Kerja",
+      "employer": "Perusahaan",
+      "jobseekerDesc": "Mencari peluang",
+      "employerDesc": "Merekrut talenta"
+    },
+    "subtitle": "Masuk ke akun infoloker Anda",
+  "enterEmail": "Masukkan email Anda",
+  "enterPassword": "Masukkan kata sandi Anda",
+  "orContinueWith": "Atau lanjutkan dengan",
+  "googleLoginFailed": "Login Google Gagal",
+  "loginRedirect": "Anda telah berhasil masuk.",
+  "redirecting": "Mengalihkan...",
+  "signingIn": "Sedang Masuk..."
+  },
+  
+  "job": {
+    "title": "Judul Pekerjaan",
+    "description": "Deskripsi Pekerjaan",
+    "requirements": "Persyaratan",
+    "location": "Lokasi",
+    "category": "Kategori",
+    "type": "Tipe Pekerjaan",
+    "unknownCompany": "Perusahaan Tidak Diketahui",
+    "salary": "Gaji",
+    "salaryRange": "Rentang Gaji",
+    "salaryMin": "Gaji Minimum",
+    "salaryMax": "Gaji Maksimum",
+    "company": "Perusahaan",
+    "postedDate": "Tanggal Posting",
+    "deadline": "Batas Waktu",
+    "applicants": "Pelamar",
+    "status": "Status",
+    "notFound": "Lowongan Tidak Ditemukan",
+  "notFoundDesc": "Lowongan ini mungkin sudah dihapus atau ditutup.",
+  "confidentialCompany": "Perusahaan Rahasia",
+  "interestedTitle": "Tertarik dengan lowongan ini?",
+  "interestedDesc": "Baca persyaratan dengan teliti sebelum melamar.",
+  "youPostedThis": "Anda memposting lowongan ini",
+  "applyViaEmail": "Lamar via Email",
+  "postedTime": "Diposting {{time}}",
+  "overview": "Ringkasan Pekerjaan",
+  "hiringCompany": "Perusahaan Perekrut",
+  "emailNotAvailable": "Email perusahaan tidak tersedia",
+  "emailSubject": "Lamaran untuk {{title}}",
+  "theCompany": "perusahaan ini",
+    "active": "Aktif",
+    "closed": "Ditutup",
+    "apply": "Lamar Sekarang",
+    "applied": "Sudah Dilamar",
+    "save": "Simpan Lowongan",
+    "saved": "Tersimpan",
+    "unsave": "Hapus Simpanan",
+    "viewDetails": "Lihat Detail",
+    "noJobsFound": "Tidak ada lowongan ditemukan",
+    "totalJobs": "Total Lowongan",
+    "recentJobs": "Lowongan Terbaru",
+    "popularJobs": "Lowongan Popular",
+    "types": {
+      "remote": "Remote",
+      "fullTime": "Full-Time",
+      "partTime": "Part-Time",
+      "contract": "Kontrak",
+      "internship": "Magang"
+    }
+  },
+
+  "dashboard": {
+  "title": "Temukan Pekerjaan Impian Anda",
+  "subtitle": "Telusuri ribuan lowongan pekerjaan untuk menemukan yang paling cocok.",
+  "showing": "Menampilkan",
+  "jobs": "lowongan",
+  "noJobsDesc": "Coba sesuaikan pencarian atau filter Anda."
+},
+
+"categories": {
+    "Engineering": "Teknik",
+    "Design": "Desain",
+    "Marketing": "Pemasaran",
+    "Sales": "Penjualan",
+    "IT & Software": "TI & Perangkat Lunak",
+    "Customer-service": "Layanan Pelanggan",
+    "Product": "Produk",
+    "Operations": "Operasional",
+    "Finance": "Keuangan",
+    "HR": "SDM",
+    "Other": "Lainnya"
+  },
+  
+  "application": {
+    "myApplications": "Lamaran Saya",
+    "applicationStatus": "Status Lamaran",
+    "appliedDate": "Tanggal Melamar",
+    "resume": "Resume / CV",
+    "uploadResume": "Unggah Resume",
+    "viewResume": "Lihat Resume",
+    "noResume": "Belum ada resume",
+    "resumeRequired": "Anda perlu resume untuk melamar",
+    "noApplications": "Belum ada lamaran",
+    "trackApplications": "Lacak status lamaran pekerjaan Anda.",
+    "statuses": {
+      "applied": "Dilamar",
+      "inReview": "Sedang Ditinjau",
+      "interview": "Interview",
+      "accepted": "Diterima",
+      "rejected": "Ditolak"
+    }
+  },
+  
+  "employer": {
+    "dashboard": "Dasbor",
+    "postJob": "Posting Lowongan",
+    "manageJobs": "Kelola Lowongan",
+    "allApplicants": "Semua Pelamar",
+    "companyProfile": "Profil Perusahaan",
+    "companyName": "Nama Perusahaan",
+    "companyDescription": "Deskripsi Perusahaan",
+    "companyLogo": "Logo Perusahaan",
+    "totalActiveJobs": "Total Lowongan Aktif",
+    "totalApplications": "Total Lamaran",
+    "hiredCandidates": "Kandidat Diterima",
+    "recentApplications": "Lamaran Terbaru",
+    "noJobsPosted": "Belum ada lowongan diposting",
+    "postFirstJob": "Posting Lowongan Pertama Anda",
+    "quickActions": "Aksi Cepat",
+    "hiringCompany": "Perusahaan Perekrut",
+  "noDescription": "Tidak ada deskripsi tersedia untuk perusahaan ini."
+  },
+  
+  "profile": {
+    "editProfile": "Ubah Profil",
+    "profilePicture": "Foto Profil",
+    "accountDetails": "Detail Akun",
+    "personalDetails": "Detail Pribadi",
+    "accountName": "Nama Akun",
+    "joinedDate": "Bergabung {{date}}",
+    "saveChanges": "Simpan Perubahan",
+    "uploadPhoto": "Unggah Foto",
+    "chooseImage": "Pilih Gambar"
+  },
+  
+  "filter": {
+    "filters": "Filter",
+    "clearAll": "Hapus Semua",
+    "showResults": "Tampilkan Hasil",
+    "salaryRange": "Rentang Gaji (IDR)",
+    "jobType": "Tipe Pekerjaan",
+    "categories": "Kategori",
+    "location": "Lokasi",
+    "searchPlaceholder": "Judul pekerjaan, kata kunci, atau perusahaan",
+    "locationPlaceholder": "Kota, provinsi, atau kode pos"
+  },
+  
+  "landing": {
+    "hero": {
+      "title": "Temukan Pekerjaan Impian Anda dengan",
+      "subtitle": "Bergabunglah dengan ribuan pencari kerja dan perusahaan yang terhubung setiap hari. Temukan kecocokan sempurna untuk tujuan karir Anda.",
+      "findJobs": "Cari Lowongan Sekarang",
+      "postJob": "Posting Lowongan"
+    },
+    "features": {
+      "title": "Semua yang Anda Butuhkan untuk Sukses",
+      "subtitle": "Baik Anda mencari peluang berikutnya atau kandidat sempurna, kami memiliki alat dan fitur untuk mewujudkannya.",
+      "forJobSeekers": "Untuk Pencari Kerja",
+      "forEmployers": "Untuk Perusahaan",
+      "smartMatch": {
+    "title": "Pencocokan Pekerjaan Cerdas",
+    "desc": "Algoritma berbasis AI mencocokkan Anda dengan peluang relevan berdasarkan keahlian dan preferensi Anda."
+  },
+  "resumeBuilder": {
+    "title": "Pembuat Resume",
+    "desc": "Buat resume profesional dengan pembuat intuitif kami dan template yang dirancang oleh para ahli."
+  },
+  "directComm": {
+    "title": "Komunikasi Langsung",
+    "desc": "Terhubung langsung dengan manajer perekrutan dan perekrut melalui platform pesan aman kami."
+  },
+  "skillAssess": {
+    "title": "Penilaian Keahlian",
+    "desc": "Tunjukkan kemampuan Anda dengan tes keahlian terverifikasi dan dapatkan lencana yang dipercaya perusahaan."
+  },
+  "talentPool": {
+    "title": "Akses Talent Pool",
+    "desc": "Akses database kandidat pra-seleksi kami yang luas dan temukan kecocokan sempurna untuk tim Anda."
+  },
+  "analytics": {
+    "title": "Dasbor Analitik",
+    "desc": "Lacak kinerja perekrutan Anda dengan analitik terperinci dan wawasan tentang keterlibatan kandidat."
+  },
+  "verified": {
+    "title": "Kandidat Terverifikasi",
+    "desc": "Semua kandidat menjalani verifikasi latar belakang untuk memastikan Anda mempekerjakan profesional terpercaya."
+  },
+  "quickHire": {
+    "title": "Perekrutan Cepat",
+    "desc": "Proses perekrutan yang efisien mengurangi waktu perekrutan hingga 60% dengan alat penyaringan otomatis."
+  }
+    },
+    "analytics": {
+      "title": "Analitik Platform",
+      "subtitle": "Wawasan real-time dan hasil berbasis data yang menampilkan kekuatan platform kami.",
+      "activeUsers": "Pengguna Aktif",
+      "jobsPosted": "Lowongan Diposting",
+      "successfulHires": "Perekrutan Sukses",
+      "matchRate": "Tingkat Kecocokan"
+    }
+  },
+  
+  "notification": {
+    "notifications": "Notifikasi",
+    "noNotifications": "Belum ada notifikasi",
+    "markAllRead": "Tandai semua telah dibaca",
+    "newApplicant": "Pelamar baru: {{name}} untuk {{job}}",
+    "statusUpdate": "Update Status: Lamaran Anda untuk {{job}} sekarang {{status}}"
+  },
+  
+  "validation": {
+    "required": "{{field}} wajib diisi",
+    "emailInvalid": "Masukkan alamat email yang valid",
+    "passwordMin": "Kata sandi minimal 8 karakter",
+    "passwordRequirements": "Kata sandi harus berisi huruf besar, kecil, dan angka",
+    "salaryInvalid": "Gaji minimum harus lebih kecil dari gaji maksimum",
+    "fileSize": "File harus kurang dari 5MB",
+    "fileType": "Hanya file JPG, PNG, atau PDF yang diperbolehkan"
+  },
+  
+  "message": {
+    "loginSuccess": "Login berhasil!",
+    "logoutSuccess": "Berhasil keluar",
+    "profileUpdated": "Profil berhasil diperbarui!",
+    "jobPosted": "Lowongan berhasil diposting!",
+    "jobUpdated": "Lowongan berhasil diperbarui!",
+    "jobDeleted": "Lowongan berhasil dihapus",
+    "applicationSubmitted": "Lamaran berhasil dikirim!",
+    "resumeRequired": "Silakan unggah resume Anda di profil sebelum melamar.",
+    "alreadyApplied": "Anda sudah melamar pekerjaan ini",
+    "emailSent": "Email terkirim ke inbox Anda",
+    "verificationSuccess": "Email berhasil diverifikasi!",
+    "statusUpdated": "Status berhasil diperbarui"
+  },
+  
+  "footer": {
+    "tagline": "Menghubungkan profesional berbakat dengan perusahaan inovatif di seluruh dunia. Kesuksesan karir Anda adalah misi kami.",
+    "copyright": "© {{year}} Restu Muhammad.",
+    "madeWith": "Dibuat dengan ❤️ Happy Coding"
+  }
+}

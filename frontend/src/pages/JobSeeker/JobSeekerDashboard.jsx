@@ -8,13 +8,13 @@ import JobCard from "../../components/cards/JobCard";
 import LoadingSpinner from "../../components/layout/LoadingSpinner";
 import { useFindJobs } from "../../hooks/useFindJobs";
 import { useAuth } from "../../context/AuthContext";
+import { useTranslation } from "react-i18next";
 
 const JobSeekerDashboard = () => {
-    const { user} = useAuth();
+  const { user } = useAuth();
   const { jobs, isLoading, error, filters, setFilters, toggleSaveJob } = useFindJobs();
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
-
-   
+  const { t } = useTranslation();
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -24,8 +24,8 @@ const JobSeekerDashboard = () => {
         
         {/* Header Section */}
         <div className="mb-8">
-            <h1 className="text-2xl font-bold text-gray-900">Find Your Dream Job</h1>
-            <p className="text-gray-500 mt-1">Browse thousands of job openings to find the perfect fit.</p>
+            <h1 className="text-2xl font-bold text-gray-900">{t('dashboard.title')}</h1>
+            <p className="text-gray-500 mt-1">{t('dashboard.subtitle')}</p>
         </div>
 
         {/* Search Bar */}
@@ -38,7 +38,7 @@ const JobSeekerDashboard = () => {
                 className="w-full flex items-center justify-center gap-2 bg-white border border-gray-200 py-3 rounded-xl text-gray-700 font-medium shadow-sm active:bg-gray-50"
             >
                 <Filter className="w-4 h-4" />
-                Filters
+                {t('filter.filters')}
             </button>
         </div>
 
@@ -53,7 +53,7 @@ const JobSeekerDashboard = () => {
             <div className="lg:col-span-3 space-y-6">
                 <div className="flex items-center justify-between">
                     <p className="text-sm text-gray-500 font-medium">
-                        Showing <span className="font-bold text-gray-900">{jobs.length}</span> jobs
+                        {t('dashboard.showing')} <span className="font-bold text-gray-900">{jobs.length}</span> {t('dashboard.jobs')}
                     </p>
                 </div>
 
@@ -70,8 +70,8 @@ const JobSeekerDashboard = () => {
                         <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
                             <Search className="w-8 h-8 text-gray-400" />
                         </div>
-                        <h3 className="text-lg font-medium text-gray-900">No jobs found</h3>
-                        <p className="text-gray-500 mt-1">Try adjusting your search or filters.</p>
+                        <h3 className="text-lg font-medium text-gray-900">{t('job.noJobsFound')}</h3>
+                        <p className="text-gray-500 mt-1">{t('dashboard.noJobsDesc')}</p>
                     </div>
                 )}
             </div>
@@ -89,7 +89,7 @@ const JobSeekerDashboard = () => {
             {/* Slide-up Drawer */}
             <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl max-h-[85vh] overflow-y-auto animate-in slide-in-from-bottom-10">
                 <div className="p-4 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white z-10">
-                    <h3 className="font-bold text-lg">Filters</h3>
+                    <h3 className="font-bold text-lg">{t('filter.filters')}</h3>
                     <button onClick={() => setIsMobileFilterOpen(false)} className="p-2 hover:bg-gray-100 rounded-full">
                         <X className="w-5 h-5" />
                     </button>

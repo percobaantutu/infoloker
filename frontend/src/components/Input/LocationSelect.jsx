@@ -1,32 +1,35 @@
 import { useState, useEffect, useRef } from "react";
 import { MapPin, ChevronDown, X, Search } from "lucide-react";
 import { searchCities, MAJOR_CITIES } from "../../utils/indonesiaCities";
+import { useTranslation } from "react-i18next";
 
 const LocationSelect = ({ 
   value, 
   onChange, 
   error, 
-  placeholder = "Search city or type location...",
-  label = "Location",
+  placeholder, 
+  label,       
   required = false,
   showMajorCities = true
 }) => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState(value || "");
   const [filteredCities, setFilteredCities] = useState([]);
   const dropdownRef = useRef(null);
 
-  
+
+  const finalPlaceholder = placeholder || t('location.searchPlaceholder');
+  const finalLabel = label === undefined ? t('job.location') : label;
+
   useEffect(() => {
     if (value !== search) {
       setSearch(value || "");
     }
   }, [value]);
 
- 
   useEffect(() => {
     if (search.trim() === "") {
-   
       setFilteredCities(showMajorCities ? MAJOR_CITIES : []);
     } else {
       const results = searchCities(search, 50);
@@ -66,9 +69,9 @@ const LocationSelect = ({
 
   return (
     <div className="space-y-2" ref={dropdownRef}>
-      {label && (
+      {finalLabel && (
         <label className="block text-sm font-medium text-gray-700">
-          {label}
+          {finalLabel}
           {required && <span className="text-red-500 ml-1">*</span>}
         </label>
       )}
@@ -82,7 +85,7 @@ const LocationSelect = ({
             value={search}
             onChange={handleInputChange}
             onFocus={() => setIsOpen(true)}
-            placeholder={placeholder}
+            placeholder={finalPlaceholder}
             className={`w-full pl-10 pr-20 py-2.5 border rounded-lg text-base transition-colors bg-white ${
               error 
                 ? "border-red-300 focus:border-red-500 focus:ring-red-500" 
@@ -115,7 +118,9 @@ const LocationSelect = ({
             {/* Header */}
             {!search && showMajorCities && (
               <div className="px-4 py-2 bg-gray-50 border-b border-gray-100">
-                <p className="text-xs font-medium text-gray-500 uppercase">Popular Cities</p>
+                <p className="text-xs font-medium text-gray-500 uppercase">
+                  {t('location.popularCities')}
+                </p>
               </div>
             )}
             
@@ -146,9 +151,11 @@ const LocationSelect = ({
                   <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
                     <Search className="w-6 h-6 text-gray-300" />
                   </div>
-                  <p className="text-sm font-medium text-gray-900 mb-1">No cities found</p>
+                  <p className="text-sm font-medium text-gray-900 mb-1">
+                    {t('location.noCitiesFound')}
+                  </p>
                   <p className="text-xs text-gray-500">
-                    Try searching with a different keyword
+                    {t('location.tryDifferentKeyword')}
                   </p>
                 </div>
               )}
@@ -158,7 +165,7 @@ const LocationSelect = ({
             {filteredCities.length > 0 && search && (
               <div className="px-4 py-2 bg-gray-50 border-t border-gray-100">
                 <p className="text-xs text-gray-500">
-                  Showing {filteredCities.length} result{filteredCities.length !== 1 ? 's' : ''}
+                  {t('location.showingResults', { count: filteredCities.length })}
                 </p>
               </div>
             )}
@@ -177,7 +184,7 @@ const LocationSelect = ({
       {/* Helper Text */}
       {!error && !search && (
         <p className="text-xs text-gray-500">
-          Type to search or select from popular cities
+          {t('location.typeToSearch')}
         </p>
       )}
     </div>

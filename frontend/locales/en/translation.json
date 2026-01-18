@@ -1,0 +1,309 @@
+{
+  "common": {
+    "appName": "infoloker",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "submit": "Submit",
+    "search": "Search",
+    "filter": "Filter",
+    "apply": "Apply",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "viewAll": "View All",
+    "noData": "No data available",
+    "error": "Something went wrong",
+    "success": "Success!",
+    "required": "Required"
+  },
+  
+  "nav": {
+    "home": "Home",
+    "findJobs": "Find Jobs",
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Sign Out",
+    "profile": "My Profile",
+    "dashboard": "Dashboard",
+    "myApplications": "My Applications",
+    "savedJobs": "Saved Jobs"
+  },
+  
+  "auth": {
+    "welcomeBack": "Welcome Back",
+    "createAccount": "Create Account",
+    "email": "Email Address",
+    "password": "Password",
+    "fullName": "Full Name",
+    "forgotPassword": "Forgot password?",
+    "dontHaveAccount": "Don't have an account?",
+    "accountCreated": "Account created!",
+  "accountCreatedDesc": "Welcome to infoloker! Your account has been successfully created",
+  "redirectingDashboard": "Redirecting to your dashboard...",
+  "signupSubtitle": "Join thousands of professionals finding their dream jobs",
+  "enterFullName": "Enter your full name",
+  "createPasswordPlaceholder": "Create a strong password",
+  "profilePictureOptional": "Profile Picture (optional)",
+  "fileConstraints": "JPG, PNG up to 5MB",
+  "creatingAccount": "Creating Account...",
+  "googleSignupFailed": "Google Signup Failed",
+    "alreadyHaveAccount": "Already have an account?",
+    "signInHere": "Sign in here",
+    "createOne": "Create one here",
+    "loginSuccess": "Login successful!",
+    "registerSuccess": "Account created successfully!",
+    "verifyEmail": "Verify Your Email",
+    "verifyEmailDesc": "We've sent a 6-digit code to {{email}}. Enter it below to confirm your account.",
+    "resendCode": "Resend Code",
+    "verifyAccount": "Verify Account",
+    "role": {
+      "label": "I am a",
+      "jobseeker": "Job Seeker",
+      "employer": "Employer",
+      "jobseekerDesc": "Looking for opportunities",
+      "employerDesc": "Hiring talent"
+    },
+    "subtitle": "Sign in to your infoloker account",
+  "enterEmail": "Enter your email",
+  "enterPassword": "Enter your password",
+  "orContinueWith": "Or continue with",
+  "googleLoginFailed": "Google Login Failed",
+  "loginRedirect": "You have been successfully logged in.",
+  "redirecting": "Redirecting...",
+  "signingIn": "Signing In..."
+  },
+  
+  "job": {
+    "title": "Job Title",
+    "description": "Job Description",
+    "requirements": "Requirements",
+    "location": "Location",
+    "category": "Category",
+    "unknownCompany": "Unknown Company",
+    "type": "Job Type",
+    "salary": "Salary",
+    "salaryRange": "Salary Range",
+    "salaryMin": "Minimum Salary",
+    "salaryMax": "Maximum Salary",
+    "company": "Company",
+    "postedDate": "Posted Date",
+    "deadline": "Deadline",
+    "applicants": "Applicants",
+    "status": "Status",
+    "active": "Active",
+    "closed": "Closed",
+    "apply": "Apply Now",
+    "applied": "Applied",
+    "save": "Save Job",
+    "saved": "Saved",
+    "unsave": "Unsave",
+    "notFound": "Job Not Found",
+  "notFoundDesc": "This job posting may have been removed or closed.",
+  "confidentialCompany": "Confidential Company",
+  "interestedTitle": "Interested in this job?",
+  "interestedDesc": "Review the requirements carefully before applying.",
+  "youPostedThis": "You posted this job",
+  "applyViaEmail": "Apply via Email",
+  "postedTime": "Posted {{time}}",
+  "overview": "Job Overview",
+  "hiringCompany": "Hiring Company",
+  "emailNotAvailable": "Employer email not available",
+  "emailSubject": "Application for {{title}}",
+  "theCompany": "the company",
+    "viewDetails": "View Details",
+    "noJobsFound": "No jobs found",
+    "totalJobs": "Total Jobs",
+    "recentJobs": "Recent Jobs",
+    "popularJobs": "Popular Jobs",
+    "types": {
+      "remote": "Remote",
+      "fullTime": "Full-Time",
+      "partTime": "Part-Time",
+      "contract": "Contract",
+      "internship": "Internship"
+    }
+  },
+  
+  "application": {
+    "myApplications": "My Applications",
+    "applicationStatus": "Application Status",
+    "appliedDate": "Applied Date",
+    "resume": "Resume / CV",
+    "uploadResume": "Upload Resume",
+    "viewResume": "View Resume",
+    "noResume": "No resume uploaded",
+    "resumeRequired": "You need a resume to apply",
+    "noApplications": "No applications yet",
+    "trackApplications": "Track the status of your job applications.",
+    "statuses": {
+      "applied": "Applied",
+      "inReview": "In Review",
+      "interview": "Interview",
+      "accepted": "Accepted",
+      "rejected": "Rejected"
+    }
+  },
+  
+  "employer": {
+    "dashboard": "Dashboard",
+    "postJob": "Post Job",
+    "manageJobs": "Manage Jobs",
+    "allApplicants": "All Applicants",
+    "companyProfile": "Company Profile",
+    "companyName": "Company Name",
+    "companyDescription": "Company Description",
+    "companyLogo": "Company Logo",
+    "totalActiveJobs": "Total Active Jobs",
+    "totalApplications": "Total Applications",
+    "hiredCandidates": "Hired Candidates",
+    "recentApplications": "Recent Applications",
+    "noJobsPosted": "No jobs posted yet",
+    "postFirstJob": "Post Your First Job",
+    "quickActions": "Quick Actions",
+    "hiringCompany": "Hiring Company",
+  "noDescription": "No description available for this company."
+  },
+  
+  "profile": {
+    "editProfile": "Edit Profile",
+    "profilePicture": "Profile Picture",
+    "accountDetails": "Account Details",
+    "personalDetails": "Personal Details",
+    "accountName": "Account Name",
+    "joinedDate": "Joined {{date}}",
+    "saveChanges": "Save Changes",
+    "uploadPhoto": "Upload Photo",
+    "chooseImage": "Choose Image"
+  },
+
+  "categories": {
+    "Engineering": "Engineering",
+    "Design": "Design",
+    "Marketing": "Marketing",
+    "Sales": "Sales",
+    "IT & Software": "IT & Software",
+    "Customer-service": "Customer Service",
+    "Product": "Product",
+    "Operations": "Operations",
+    "Finance": "Finance",
+    "HR": "Human Resources",
+    "Other": "Other"
+  },
+
+  "dashboard": {
+  "title": "Find Your Dream Job",
+  "subtitle": "Browse thousands of job openings to find the perfect fit.",
+  "showing": "Showing",
+  "jobs": "jobs",
+  "noJobsDesc": "Try adjusting your search or filters."
+},
+  
+  "filter": {
+    "filters": "Filters",
+    "clearAll": "Clear All",
+    "showResults": "Show Results",
+    "salaryRange": "Salary Range (IDR)",
+    "jobType": "Job Type",
+    "categories": "Categories",
+    "location": "Location",
+    "searchPlaceholder": "Job title, keywords, or company",
+    "locationPlaceholder": "City, state, or zip code"
+  },
+  
+  "landing": {
+    "hero": {
+      "title": "Discover Your Dream Job with",
+      "subtitle": "Join thousands of job seekers and employers connecting daily. Find the perfect match for your career goals.",
+      "findJobs": "Find Jobs Now",
+      "postJob": "Post a Job"
+    },
+    "features": {
+      "title": "Everything You Need to Succeed",
+      "subtitle": "Whether you're looking for your next opportunity or the perfect candidate, we have the tools and features to make it happen.",
+      "forJobSeekers": "For Job Seekers",
+      "forEmployers": "For Employers",
+      "smartMatch": {
+    "title": "Smart Job Matching",
+    "desc": "AI-powered algorithm matches you with relevant opportunities based on your skills and preferences."
+  },
+  "resumeBuilder": {
+    "title": "Resume Builder",
+    "desc": "Create professional resumes with our intuitive builder and templates designed by experts."
+  },
+  "directComm": {
+    "title": "Direct Communication",
+    "desc": "Connect directly with hiring managers and recruiters through our secure messaging platform."
+  },
+  "skillAssess": {
+    "title": "Skill Assessment",
+    "desc": "Showcase your abilities with verified skill tests and earn badges that employers trust."
+  },
+  "talentPool": {
+    "title": "Talent Pool Access",
+    "desc": "Access our vast database of pre-screened candidates and find the perfect fit for your team."
+  },
+  "analytics": {
+    "title": "Analytics Dashboard",
+    "desc": "Track your hiring performance with detailed analytics and insights on candidate engagement."
+  },
+  "verified": {
+    "title": "Verified Candidates",
+    "desc": "All candidates undergo background verification to ensure you're hiring trustworthy professionals."
+  },
+  "quickHire": {
+    "title": "Quick Hiring",
+    "desc": "Streamlined hiring process reduces time-to-hire by 60% with automated screening tools."
+  }
+    },
+    "analytics": {
+      "title": "Platform Analytics",
+      "subtitle": "Real-time insights and data-driven results that showcase the power of our platform.",
+      "activeUsers": "Active Users",
+      "jobsPosted": "Jobs Posted",
+      "successfulHires": "Successful Hires",
+      "matchRate": "Match Rate"
+    }
+  },
+  
+  "notification": {
+    "notifications": "Notifications",
+    "noNotifications": "No notifications yet",
+    "markAllRead": "Mark all as read",
+    "newApplicant": "New applicant: {{name}} for {{job}}",
+    "statusUpdate": "Status Update: Your application for {{job}} is now {{status}}"
+  },
+  
+  "validation": {
+    "required": "{{field}} is required",
+    "emailInvalid": "Please enter a valid email address",
+    "passwordMin": "Password must be at least 8 characters",
+    "passwordRequirements": "Password must contain uppercase, lowercase, and number",
+    "salaryInvalid": "Minimum salary must be less than maximum salary",
+    "fileSize": "File must be less than 5MB",
+    "fileType": "Only JPG, PNG, or PDF files are allowed"
+  },
+  
+  "message": {
+    "loginSuccess": "Login successful!",
+    "logoutSuccess": "Logged out successfully",
+    "profileUpdated": "Profile updated successfully!",
+    "jobPosted": "Job posted successfully!",
+    "jobUpdated": "Job updated successfully!",
+    "jobDeleted": "Job deleted successfully",
+    "applicationSubmitted": "Application submitted successfully!",
+    "resumeRequired": "Please upload your resume in your profile before applying.",
+    "alreadyApplied": "You have already applied to this job",
+    "emailSent": "Email sent to your inbox",
+    "verificationSuccess": "Email verified successfully!",
+    "statusUpdated": "Status updated successfully"
+  },
+  
+  "footer": {
+    "tagline": "Connecting talented professionals with innovative companies worldwide. Your career success is our mission.",
+    "copyright": "© {{year}} Restu Muhammad.",
+    "madeWith": "Made with ❤️ Happy Coding"
+  }
+}

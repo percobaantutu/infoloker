@@ -3,58 +3,61 @@ import { Search, Users, FileText, MessageSquare, BarChart3, Shield, Clock, Award
 export const jobSeekerFeatures = [
   {
     icon: Search,
-    title: "Smart Job Matching",
-    description: "AI-powered algorithm matches you with relevant opportunities based on your skills and preferences.",
+    title: "landing.features.smartMatch.title",
+    description: "landing.features.smartMatch.desc",
   },
   {
     icon: FileText,
-    title: "Resume Builder",
-    description: "Create professional resumes with our intuitive builder and templates designed by experts.",
+    title: "landing.features.resumeBuilder.title",
+    description: "landing.features.resumeBuilder.desc",
   },
   {
     icon: MessageSquare,
-    title: "Direct Communication",
-    description: "Connect directly with hiring managers and recruiters through our secure messaging platform.",
+    title: "landing.features.directComm.title",
+    description: "landing.features.directComm.desc",
   },
   {
     icon: Award,
-    title: "Skill Assessment",
-    description: "Showcase your abilities with verified skill tests and earn badges that employers trust.",
+    title: "landing.features.skillAssess.title",
+    description: "landing.features.skillAssess.desc",
   },
 ];
 
 export const employerFeatures = [
   {
     icon: Users,
-    title: "Talent Pool Access",
-    description: "Access our vast database of pre-screened candidates and find the perfect fit for your team.",
+    title: "landing.features.talentPool.title",
+    description: "landing.features.talentPool.desc",
   },
   {
     icon: BarChart3,
-    title: "Analytics Dashboard",
-    description: "Track your hiring performance with detailed analytics and insights on candidate engagement.",
+    title: "landing.features.analytics.title",
+    description: "landing.features.analytics.desc",
   },
   {
     icon: Shield,
-    title: "Verified Candidates",
-    description: "All candidates undergo background verification to ensure you're hiring trustworthy professionals.",
+    title: "landing.features.verified.title",
+    description: "landing.features.verified.desc",
   },
   {
     icon: Clock,
-    title: "Quick Hiring",
-    description: "Streamlined hiring process reduces time-to-hire by 60% with automated screening tools.",
+    title: "landing.features.quickHire.title",
+    description: "landing.features.quickHire.desc",
   },
 ];
 
 // Navigation items configuration
+// Mapped to existing keys in your translation.json "nav" section
 export const NAVIGATION_MENU = [
-  { id: "employer-dashboard", name: "Dashboard", icon: LayoutDashboard },
-  { id: "post-job", name: "Post Job", icon: Plus },
-  { id: "manage-jobs", name: "Manage Jobs", icon: Briefcase },
-  { id: "company-profile", name: "Company Profile", icon: Building2 },
+  { id: "employer-dashboard", name: "nav.dashboard", icon: LayoutDashboard },
+  { id: "post-job", name: "employer.postJob", icon: Plus }, // Use employer specific key or generic nav
+  { id: "manage-jobs", name: "employer.manageJobs", icon: Briefcase },
+  { id: "company-profile", name: "employer.companyProfile", icon: Building2 },
 ];
 
-// Categories and job types
+// Categories
+// Note: You might want to add a "categories" section to your JSON later. 
+// For now, I kept them as is, but you can wrap them in t() in your component like: t(`categories.${category.value}`)
 export const CATEGORIES = [
   { value: "Engineering", label: "Engineering" },
   { value: "Design", label: "Design" },
@@ -69,12 +72,13 @@ export const CATEGORIES = [
   { value: "Other", label: "Other" },
 ];
 
+// Mapped to existing keys in your translation.json "job.types" section
 export const JOB_TYPES = [
-  { value: "Remote", label: "Remote" },
-  { value: "Full-Time", label: "Full-Time" },
-  { value: "Part-Time", label: "Part-Time" },
-  { value: "Contract", label: "Contract" },
-  { value: "Internship", label: "Internship" },
+  { value: "Remote", label: "job.types.remote" },
+  { value: "Full-Time", label: "job.types.fullTime" },
+  { value: "Part-Time", label: "job.types.partTime" },
+  { value: "Contract", label: "job.types.contract" },
+  { value: "Internship", label: "job.types.internship" },
 ];
 
 export const SALARY_RANGES = ["Less than Rp 3.000.000", "Rp 3.000.000 - Rp 7.000.000", "More than Rp 7.000.000"];

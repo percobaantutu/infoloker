@@ -1,6 +1,9 @@
 import { Search, MapPin } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const JobSearchHeader = ({ filters, setFilters }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mb-6">
       <div className="flex flex-col md:flex-row gap-4">
@@ -12,7 +15,8 @@ const JobSearchHeader = ({ filters, setFilters }) => {
           </div>
           <input
             type="text"
-            placeholder="Job title, keywords, or company"
+            // Using existing key from translation.json
+            placeholder={t('filter.searchPlaceholder')}
             className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
             value={filters.keyword}
             onChange={(e) => setFilters({ ...filters, keyword: e.target.value })}
@@ -26,16 +30,16 @@ const JobSearchHeader = ({ filters, setFilters }) => {
           </div>
           <input
             type="text"
-            placeholder="City, state, or zip code"
+            // Using existing key from translation.json
+            placeholder={t('filter.locationPlaceholder')}
             className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
             value={filters.location}
             onChange={(e) => setFilters({ ...filters, location: e.target.value })}
           />
         </div>
 
- 
         <button className="bg-blue-600 text-white px-8 py-3 rounded-xl font-medium hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200">
-          Find Jobs
+          {t('nav.findJobs')}
         </button>
       </div>
     </div>

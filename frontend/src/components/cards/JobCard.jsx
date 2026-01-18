@@ -1,21 +1,39 @@
-
 import { MapPin, Briefcase, Clock, Heart, Building2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import "moment/locale/id"; // Import Indonesian locale for moment
 import { formatRupiah } from "../../utils/formatRupiah";
+import { useTranslation } from "react-i18next";
+import { JOB_TYPES } from "../../utils/data"; // Import to match values to translation keys
 
 const JobCard = ({ job, onToggleSave }) => {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
+  // Set moment locale based on current language
+  moment.locale(i18n.language === 'id' ? 'id' : 'en');
 
   const handleCardClick = () => {
     navigate(`/job/${job._id}`);
   };
 
-
   const handleSaveClick = (e) => {
     e.stopPropagation();
     onToggleSave(job._id);
+  };
+
+  // Helper to find the translation key for the job type (e.g. "Full-Time" -> "job.types.fullTime")
+  const getJobTypeLabel = (typeValue) => {
+    const type = JOB_TYPES.find(t => t.value === typeValue);
+    return type ? t(type.label) : typeValue;
+  };
+
+  // Helper for Application Status translation
+  const getStatusLabel = (status) => {
+    // Maps "Applied" -> "application.statuses.applied"
+    // Assuming status comes in Title Case or lowercase
+    const key = `application.statuses.${status.toLowerCase()}`;
+    return t(key) !== key ? t(key) : status; // Returns translated text or original if key not found
   };
 
   return (
@@ -40,7 +58,9 @@ const JobCard = ({ job, onToggleSave }) => {
               <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-1">
                 {job.title}
               </h3>
-              <p className="text-sm text-gray-500 font-medium mb-2">{job.company?.companyName || "Unknown Company"}</p>
+              <p className="text-sm text-gray-500 font-medium mb-2">
+                {job.company?.companyName || t('job.unknownCompany')}
+              </p>
             </div>
             
             {/* Save Button */}
@@ -60,7 +80,7 @@ const JobCard = ({ job, onToggleSave }) => {
           <div className="flex flex-wrap gap-2 mb-4">
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-medium bg-blue-50 text-blue-700">
               <Briefcase className="w-3 h-3 mr-1" />
-              {job.type}
+              {getJobTypeLabel(job.type)}
             </span>
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-medium bg-purple-50 text-purple-700">
               <MapPin className="w-3 h-3 mr-1" />
@@ -81,7 +101,7 @@ const JobCard = ({ job, onToggleSave }) => {
             {/* Show "Applied" Badge if applicable */}
             {job.applicationStatus && (
               <span className="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-700">
-                {job.applicationStatus}
+                {getStatusLabel(job.applicationStatus)}
               </span>
             )}
           </div>

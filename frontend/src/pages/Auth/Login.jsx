@@ -9,9 +9,10 @@ import { useAuth } from "../../context/AuthContext";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
-
+  const { t } = useTranslation();
   const { login } = useAuth(); 
   const navigate = useNavigate();
 
@@ -24,13 +25,13 @@ const Login = () => {
       const { token, ...userData } = res.data;
       login(userData, token);
 
-      toast.success("Login successful!");
+      toast.success(t('auth.loginSuccess'));
       
       const target = res.data.role === "employer" ? "/employer-dashboard" : "/find-jobs";
       navigate(target);
     } catch (error) {
       console.error("Google Login Error:", error);
-      toast.error("Google Login Failed");
+      toast.error(t('auth.googleLoginFailed'));
     }
   };
 
@@ -42,10 +43,10 @@ const Login = () => {
       <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
         <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-center">
           <CheckCircle className="w-16 h-16 text-green-500 mb-4 mx-auto" />
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome Back!</h2>
-          <p className="text-gray-600 mb-4">You have been successfully logged in.</p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('auth.welcomeBack')}</h2>
+          <p className="text-gray-600 mb-4">{t('auth.loginRedirect')}</p>
           <div className="w-6 h-6 border-2 border-blue-500 mx-auto border-t-transparent rounded-full animate-spin mb-4" />
-          <p className="text-gray-500 text-sm mt-2">Redirecting...</p>
+          <p className="text-gray-500 text-sm mt-2">{t('auth.redirecting')}</p>
         </motion.div>
       </div>
     );
@@ -57,14 +58,14 @@ const Login = () => {
       <Header />
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md my-20">
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome Back</h2>
-          <p className="text-gray-600">Sign in to your infoloker account</p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('auth.welcomeBack')}</h2>
+          <p className="text-gray-600">{t('auth.subtitle')}</p>
         </div>
 
         <form onSubmit={submitLogin} className="space-y-6">
           {/* Email */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">{t('auth.email')}</label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
@@ -73,14 +74,14 @@ const Login = () => {
                 value={formData.email}
                 onChange={handleChange}
                 className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                placeholder="Enter your email"
+                placeholder={t('auth.enterEmail')}
               />
             </div>
           </div>
 
           {/* Password */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">{t('auth.password')}</label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
@@ -89,7 +90,7 @@ const Login = () => {
                 value={formData.password}
                 onChange={handleChange}
                 className="w-full pl-10 pr-12 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                placeholder="Enter your password"
+                placeholder={t('auth.enterPassword')}
               />
               <button type="button" onClick={togglePassword} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700">
                 {status.showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -106,10 +107,11 @@ const Login = () => {
           )}
 
           <div className="flex justify-end">
-  <Link to="/forgot-password" className="text-sm font-medium text-blue-600 hover:text-blue-500">
-    Forgot password?
-  </Link>
-</div>
+            <Link to="/forgot-password" className="text-sm font-medium text-blue-600 hover:text-blue-500">
+              {t('auth.forgotPassword')}
+            </Link>
+          </div>
+          
           {/* Submit Button */}
           <button
             type="submit"
@@ -119,10 +121,10 @@ const Login = () => {
             {status.loading ? (
               <>
                 <Loader className="w-5 h-5 animate-spin" />
-                <span>Signing In...</span>
+                <span>{t('auth.signingIn')}</span>
               </>
             ) : (
-              <span>Sign In</span>
+              <span>{t('nav.login')}</span>
             )}
           </button>
 
@@ -132,14 +134,14 @@ const Login = () => {
                     <div className="w-full border-t border-gray-300"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                    <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                    <span className="px-2 bg-white text-gray-500">{t('auth.orContinueWith')}</span>
                 </div>
             </div>
 
             <div className="mt-6 flex justify-center">
                 <GoogleLogin
                     onSuccess={handleGoogleSuccess}
-                    onError={() => toast.error("Google Login Failed")}
+                    onError={() => toast.error(t('auth.googleLoginFailed'))}
                     theme="outline"
                     size="large"
                     width="100%"
@@ -150,9 +152,9 @@ const Login = () => {
           {/* Sign Up Link */}
           <div className="text-center mt-6">
             <p className="text-gray-600">
-              Don't have an account?{" "}
+              {t('auth.dontHaveAccount')}{" "}
               <Link to="/signup" className="text-blue-600 hover:text-blue-700 font-medium">
-                Create one here
+                {t('auth.createOne')}
               </Link>
             </p>
           </div>

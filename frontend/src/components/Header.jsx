@@ -4,11 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ProfileDropdown from "./layout/ProfileDropdown";
 import NotificationDropdown from "./layout/NotificationDropdown";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+   const { t } = useTranslation();
 
    const handleLogout = () => {
     logout();
@@ -32,13 +35,15 @@ const Header = () => {
           <div className="hidden md:flex items-center space-x-6">
           {(!user || user.role !== "employer") && (
     <Link to="/find-jobs" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">
-      Find Jobs
+      {t('nav.findJobs')}
     </Link>
+    
   )}
             
             {/* If logged in, show Profile Dropdown. If not, show Login/Signup */}
             {isAuthenticated ? (
               <div className="flex items-center space-x-2">
+                <LanguageSwitcher />
            
                 <NotificationDropdown />
                 
@@ -47,11 +52,12 @@ const Header = () => {
               </div>
             ) : (
               <div className="flex items-center space-x-3">
+                <LanguageSwitcher />
                 <Link to="/login" className="text-sm font-medium text-gray-600 hover:text-gray-900 px-3 py-2">
-                  Login
+                  {t('nav.login')}
                 </Link>
                 <Link to="/signup" className="text-sm font-medium bg-blue-600 text-white px-5 py-2.5 rounded-full hover:bg-blue-700 transition-all shadow-sm shadow-blue-200">
-                  Sign Up
+                  {t('nav.signup')}
                 </Link>
               </div>
             )}
@@ -78,7 +84,7 @@ const Header = () => {
             className="text-base font-medium text-gray-700 py-2 border-b border-gray-50"
             onClick={() => setMobileMenuOpen(false)}
           >
-            Find Jobs
+            {t('nav.findJobs')}
           </Link>
 
           {isAuthenticated ? (
@@ -95,19 +101,21 @@ const Header = () => {
               
               {user.role === 'employer' ? (
                 <>
-                 <Link to="/employer-dashboard" onClick={() => setMobileMenuOpen(false)} className="block text-gray-600 py-2">Dashboard</Link>
-                 <Link to="/company-profile" onClick={() => setMobileMenuOpen(false)} className="block text-gray-600 py-2">Company Profile</Link>
+                 <Link to="/employer-dashboard" onClick={() => setMobileMenuOpen(false)} className="block text-gray-600 py-2">{t('nav.dashboard')}</Link>
+                 <Link to="/company-profile" onClick={() => setMobileMenuOpen(false)} className="block text-gray-600 py-2">{t('nav.companyProfile')}</Link>
+                 <LanguageSwitcher />
                  <button onClick={handleLogout} className="w-full text-center py-2.5 text-sm text-red-600 hover:bg-red-50 flex items-center">
-                <LogOut className="w-4 h-4 mr-2" /> Sign Out
+                <LogOut className="w-4 h-4 mr-2" /> {t('nav.logout')}
               </button>
               </>
               ) : (
                 <>
-                  <Link to="/profile" onClick={() => setMobileMenuOpen(false)} className="block text-gray-600 py-2">My Profile</Link>
-                  <Link to="/applications/my" onClick={() => setMobileMenuOpen(false)} className="block text-gray-600 py-2">My Applications</Link>
-                  <Link to="/saved-jobs" onClick={() => setMobileMenuOpen(false)} className="block text-gray-600 py-2">Saved Jobs</Link>
+                  <Link to="/profile" onClick={() => setMobileMenuOpen(false)} className="block text-gray-600 py-2">{t('nav.profile')}</Link>
+                  <Link to="/applications/my" onClick={() => setMobileMenuOpen(false)} className="block text-gray-600 py-2">{t('nav.myApplications')}</Link>
+                  <Link to="/saved-jobs" onClick={() => setMobileMenuOpen(false)} className="block text-gray-600 py-2">{t('nav.savedJobs')}</Link>
+                  <LanguageSwitcher />
                    <button onClick={handleLogout} className="w-full text-center py-2.5 text-sm text-red-600 hover:bg-red-50 flex items-center">
-                <LogOut className="w-4 h-4 mr-2" /> Sign Out
+                <LogOut className="w-4 h-4 mr-2" /> {t('nav.logout')}
               </button>
                 </>
               )}
@@ -115,10 +123,10 @@ const Header = () => {
           ) : (
             <div className="flex flex-col space-y-3 pt-2">
               <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="w-full text-center py-2.5 border border-gray-200 rounded-lg text-gray-700 font-medium">
-                Login
+                {t('nav.login')}
               </Link>
               <Link to="/signup" onClick={() => setMobileMenuOpen(false)} className="w-full text-center py-2.5 bg-blue-600 text-white rounded-lg font-medium">
-                Sign Up
+                {t('nav.signup')}
               </Link>
               
                
