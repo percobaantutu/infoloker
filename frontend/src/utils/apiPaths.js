@@ -64,6 +64,12 @@ NOTIFICATIONS: {
      ARTICLES: "/api/articles", 
     ARTICLE_OPERATIONS: (id) => `/api/articles/${id}`,
     GET_BY_ID: (id) => `/api/articles/${id}`,
+    USERS: "/api/admin/users",
+    USER_SUSPEND: (id) => `/api/admin/users/${id}/suspend`,
+    USER_DELETE: (id) => `/api/admin/users/${id}`,
+    JOBS: "/api/admin/jobs",
+    JOB_DELETE: (id) => `/api/admin/jobs/${id}`,
+    JOB_FEATURE: (id) => `/api/admin/jobs/${id}/feature`,
   },
 
   ARTICLES: {

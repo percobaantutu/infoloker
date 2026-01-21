@@ -29,6 +29,8 @@ import ArticleEditor from "./pages/Admin/ArticleEditor";
 import ArticleManagement from "./pages/Admin/ArticleManagement";
 import ArticlesPage from "./pages/Articles/ArticlesPage";
 import ArticleDetailPage from "./pages/Articles/ArticleDetailPage";
+import UserManagement from "./pages/Admin/UserManagement";
+import JobManagement from "./pages/Admin/JobManagement";
 
 
 function App() {
@@ -90,7 +92,8 @@ function App() {
    <Route path="/admin/articles" element={<ArticleManagement />} />
   <Route path="/admin/articles/new" element={<ArticleEditor />} />
 <Route path="/admin/articles/edit/:id" element={<ArticleEditor />} />
-
+<Route path="/admin/users" element={<UserManagement />} />
+<Route path="/admin/jobs" element={<JobManagement />} />
 </Route>
 
           {/* Catch All Routes */}

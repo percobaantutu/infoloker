@@ -14,6 +14,8 @@ const analyticsRoute = require("./route/analyticsRoute");
 const notificationRoute = require("./route/notificationRoute");
 const adminDashboardRoute = require("./route/admin/dashboardRoute");
 const articleRoute = require("./route/articleRoute");
+const userManagementRoute = require("./route/admin/userManagementRoute");
+const adminJobRoute = require("./route/admin/jobManagementRoute");
 const app = express();
 
 
@@ -46,6 +48,8 @@ app.use("/api/analytics", analyticsRoute);
 app.use("/api/notifications", notificationRoute);
 app.use("/api/admin/dashboard", adminDashboardRoute);
 app.use("/api/articles", articleRoute);
+app.use("/api/admin/users", userManagementRoute);
+app.use("/api/admin/jobs", adminJobRoute);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

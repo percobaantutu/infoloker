@@ -182,6 +182,10 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
+    if (!user.isActive) {
+  return res.status(403).json({ message: "Your account has been suspended. Contact support." });
+}
+
     // 3. Respond with user data and a new JWT token
     res.json({
       _id: user._id,
