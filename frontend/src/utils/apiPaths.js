@@ -63,6 +63,12 @@ NOTIFICATIONS: {
     DASHBOARD_OVERVIEW: "/api/admin/dashboard/overview",
      ARTICLES: "/api/articles", 
     ARTICLE_OPERATIONS: (id) => `/api/articles/${id}`,
+    GET_BY_ID: (id) => `/api/articles/${id}`,
+  },
+
+  ARTICLES: {
+    GET_ALL: "/api/articles", // List (Public)
+    GET_BY_SLUG: (slug) => `/api/articles/slug/${slug}`, // Detail (Public) - Updated based on your fix
   },
 
   IMAGE: {

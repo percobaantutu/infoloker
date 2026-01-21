@@ -27,6 +27,8 @@ import PublicJobRoute from "./routes/PublicJobRoute";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import ArticleEditor from "./pages/Admin/ArticleEditor";
 import ArticleManagement from "./pages/Admin/ArticleManagement";
+import ArticlesPage from "./pages/Articles/ArticlesPage";
+import ArticleDetailPage from "./pages/Articles/ArticleDetailPage";
 
 
 function App() {
@@ -39,6 +41,8 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/articles" element={<ArticlesPage />} />
+          <Route path="/articles/:slug" element={<ArticleDetailPage />} />
          
         
           <Route path="/forgot-password" element={<ForgotPassword />} />
