@@ -24,6 +24,11 @@ import ForgotPassword from "./pages/Auth/ForgotPassword";
 import ResetPassword from "./pages/Auth/ResetPassword";
 import VerifyEmail from "./pages/Auth/VerifyEmail";
 import PublicJobRoute from "./routes/PublicJobRoute";
+import AdminDashboard from "./components/admin/AdminDashboard";
+import ArticleEditor from "./pages/Admin/ArticleEditor";
+import ArticleManagement from "./pages/Admin/ArticleManagement";
+
+
 function App() {
   return (
     <AuthProvider>
@@ -76,6 +81,13 @@ function App() {
        
             <Route path="/applications/my" element={<MyApplications />} /> 
           </Route>
+          <Route element={<ProtectedRoute requiredRole="admin" />}>
+  <Route path="/admin/dashboard" element={<AdminDashboard />} />
+   <Route path="/admin/articles" element={<ArticleManagement />} />
+  <Route path="/admin/articles/new" element={<ArticleEditor />} />
+<Route path="/admin/articles/edit/:id" element={<ArticleEditor />} />
+
+</Route>
 
           {/* Catch All Routes */}
           <Route path="*" element={<Navigate to="/" replace />} />

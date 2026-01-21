@@ -19,6 +19,13 @@ exports.register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
+    const allowedRoles = ["jobseeker", "employer"];
+    if (role && !allowedRoles.includes(role)) {
+      return res.status(403).json({ message: "You cannot register with this role." });
+    }
+
+    const finalRole = role || "jobseeker";
+
     let avatarUrl = "";
     if (req.file && req.file.path) {
       avatarUrl = req.file.path;
@@ -37,9 +44,9 @@ exports.register = async (req, res) => {
       name,
       email,
       password,
-      role,
+      role: finalRole,
       avatar: avatarUrl,
-      isVerified: false, // Default to false
+      isVerified: false, 
       otp,
       otpExpire,
     });

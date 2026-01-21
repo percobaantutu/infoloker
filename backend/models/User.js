@@ -7,13 +7,34 @@ const userSchema = new mongoose.Schema(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    role: { type: String, enum: ["jobseeker", "employer"], required: true },
+    role: { type: String, enum: ["jobseeker", "employer", "admin", "author"], required: true },
+    permissions: [{
+      type: String,
+      enum: [
+        "*",
+        'manage_users', 'manage_jobs', 'manage_articles', 
+        'manage_applications', 'view_analytics', 'manage_settings', 
+        'manage_payments', 'publish_articles', 'edit_all_articles'
+      ]
+    }],
+    lastLogin: Date,
+    loginCount: { type: Number, default: 0 },
+    isActive: { type: Boolean, default: true },
+    suspendedAt: Date,
+    suspensionReason: String,
+    authorProfile: {
+      bio: String,
+      expertise: [String],
+      articlesPublished: { type: Number, default: 0 }
+    },
+    plan: { type: String, enum: ["free", "basic", "premium"], default: "free" },
 
-    // Optional fields for all users
+
+  
     avatar: String,
-    resume: String, // Path to resume file (primarily for jobseekers)
+    resume: String,
 
-    // Fields specific to employer role
+   
     companyName: String,
     companyDescription: String,
     companyLogo: String,
@@ -30,34 +51,32 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Encrypt password before save (Mongoose Pre-Save Hook)
+
 userSchema.pre("save", async function (next) {
-  // Only hash the password if it has been modified (or is new)
+
   if (!this.isModified("password")) return next();
 
-  // Hash the password with a cost factor of 10
+
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
-// Match entered password (Schema Method)
+
 userSchema.methods.matchPassword = function (enteredPassword) {
-  // Compare the plaintext password with the stored hash
+
   return bcrypt.compare(enteredPassword, this.password);
 };
 
-// Generate Password Reset Token
 userSchema.methods.getResetPasswordToken = function () {
-  // 1. Generate token
+
   const resetToken = crypto.randomBytes(20).toString("hex");
 
-  // 2. Hash token and set to resetPasswordToken field
   this.resetPasswordToken = crypto
     .createHash("sha256")
     .update(resetToken)
     .digest("hex");
 
-  // 3. Set expire (10 minutes)
+
   this.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
 
   return resetToken;

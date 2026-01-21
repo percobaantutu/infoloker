@@ -6,9 +6,11 @@ const uploadImage = async (imageFile) => {
   formData.append("image", imageFile);
 
   try {
-    // Corrected Key: API_PATHS.IMAGE.UPLOAD
-    // Removed 'Content-Type': 'multipart/form-data'. Let Axios set it.
-    const response = await axiosInstance.post(API_PATHS.IMAGE.UPLOAD, formData);
+    const response = await axiosInstance.post(API_PATHS.IMAGE.UPLOAD, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Error uploading the image:", error);

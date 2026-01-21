@@ -72,6 +72,17 @@ export const CATEGORIES = [
   { value: "Other", label: "Other" },
 ];
 
+export const ARTICLE_CATEGORIES = [
+  { value: "Career Tips", label: "Career Tips" },
+  { value: "Interview Guide", label: "Interview Guide" },
+  { value: "Salary Guide", label: "Salary Guide" },
+  { value: "Industry News", label: "Industry News" },
+  { value: "Company Culture", label: "Company Culture" },
+  { value: "Resume Writing", label: "Resume Writing" },
+  { value: "Skill Development", label: "Skill Development" },
+  { value: "Job Search Strategy", label: "Job Search Strategy" },
+];
+
 // Mapped to existing keys in your translation.json "job.types" section
 export const JOB_TYPES = [
   { value: "Remote", label: "job.types.remote" },

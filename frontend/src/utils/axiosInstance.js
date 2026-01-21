@@ -3,7 +3,7 @@ import { BASE_URL } from "./apiPaths";
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
-  timeout: 10000, // 80000 (80s) is too long. 10s is standard.
+  timeout: 10000, 
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -19,6 +19,10 @@ axiosInstance.interceptors.request.use(
       config.headers.Authorization = `Bearer ${JSON.parse(token)}`;
     }
 
+    if (config.data instanceof FormData) {
+      delete config.headers["Content-Type"];
+    }
+
     return config;
   },
   (error) => Promise.reject(error)
@@ -32,7 +36,7 @@ axiosInstance.interceptors.response.use(
   (error) => {
     if (error.response) {
       if (error.response.status === 401) {
-        // Optional: Clear storage on 401 to prevent loops
+    
         localStorage.removeItem("userInfo");
         if (error.response?.status === 401) {
           localStorage.removeItem("token");

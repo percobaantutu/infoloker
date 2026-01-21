@@ -59,6 +59,12 @@ NOTIFICATIONS: {
     MARK_READ: "/api/notifications/read",
   },
 
+  ADMIN: {
+    DASHBOARD_OVERVIEW: "/api/admin/dashboard/overview",
+     ARTICLES: "/api/articles", 
+    ARTICLE_OPERATIONS: (id) => `/api/articles/${id}`,
+  },
+
   IMAGE: {
     UPLOAD: "/api/auth/upload-image",
   },
