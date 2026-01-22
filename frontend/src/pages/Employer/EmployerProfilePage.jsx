@@ -3,12 +3,22 @@ import { useNavigate } from "react-router-dom";
 import { Building2, Mail, Edit, User, Globe, MapPin } from "lucide-react";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import { useProfile } from "../../hooks/useProfile";
+import { useTranslation } from "react-i18next";
 
 const EmployerProfilePage = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { user } = useProfile();
 
   if (!user) return null;
+
+  // Helper to translate the role (e.g. "employer" -> "Perusahaan")
+  // Falls back to capitalized original string if translation is missing
+  const userRoleTranslated = user.role 
+    ? (t(`auth.role.${user.role.toLowerCase()}`) !== `auth.role.${user.role.toLowerCase()}` 
+        ? t(`auth.role.${user.role.toLowerCase()}`) 
+        : user.role)
+    : "";
 
   return (
     <DashboardLayout activeMenu="company-profile">
@@ -24,7 +34,11 @@ const EmployerProfilePage = () => {
                 {/* Company Logo */}
                 <div className="w-32 h-32 bg-white rounded-2xl p-1 shadow-lg">
                   <div className="w-full h-full bg-gray-50 rounded-xl flex items-center justify-center overflow-hidden border border-gray-100">
-                    {user.companyLogo ? <img src={user.companyLogo} alt="Company Logo" className="w-full h-full object-cover" /> : <Building2 className="w-12 h-12 text-gray-300" />}
+                    {user.companyLogo ? (
+                      <img src={user.companyLogo} alt="Company Logo" className="w-full h-full object-cover" />
+                    ) : (
+                      <Building2 className="w-12 h-12 text-gray-300" />
+                    )}
                   </div>
                 </div>
 
@@ -34,7 +48,7 @@ const EmployerProfilePage = () => {
                   className="mb-2 flex items-center px-4 py-2 bg-white border border-gray-300 shadow-sm text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
                 >
                   <Edit className="w-4 h-4 mr-2" />
-                  Edit Profile
+                  {t('profile.editProfile')}
                 </button>
               </div>
 
@@ -54,14 +68,14 @@ const EmployerProfilePage = () => {
             {/* Left Column: About */}
             <div className="md:col-span-2 space-y-6">
               <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                <h2 className="text-lg font-bold text-gray-900 mb-4">About the Company</h2>
+                <h2 className="text-lg font-bold text-gray-900 mb-4">{t('profile.aboutCompany')}</h2>
                 {user.companyDescription ? (
                   <p className="text-gray-600 leading-relaxed whitespace-pre-line">{user.companyDescription}</p>
                 ) : (
                   <div className="text-center py-8 bg-gray-50 rounded-xl border border-dashed border-gray-200">
-                    <p className="text-gray-500 mb-2">No description added yet.</p>
+                    <p className="text-gray-500 mb-2">{t('profile.noDescription')}</p>
                     <button onClick={() => navigate("/company-profile/edit")} className="text-blue-600 hover:underline text-sm font-medium">
-                      Add a description
+                      {t('profile.addDescription')}
                     </button>
                   </div>
                 )}
@@ -71,7 +85,9 @@ const EmployerProfilePage = () => {
             {/* Right Column: Contact / Info */}
             <div className="space-y-6">
               <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Account Details</h3>
+                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">
+                  {t('profile.accountDetails')}
+                </h3>
 
                 <div className="space-y-4">
                   <div className="flex items-start">
@@ -79,7 +95,7 @@ const EmployerProfilePage = () => {
                       <User className="w-4 h-4 text-blue-600" />
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">Account Name</p>
+                      <p className="text-xs text-gray-500">{t('profile.accountName')}</p>
                       <p className="text-sm font-medium text-gray-900">{user.name}</p>
                     </div>
                   </div>
@@ -89,8 +105,10 @@ const EmployerProfilePage = () => {
                       <Globe className="w-4 h-4 text-gray-900" />
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">Role</p>
-                      <p className="text-sm font-medium text-gray-900 capitalize">{user.role}</p>
+                      <p className="text-xs text-gray-500">{t('profile.role')}</p>
+                      <p className="text-sm font-medium text-gray-900 capitalize">
+                        {userRoleTranslated}
+                      </p>
                     </div>
                   </div>
 
@@ -100,8 +118,8 @@ const EmployerProfilePage = () => {
                       <MapPin className="w-4 h-4 text-emerald-600" />
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">Location</p>
-                      <p className="text-sm font-medium text-gray-900">Remote</p>
+                      <p className="text-xs text-gray-500">{t('job.location')}</p>
+                      <p className="text-sm font-medium text-gray-900">{t('job.types.remote')}</p>
                     </div>
                   </div>
                 </div>

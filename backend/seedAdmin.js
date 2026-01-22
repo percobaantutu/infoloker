@@ -2,13 +2,14 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const User = require("./models/User");
 
+
 const seedAdmin = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
     console.log("MongoDB connected...");
 
-    const adminEmail = "admin@infoloker.com";
-    const adminPassword = "adminpassword123"; // Change this later!
+    const adminEmail = process.env.ADMIN_EMAIL;
+    const adminPassword = process.env.ADMIN_PASSWORD; 
 
     // Check if admin exists
     const existingAdmin = await User.findOne({ email: adminEmail });

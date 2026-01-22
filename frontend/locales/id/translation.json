@@ -4,7 +4,9 @@
     "loading": "Memuat...",
     "save": "Simpan",
     "cancel": "Batal",
+    "saving": "Menyimpan...",
     "delete": "Hapus",
+    "preview": "Pratinjau",
     "edit": "Ubah",
     "submit": "Kirim",
     "search": "Cari",
@@ -28,6 +30,7 @@
     "logout": "Keluar",
     "profile": "Profil Saya",
     "dashboard": "Dasbor",
+    "companyProfile":"Profil Perusahaan",
     "myApplications": "Lamaran Saya",
     "savedJobs": "Lowongan Tersimpan"
   },
@@ -124,7 +127,20 @@
       "partTime": "Part-Time",
       "contract": "Kontrak",
       "internship": "Magang"
-    }
+    },
+    "placeholders": {
+    "title": "cth., Senior Software Engineer",
+    "location": "cth., Jakarta, Bandung, Surabaya",
+    "selectCategory": "Pilih kategori",
+    "selectType": "Pilih tipe pekerjaan",
+    "description": "Jelaskan peran, tanggung jawab, dan budaya perusahaan...",
+    "requirements": "Sebutkan kualifikasi utama, keahlian, dan pengalaman yang dibutuhkan..."
+  },
+  "helpers": {
+    "description": "Cantumkan tanggung jawab utama.",
+    "requirements": "Cantumkan keahlian yang diperlukan."
+  }
+    
   },
 
   "dashboard": {
@@ -176,9 +192,27 @@
     "allApplicants": "Semua Pelamar",
     "companyProfile": "Profil Perusahaan",
     "companyName": "Nama Perusahaan",
+    "dashboardOverview": "Ringkasan Dasbor",
+  "welcomeSubtitle": "Selamat datang kembali! Inilah yang terjadi hari ini.",
+  "recentJobPosts": "Postingan Pekerjaan Terbaru",
+  "yourLatestJobs": "Postingan pekerjaan terbaru Anda",
+  "latestCandidates": "Kandidat terbaru yang melamar",
+  "quickActionsSubtitle": "Tugas umum untuk memulai",
+  "reviewApplications": "Tinjau Lamaran",
+  "companySettings": "Pengaturan Perusahaan",
     "companyDescription": "Deskripsi Perusahaan",
     "companyLogo": "Logo Perusahaan",
     "totalActiveJobs": "Total Lowongan Aktif",
+    "postNewJob": "Posting Lowongan Baru",
+    "jobManagement": "Manajemen Lowongan",
+  "jobManagementDesc": "Kelola postingan lowongan Anda dan lacak lamaran",
+  "addNewJob": "Tambah Lowongan Baru",
+  "startPostingDesc": "Mulailah dengan membuat postingan lowongan pertama Anda untuk menemukan talenta hebat.",
+  "editJob": "Ubah Lowongan",
+  "postJobSubtitle": "Isi formulir di bawah untuk membuat lowongan pekerjaan Anda",
+  "publishJob": "Terbitkan Lowongan",
+  "updateJob": "Perbarui Lowongan",
+  "publishing": "Menerbitkan...",
     "totalApplications": "Total Lamaran",
     "hiredCandidates": "Kandidat Diterima",
     "recentApplications": "Lamaran Terbaru",
@@ -197,6 +231,24 @@
     "accountName": "Nama Akun",
     "joinedDate": "Bergabung {{date}}",
     "saveChanges": "Simpan Perubahan",
+    "brandingImages": "Branding & Gambar",
+  "clickToUpload": "Klik untuk unggah",
+  "aboutCompany": "Tentang Perusahaan",
+  "noDescription": "Belum ada deskripsi.",
+  "addDescription": "Tambah deskripsi",
+  "role": "Peran",
+  "imageRecommendation": "Disarankan: 500x500px, PNG atau JPG.",
+  "accountAvatar": "Avatar Akun",
+  "avatarHelper": "Gambar ini akan ditampilkan di profil dan dasbor internal Anda.",
+  "companyInfo": "Informasi Perusahaan",
+  "placeholders": {
+    "companyName": "cth. Acme Corp",
+    "fullName": "Nama Lengkap Anda",
+    "companyDescription": "Ceritakan tentang perusahaan, budaya, dan misi Anda..."
+  },
+  "helpers": {
+    "companyDescription": "Deskripsi ini akan muncul di profil publik dan postingan pekerjaan Anda."
+  },
     "uploadPhoto": "Unggah Foto",
     "chooseImage": "Pilih Gambar"
   },

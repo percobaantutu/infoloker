@@ -5,20 +5,22 @@ import { useAuth } from "../../context/AuthContext";
 import { NAVIGATION_MENU } from "../../utils/data";
 import NavigationItem from "./NavigationItem";
 import ProfileDropdown from "./ProfileDropdown";
+import LanguageSwitcher from "../LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 const DashboardLayout = ({ activeMenu, children }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeNavItem, setActiveNavItem] = useState(activeMenu || "employer-dashboard");
-
   const [isMobile, setIsMobile] = useState(false);
 
   // Resize handler
   useEffect(() => {
     const handleResize = () => {
-      const mobile = window.innerWidth < 1024; // Changed to 1024px for better tablet handling
+      const mobile = window.innerWidth < 1024;
       setIsMobile(mobile);
       if (!mobile) setSidebarOpen(false);
     };
@@ -38,8 +40,17 @@ const DashboardLayout = ({ activeMenu, children }) => {
     navigate("/login");
   };
 
-  // Fixed variable name casing
-  const isCollapsed = !isMobile && false; // You can make this dynamic state later
+  const isCollapsed = !isMobile && false;
+
+  // Helper to get the translated title for the current page
+  const getCurrentPageTitle = () => {
+    const menuItem = NAVIGATION_MENU.find(item => item.id === activeNavItem);
+    if (menuItem) {
+      return t(menuItem.name);
+    }
+    // Fallback if not found in menu (e.g. for custom routes not in sidebar)
+    return activeNavItem.replace("-", " "); 
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
@@ -69,15 +80,20 @@ const DashboardLayout = ({ activeMenu, children }) => {
         {/* Navigation Links */}
         <div className="p-4 space-y-1">
           {NAVIGATION_MENU.map((item) => (
-            <NavigationItem key={item.id} item={item} isActive={activeNavItem === item.id} onClick={handleNavigation} isCollapsed={isCollapsed} />
+            <NavigationItem 
+              key={item.id} 
+              item={item} 
+              isActive={activeNavItem === item.id} 
+              onClick={handleNavigation} 
+              isCollapsed={isCollapsed} 
+            />
           ))}
         </div>
 
-        {/* Sidebar Footer (Optional: Logout button at bottom) */}
         <div className="absolute bottom-0 w-full p-4 border-t border-gray-200">
           <button onClick={handleLogout} className="w-full flex items-center px-3 py-2.5 text-sm font-medium text-red-600 rounded-lg hover:bg-red-50 transition-colors">
             <LogOut className="h-5 w-5 mr-3" />
-            {!isCollapsed && "Sign Out"}
+            {!isCollapsed && t('nav.logout')}
           </button>
         </div>
       </aside>
@@ -86,17 +102,21 @@ const DashboardLayout = ({ activeMenu, children }) => {
       <div className={`flex-1 flex flex-col min-h-screen min-w-0 transition-all duration-300 ${!isMobile && (isCollapsed ? "ml-20" : "ml-64")}`}>
         {/* TOP HEADER */}
         <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-40">
+          
           <div className="flex items-center">
             {isMobile && (
               <button onClick={() => setSidebarOpen(true)} className="p-2 -ml-2 text-gray-600 hover:bg-gray-100 rounded-md">
                 <Menu size={24} />
               </button>
             )}
-            <h2 className="text-lg font-semibold text-gray-800 ml-2 capitalize">{activeNavItem.replace("-", " ")}</h2>
+            <h2 className="text-lg font-semibold text-gray-800 ml-2 capitalize">
+              {getCurrentPageTitle()}
+            </h2>
           </div>
-
-          {/* User Profile Dropdown */}
-          <ProfileDropdown profileRoute={user?.role === "Employer" ? "/company-profile" : "/profile"} showRole={true} />
+            <div className="flex items-center space-x-2">
+              <LanguageSwitcher />
+              <ProfileDropdown profileRoute={user?.role === "Employer" ? "/company-profile" : "/profile"} showRole={true} />
+            </div>
         </header>
 
         {/* PAGE CONTENT */}

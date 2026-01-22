@@ -3,6 +3,8 @@
     "appName": "infoloker",
     "loading": "Loading...",
     "save": "Save",
+    "saving": "Saving...",
+    "preview": "Preview",
     "cancel": "Cancel",
     "delete": "Delete",
     "edit": "Edit",
@@ -29,6 +31,7 @@
     "profile": "My Profile",
     "dashboard": "Dashboard",
     "myApplications": "My Applications",
+    "companyProfile": "Company Profile",
     "savedJobs": "Saved Jobs"
   },
   
@@ -124,7 +127,19 @@
       "partTime": "Part-Time",
       "contract": "Contract",
       "internship": "Internship"
-    }
+    },
+    "placeholders": {
+    "title": "e.g., Senior Software Engineer",
+    "location": "e.g., Jakarta, Bandung, Surabaya",
+    "selectCategory": "Select a category",
+    "selectType": "Select job type",
+    "description": "Describe the role, responsibilities, and company culture...",
+    "requirements": "List key qualifications, skills, and experience needed..."
+  },
+  "helpers": {
+    "description": "Include key responsibilities.",
+    "requirements": "Include necessary skills."
+  }
   },
   
   "application": {
@@ -155,6 +170,24 @@
     "companyProfile": "Company Profile",
     "companyName": "Company Name",
     "companyDescription": "Company Description",
+    "dashboardOverview": "Dashboard Overview",
+  "welcomeSubtitle": "Welcome back! Here's what's happening today.",
+  "recentJobPosts": "Recent Job Posts",
+  "yourLatestJobs": "Your latest job postings",
+  "postNewJob": "Post a New Job",
+  "editJob": "Edit Job",
+  "postJobSubtitle": "Fill out the form below to create your job posting",
+  "publishJob": "Publish Job",
+  "updateJob": "Update Job",
+  "publishing": "Publishing Job...",
+  "latestCandidates": "Latest candidates who applied",
+  "quickActionsSubtitle": "Common tasks to get you started",
+  "reviewApplications": "Review Applications",
+  "jobManagement": "Job Management",
+  "jobManagementDesc": "Manage your job postings and track applications",
+  "addNewJob": "Add New Job",
+  "startPostingDesc": "Get started by creating your first job posting to find great talent.",
+  "companySettings": "Company Settings",
     "companyLogo": "Company Logo",
     "totalActiveJobs": "Total Active Jobs",
     "totalApplications": "Total Applications",
@@ -176,7 +209,25 @@
     "joinedDate": "Joined {{date}}",
     "saveChanges": "Save Changes",
     "uploadPhoto": "Upload Photo",
-    "chooseImage": "Choose Image"
+    "aboutCompany": "About the Company",
+  "noDescription": "No description added yet.",
+  "addDescription": "Add a description",
+  "role": "Role",
+    "chooseImage": "Choose Image",
+    "brandingImages": "Branding & Images",
+  "clickToUpload": "Click to upload",
+  "imageRecommendation": "Recommended: 500x500px, PNG or JPG.",
+  "accountAvatar": "Account Avatar",
+  "avatarHelper": "This image will be displayed on your profile and internal dashboard.",
+  "companyInfo": "Company Information",
+  "placeholders": {
+    "companyName": "e.g. Acme Corp",
+    "fullName": "Your Full Name",
+    "companyDescription": "Tell us about your company, culture, and mission..."
+  },
+  "helpers": {
+    "companyDescription": "This description will appear on your public profile and job postings."
+  }
   },
 
   "categories": {

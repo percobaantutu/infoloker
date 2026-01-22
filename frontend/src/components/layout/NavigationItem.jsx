@@ -1,7 +1,10 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const NavigationItem = ({ item, isActive, onClick, isCollapsed }) => {
+  const { t } = useTranslation();
   const Icon = item.icon;
+  
   return (
     <button
       onClick={() => onClick(item.id)}
@@ -10,7 +13,10 @@ const NavigationItem = ({ item, isActive, onClick, isCollapsed }) => {
       }`}
     >
       <Icon className={`h-5 w-5 flex-shrink-0 ${isActive ? "text-blue-600" : "text-gray-500"}`} />
-      {!isCollapsed && <span className="ml-3 truncate">{item.name}</span>}
+      {!isCollapsed && (
+       
+        <span className="ml-3 truncate">{t(item.name)}</span>
+      )}
     </button>
   );
 };

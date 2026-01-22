@@ -9,11 +9,26 @@ import JobPostingPreview from "../../components/layout/JobPostingPreview";
 import { formatRupiah } from "../../utils/formatRupiah";
 import { useJobForm } from "../../hooks/useJobForm";
 import LocationSelect from "../../components/Input/LocationSelect";
+import { useTranslation } from "react-i18next";
 
 const JobPostingForm = () => {
+  const { t } = useTranslation();
   const { formData, errors, isSubmitting, handleInputChange, handleSubmit, isFormValid, isLoading, isEditMode } = useJobForm();
 
   const [isPreview, setIsPreview] = useState(false);
+
+  // Translate Categories and Job Types for the SelectFields
+  const translatedCategories = CATEGORIES.map(cat => ({
+    ...cat,
+    // Assumes keys like "categories.Engineering" exist in translation.json
+    label: t(`categories.${cat.value}`) !== `categories.${cat.value}` ? t(`categories.${cat.value}`) : cat.label
+  }));
+
+  const translatedJobTypes = JOB_TYPES.map(type => ({
+    ...type,
+    // JOB_TYPES in data.js already has keys like "job.types.fullTime" in the label field
+    label: t(type.label)
+  }));
 
   if (isLoading) {
     return (
@@ -33,8 +48,10 @@ const JobPostingForm = () => {
             {/* Header */}
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h2 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">Post a New Job</h2>
-                <p className="text-sm text-gray-600 mt-1">Fill out the form below to create your job posting</p>
+                <h2 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+                  {isEditMode ? t('employer.editJob') : t('employer.postNewJob')}
+                </h2>
+                <p className="text-sm text-gray-600 mt-1">{t('employer.postJobSubtitle')}</p>
               </div>
               <button
                 onClick={() => setIsPreview(true)}
@@ -42,16 +59,16 @@ const JobPostingForm = () => {
                 className="group flex items-center space-x-2 px-6 py-3 text-sm font-medium text-gray-600 hover:text-white bg-white/50 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 border border-gray-200 hover:border-transparent rounded-xl transition-all duration-300 shadow-lg disabled:opacity-50"
               >
                 <Eye className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-                <span>Preview</span>
+                <span>{t('common.preview')}</span>
               </button>
             </div>
 
             {/* Form Fields */}
             <div className="space-y-6">
               <InputField
-                label="Job Title"
+                label={t('job.title')}
                 id="jobTitle"
-                placeholder="e.g., Senior Software Engineer"
+                placeholder={t('job.placeholders.title')}
                 value={formData.jobTitle}
                 onChange={(e) => handleInputChange("jobTitle", e.target.value)}
                 error={errors.jobTitle}
@@ -61,53 +78,64 @@ const JobPostingForm = () => {
 
               <div className="flex-1">
                 <LocationSelect
+                  label={t('job.location')}
                   value={formData.location}
                   onChange={(value) => handleInputChange("location", value)}
                   error={errors.location}
-                  placeholder="e.g., Jakarta, Bandung, Surabaya"
+                  placeholder={t('job.placeholders.location')}
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <SelectField
-                  label="Category"
+                  label={t('job.category')}
                   id="category"
                   value={formData.category}
                   onChange={(e) => handleInputChange("category", e.target.value)}
                   error={errors.category}
                   required
-                  options={CATEGORIES}
+                  options={translatedCategories}
                   icon={Users}
-                  placeholder="Select a category"
+                  placeholder={t('job.placeholders.selectCategory')}
                 />
-                <SelectField label="Job Type" id="jobType" value={formData.jobType} onChange={(e) => handleInputChange("jobType", e.target.value)} error={errors.jobType} required options={JOB_TYPES} icon={Briefcase} />
+                <SelectField 
+                  label={t('job.type')}
+                  id="jobType" 
+                  value={formData.jobType} 
+                  onChange={(e) => handleInputChange("jobType", e.target.value)} 
+                  error={errors.jobType} 
+                  required 
+                  options={translatedJobTypes} 
+                  icon={Briefcase}
+                  placeholder={t('job.placeholders.selectType')} 
+                />
               </div>
 
               <TextAreaField
-                label="Job Description"
+                label={t('job.description')}
                 id="description"
-                placeholder="Describe the role..."
+                placeholder={t('job.placeholders.description')}
                 value={formData.description}
                 onChange={(e) => handleInputChange("description", e.target.value)}
                 error={errors.description}
-                helperText="Include key responsibilities."
+                helperText={t('job.helpers.description')}
                 required
               />
 
               <TextAreaField
-                label="Requirements"
+                label={t('job.requirements')}
                 id="requirements"
-                placeholder="List key qualifications..."
+                placeholder={t('job.placeholders.requirements')}
                 value={formData.requirements}
                 onChange={(e) => handleInputChange("requirements", e.target.value)}
                 error={errors.requirements}
-                helperText="Include necessary skills."
+                helperText={t('job.helpers.requirements')}
                 required
               />
 
               {/* Salary Section */}
               <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-700">Salary Range (RP)</label>
+                <label className="block text-sm font-medium text-gray-700">{t('job.salaryRange')} (RP)</label>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
@@ -116,7 +144,7 @@ const JobPostingForm = () => {
                     <input
                       type="text"
                       inputMode="numeric"
-                      placeholder="Minimum Salary"
+                      placeholder={t('job.salaryMin')}
                       value={formatRupiah(formData.salaryMin)}
                       onChange={(e) => handleInputChange("salaryMin", e.target.value.replace(/\D/g, ""))}
                       className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-blue-500"
@@ -129,7 +157,7 @@ const JobPostingForm = () => {
                     <input
                       type="text"
                       inputMode="numeric"
-                      placeholder="Maximum Salary"
+                      placeholder={t('job.salaryMax')}
                       value={formatRupiah(formData.salaryMax)}
                       onChange={(e) => handleInputChange("salaryMax", e.target.value.replace(/\D/g, ""))}
                       className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-blue-500"
@@ -152,11 +180,11 @@ const JobPostingForm = () => {
                   className="w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-xl shadow-lg text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:-translate-y-0.5"
                 >
                   {isSubmitting ? (
-                    "Publishing Job..."
+                    t('employer.publishing')
                   ) : (
                     <>
                       <Send className="mr-2 h-5 w-5" />
-                      Publish Job
+                      {isEditMode ? t('employer.updateJob') : t('employer.publishJob')}
                     </>
                   )}
                 </button>

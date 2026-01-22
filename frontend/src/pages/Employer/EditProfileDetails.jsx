@@ -5,9 +5,11 @@ import DashboardLayout from "../../components/layout/DashboardLayout";
 import InputField from "../../components/Input/InputField";
 import TextAreaField from "../../components/Input/TextAreaField";
 import { useProfile } from "../../hooks/useProfile";
+import { useTranslation } from "react-i18next";
 
 const EditProfileDetails = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { user, updateProfile, isSubmitting } = useProfile();
 
   const [formData, setFormData] = useState({
@@ -74,26 +76,26 @@ const EditProfileDetails = () => {
               <button onClick={() => navigate("/company-profile")} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
                 <ArrowLeft className="w-5 h-5 text-gray-600" />
               </button>
-              <h1 className="text-2xl font-bold text-gray-900">Edit Profile</h1>
+              <h1 className="text-2xl font-bold text-gray-900">{t('profile.editProfile')}</h1>
             </div>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* 1. Images Section */}
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-              <h2 className="text-lg font-semibold text-gray-900 mb-6">Branding & Images</h2>
+              <h2 className="text-lg font-semibold text-gray-900 mb-6">{t('profile.brandingImages')}</h2>
 
               <div className="flex flex-col md:flex-row gap-8">
                 {/* Company Logo Upload */}
                 <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Company Logo</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">{t('employer.companyLogo')}</label>
                   <div className="relative group w-full h-40 bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center overflow-hidden hover:border-blue-500 transition-colors">
                     {previews.companyLogo ? (
                       <img src={previews.companyLogo} alt="Logo Preview" className="w-full h-full object-cover" />
                     ) : (
                       <div className="text-center p-4">
                         <Building2 className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                        <span className="text-xs text-gray-500">Click to upload</span>
+                        <span className="text-xs text-gray-500">{t('profile.clickToUpload')}</span>
                       </div>
                     )}
 
@@ -103,12 +105,12 @@ const EditProfileDetails = () => {
                     </label>
                     <input type="file" id="companyLogo" accept="image/*" className="hidden" onChange={(e) => handleFileChange(e, "companyLogo")} />
                   </div>
-                  <p className="text-xs text-gray-500 mt-2">Recommended: 500x500px, PNG or JPG.</p>
+                  <p className="text-xs text-gray-500 mt-2">{t('profile.imageRecommendation')}</p>
                 </div>
 
                 {/* Avatar Upload */}
                 <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Account Avatar</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">{t('profile.accountAvatar')}</label>
                   <div className="flex items-center gap-4">
                     <div className="relative group w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden border border-gray-200">
                       {previews.avatar ? <img src={previews.avatar} alt="Avatar Preview" className="w-full h-full object-cover" /> : <User className="w-10 h-10 text-gray-400" />}
@@ -119,7 +121,7 @@ const EditProfileDetails = () => {
                       <input type="file" id="avatar" accept="image/*" className="hidden" onChange={(e) => handleFileChange(e, "avatar")} />
                     </div>
                     <div className="text-sm text-gray-500">
-                      <p>This image will be displayed on your profile and internal dashboard.</p>
+                      <p>{t('profile.avatarHelper')}</p>
                     </div>
                   </div>
                 </div>
@@ -128,29 +130,43 @@ const EditProfileDetails = () => {
 
             {/* 2. Company Details Section */}
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-6">
-              <h2 className="text-lg font-semibold text-gray-900">Company Information</h2>
+              <h2 className="text-lg font-semibold text-gray-900">{t('profile.companyInfo')}</h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <InputField label="Company Name" id="companyName" value={formData.companyName} onChange={(e) => handleInputChange("companyName", e.target.value)} placeholder="e.g. Acme Corp" icon={Building2} />
+                <InputField 
+                    label={t('employer.companyName')} 
+                    id="companyName" 
+                    value={formData.companyName} 
+                    onChange={(e) => handleInputChange("companyName", e.target.value)} 
+                    placeholder={t('profile.placeholders.companyName')} 
+                    icon={Building2} 
+                />
 
-                <InputField label="Account Name" id="name" value={formData.name} onChange={(e) => handleInputChange("name", e.target.value)} placeholder="Your Full Name" icon={User} />
+                <InputField 
+                    label={t('profile.accountName')} 
+                    id="name" 
+                    value={formData.name} 
+                    onChange={(e) => handleInputChange("name", e.target.value)} 
+                    placeholder={t('profile.placeholders.fullName')} 
+                    icon={User} 
+                />
               </div>
 
               <TextAreaField
-                label="About the Company"
+                label={t('employer.companyDescription')} 
                 id="companyDescription"
                 value={formData.companyDescription}
                 onChange={(e) => handleInputChange("companyDescription", e.target.value)}
-                placeholder="Tell us about your company, culture, and mission..."
+                placeholder={t('profile.placeholders.companyDescription')}
                 rows={5}
-                helperText="This description will appear on your public profile and job postings."
+                helperText={t('profile.helpers.companyDescription')}
               />
             </div>
 
             {/* Actions */}
             <div className="flex justify-end pt-4">
               <button type="button" onClick={() => navigate("/company-profile")} className="px-6 py-2.5 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 mr-4 transition-colors">
-                Cancel
+                {t('common.cancel')}
               </button>
               <button
                 type="submit"
@@ -160,12 +176,12 @@ const EditProfileDetails = () => {
                 {isSubmitting ? (
                   <>
                     <Loader className="w-5 h-5 animate-spin mr-2" />
-                    Saving...
+                    {t('common.saving')}
                   </>
                 ) : (
                   <>
                     <Save className="w-5 h-5 mr-2" />
-                    Save Changes
+                    {t('profile.saveChanges')}
                   </>
                 )}
               </button>
