@@ -12,7 +12,7 @@ export const useAdminDashboard = () => {
     setIsLoading(true);
     try {
       const response = await axiosInstance.get(API_PATHS.ADMIN.DASHBOARD_OVERVIEW);
-      setStats(response.data.summary);
+      setStats(response.data);
       setRecentUsers(response.data.recentUsers);
     } catch (error) {
       console.error("Admin Dashboard Error:", error);

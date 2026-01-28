@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import { 
   LayoutDashboard, Users, Briefcase, FileText, 
-  Settings, LogOut, Menu, X, Shield 
+  Settings, LogOut, Menu, X, Shield, DollarSign 
 } from "lucide-react";
 
 const ADMIN_MENU = [
@@ -11,6 +11,8 @@ const ADMIN_MENU = [
   { name: "Users", path: "/admin/users", icon: Users },
   { name: "Jobs", path: "/admin/jobs", icon: Briefcase },
   { name: "Articles", path: "/admin/articles", icon: FileText },
+  { name: "Finance", path: "/admin/subscriptions", icon: DollarSign }, 
+
   { name: "Settings", path: "/admin/settings", icon: Settings },
 ];
 

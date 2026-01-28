@@ -12,6 +12,7 @@ import EmployerDashboard from "./pages/Employer/EmployerDashboard";
 import JobPostingForm from "./pages/Employer/JobPostingForm";
 import ManageJobs from "./pages/Employer/ManageJobs";
 import ApplicationViewer from "./pages/Employer/ApplicationViewer";
+import PricingPage from "./pages/Employer/PricingPage";
 import EmployerProfilePage from "./pages/Employer/EmployerProfilePage";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
@@ -31,6 +32,8 @@ import ArticlesPage from "./pages/Articles/ArticlesPage";
 import ArticleDetailPage from "./pages/Articles/ArticleDetailPage";
 import UserManagement from "./pages/Admin/UserManagement";
 import JobManagement from "./pages/Admin/JobManagement";
+import SubscriptionManagement from "./pages/Admin/SubscriptionManagement";
+import SystemSettings from "./pages/Admin/SystemSettings";
 
 
 function App() {
@@ -83,6 +86,7 @@ function App() {
             <Route path="/profile" element={<UserProfile />} />
             <Route path="/profile/edit" element={<EditUserProfile />} />
             <Route path="/saved-jobs" element={<SavedJobs />} />
+            <Route path="/pricing" element={<PricingPage />} />
             
        
             <Route path="/applications/my" element={<MyApplications />} /> 
@@ -94,6 +98,8 @@ function App() {
 <Route path="/admin/articles/edit/:id" element={<ArticleEditor />} />
 <Route path="/admin/users" element={<UserManagement />} />
 <Route path="/admin/jobs" element={<JobManagement />} />
+<Route path="/admin/subscriptions" element={< SubscriptionManagement/>}/>
+<Route path="/admin/settings" element={<SystemSettings />} />
 </Route>
 
           {/* Catch All Routes */}

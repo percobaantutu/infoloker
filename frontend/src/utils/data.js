@@ -1,4 +1,4 @@
-import { Search, Users, FileText, MessageSquare, BarChart3, Shield, Clock, Award, Briefcase, Building2, LayoutDashboard, Plus } from "lucide-react";
+import { Search, Users, FileText, MessageSquare, BarChart3, Shield, Clock, Award, Briefcase, Building2, LayoutDashboard, Plus, CreditCard } from "lucide-react";
 
 export const jobSeekerFeatures = [
   {
@@ -50,9 +50,10 @@ export const employerFeatures = [
 // Mapped to existing keys in your translation.json "nav" section
 export const NAVIGATION_MENU = [
   { id: "employer-dashboard", name: "nav.dashboard", icon: LayoutDashboard },
-  { id: "post-job", name: "employer.postJob", icon: Plus }, // Use employer specific key or generic nav
+  { id: "post-job", name: "employer.postJob", icon: Plus }, 
   { id: "manage-jobs", name: "employer.manageJobs", icon: Briefcase },
   { id: "company-profile", name: "employer.companyProfile", icon: Building2 },
+  { id: "pricing", name: "Upgrade Plan", icon: CreditCard },
 ];
 
 // Categories

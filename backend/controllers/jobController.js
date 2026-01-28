@@ -3,12 +3,38 @@ const User = require("../models/User");
 const Application = require("../models/Application");
 const SavedJob = require("../models/SavedJob");
 
+const JOB_LIMITS = {
+  free: 1,
+  basic: 3,
+  premium: Infinity,
+  enterprise: Infinity
+};
+
 exports.createJob = async (req, res) => {
   try {
     if (req.user.role !== "employer") {
-      return res.status(403).json({ message: "Only employers can post jobs" });
+      return res.status(403).json({ message: "Access denied" });
     }
 
+   
+    const userPlan = req.user.plan || "free"; 
+    const limit = JOB_LIMITS[userPlan];
+
+
+    const activeJobsCount = await Job.countDocuments({ 
+      company: req.user._id,
+      isClosed: false 
+    });
+
+    
+    if (activeJobsCount >= limit) {
+      return res.status(403).json({ 
+        message: "LIMIT_REACHED", 
+        detail: `You have reached the limit of ${limit} active jobs for the ${userPlan} plan. Please upgrade to post more.` 
+      });
+    }
+
+    
     const job = await Job.create({ ...req.body, company: req.user._id });
     res.status(201).json(job);
   } catch (err) {

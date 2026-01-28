@@ -11,6 +11,8 @@ import Card from "../../components/Card";
 import RecentApplicationsTable from "../../components/layout/RecentApplicationsTable";
 import QuickActions from "../../components/layout/QuickActions";
 import { useTranslation } from "react-i18next";
+import SubscriptionStatus from "../../components/premium/SubscriptionStatus";
+import { useAuth } from "../../context/AuthContext";
 
 const EmployerDashboard = () => {
   const navigate = useNavigate();
@@ -18,6 +20,7 @@ const EmployerDashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+   const { user } = useAuth();
 
   const getDashboardOverview = async () => {
     try {
@@ -94,6 +97,10 @@ const EmployerDashboard = () => {
             trend={trends.totalHired} 
           />
         </div>
+
+          <div className="lg:col-span-1">
+                <SubscriptionStatus user={user} />
+            </div>
 
         {/* Recent Applications Table */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

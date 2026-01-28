@@ -70,11 +70,18 @@ NOTIFICATIONS: {
     JOBS: "/api/admin/jobs",
     JOB_DELETE: (id) => `/api/admin/jobs/${id}`,
     JOB_FEATURE: (id) => `/api/admin/jobs/${id}/feature`,
+    SUBSCRIPTIONS: "/api/admin/subscriptions",
+    REVENUE: "/api/admin/subscriptions/stats",
+    SETTINGS: "/api/admin/settings",
   },
 
   ARTICLES: {
-    GET_ALL: "/api/articles", // List (Public)
-    GET_BY_SLUG: (slug) => `/api/articles/slug/${slug}`, // Detail (Public) - Updated based on your fix
+    GET_ALL: "/api/articles", 
+    GET_BY_SLUG: (slug) => `/api/articles/slug/${slug}`, 
+  },
+
+  SUBSCRIPTION: {
+    CREATE_TRANSACTION: "/api/subscriptions/create-transaction",
   },
 
   IMAGE: {

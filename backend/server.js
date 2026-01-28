@@ -16,6 +16,10 @@ const adminDashboardRoute = require("./route/admin/dashboardRoute");
 const articleRoute = require("./route/articleRoute");
 const userManagementRoute = require("./route/admin/userManagementRoute");
 const adminJobRoute = require("./route/admin/jobManagementRoute");
+const subscriptionRoute = require("./route/subscriptionRoute");
+const adminSubscriptionRoute = require("./route/admin/subscriptionManagementRoute");
+const adminSettingsRoute = require("./route/admin/settingsRoute");
+const { checkMaintenance } = require("./middleware/maintenanceMiddleware");
 const app = express();
 
 
@@ -50,6 +54,10 @@ app.use("/api/admin/dashboard", adminDashboardRoute);
 app.use("/api/articles", articleRoute);
 app.use("/api/admin/users", userManagementRoute);
 app.use("/api/admin/jobs", adminJobRoute);
+app.use("/api/subscriptions", subscriptionRoute);
+app.use("/api/admin/subscriptions", adminSubscriptionRoute);
+app.use("/api/admin/settings", adminSettingsRoute);
+app.use("/api", checkMaintenance);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

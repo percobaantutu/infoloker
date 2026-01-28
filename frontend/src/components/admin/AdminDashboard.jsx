@@ -1,9 +1,11 @@
 import React from "react";
 import AdminLayout from "../../components/admin/layout/AdminLayout";
 import { useAdminDashboard } from "../../hooks/admin/useAdminDashboard";
-import { Users, Briefcase, FileText, Activity } from "lucide-react";
+import { Users, Briefcase, FileText, Activity, DollarSign } from "lucide-react";
 import LoadingSpinner from "../../components/layout/LoadingSpinner";
 import moment from "moment";
+import { formatRupiah } from "../../utils/formatRupiah";
+import ChartWidget from "./layout/ChartWidget";
 
 const StatCard = ({ title, value, icon: Icon, color }) => (
   <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
@@ -55,7 +57,39 @@ const AdminDashboard = () => {
             icon={FileText} 
             color="bg-orange-500" 
           />
+          <StatCard 
+            title="Total Revenue" 
+            value={`Rp ${formatRupiah(String(stats?.revenue?.total || 0))}`} 
+            icon={DollarSign} 
+            color="bg-emerald-600" 
+          />
         </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <ChartWidget 
+            title="User Growth (Last 30 Days)" 
+            type="line" 
+            data={stats?.charts?.userGrowth} 
+            color="#215E61" 
+          />
+          <ChartWidget 
+            title="Job Applications (Last 30 Days)" 
+            type="bar" 
+            data={stats?.charts?.applicationTrend} 
+            color="#FE7F2D"
+          />
+        </div>
+
+        <div className="w-full">
+            <ChartWidget 
+                title="Revenue Trend (Last 30 Days)" 
+                type="line" 
+                data={stats?.charts?.revenueTrend} 
+                color="#059669" 
+                isCurrency={true}
+            />
+        </div>
+
 
         {/* Recent Users Table */}
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">

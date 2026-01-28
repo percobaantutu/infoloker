@@ -40,7 +40,7 @@ const Header = () => {
     
   )}
             
-            {/* If logged in, show Profile Dropdown. If not, show Login/Signup */}
+          
             {isAuthenticated ? (
               <div className="flex items-center space-x-2">
                 <LanguageSwitcher />
