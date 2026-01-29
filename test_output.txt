@@ -1,0 +1,9 @@
+--- Testing Validators ---
+✅ PASSED: Valid register data should pass
+✅ PASSED: Invalid register data should fail
+✅ PASSED: Valid login data should pass
+✅ PASSED: Valid job payload should pass
+✅ PASSED: Invalid job payload should fail
+✅ PASSED: Valid status should pass
+✅ PASSED: Invalid status should fail
+--- All Tests Passed ---

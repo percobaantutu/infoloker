@@ -4,26 +4,23 @@ const { register, login, getMe, testEmail, forgotPassword, resetPassword, verify
 const { protect } = require("../middleware/authMiddleware");
 const upload = require("../middleware/uploadMiddleware");
 const { authLimiter } = require("../middleware/rateLimitMiddleware");
+const { validateRequest } = require("../middleware/validationMiddleware");
+const {
+  registerSchema, loginSchema, verifyEmailSchema, resendOtpSchema,
+  forgotPasswordSchema, resetPasswordSchema, googleLoginSchema
+} = require("../validators/authValidator");
 
 const router = express.Router();
 
-router.post("/register", authLimiter, upload.single("avatar"), register);
-router.post("/login", authLimiter, login);
-router.post("/google", authLimiter, googleLogin);
-router.post("/forgot-password", authLimiter, forgotPassword);
-router.put("/reset-password/:resetToken", authLimiter, resetPassword);
-router.post("/verify-email", authLimiter, verifyEmail);
-router.post("/resend-otp", authLimiter, resendOtp);
+router.post("/register", authLimiter, upload.single("avatar"), validateRequest(registerSchema), register);
+router.post("/login", authLimiter, validateRequest(loginSchema), login);
+router.post("/google", authLimiter, validateRequest(googleLoginSchema), googleLogin);
+router.post("/forgot-password", authLimiter, validateRequest(forgotPasswordSchema), forgotPassword);
+router.put("/reset-password/:resetToken", authLimiter, validateRequest(resetPasswordSchema), resetPassword);
+router.post("/verify-email", authLimiter, validateRequest(verifyEmailSchema), verifyEmail);
+router.post("/resend-otp", authLimiter, validateRequest(resendOtpSchema), resendOtp);
 
 router.get("/me", protect, getMe); 
-
-router.post("/register", upload.single("avatar"), register);
-
-
-router.post("/login", login);
-
-
-router.get("/me", protect, getMe);
 
 router.post("/upload-image", upload.single("image"), (req, res) => {
   if (!req.file) {
@@ -34,9 +31,5 @@ router.post("/upload-image", upload.single("image"), (req, res) => {
 });
 
 router.post("/test-email", testEmail);
-router.post("/verify-email", verifyEmail); 
-router.post("/resend-otp", resendOtp);   
-router.post("/forgot-password", forgotPassword);
-router.put("/reset-password/:resetToken", resetPassword);
-router.post("/google", googleLogin);
+
 module.exports = router;
