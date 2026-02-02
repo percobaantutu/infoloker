@@ -10,9 +10,9 @@ const snap = new midtransClient.Snap({
 });
 
 const PLANS = {
-  basic: { price: 99000, durationInDays: 30, name: "Basic Plan" },
-  premium: { price: 299000, durationInDays: 30, name: "Premium Plan" },
-  enterprise: { price: 999000, durationInDays: 365, name: "Enterprise Plan" },
+  basic: { price: 39000, durationInDays: 30, name: "Basic Plan" },
+  premium: { price: 89000, durationInDays: 30, name: "Premium Plan" },
+  enterprise: { price: 123000, durationInDays: 365, name: "Enterprise Plan" },
 };
 
 // @desc    Create Payment Transaction

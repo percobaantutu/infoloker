@@ -73,7 +73,7 @@ const PricingPage = () => {
             {/* Basic */}
             <PricingCard
               title="Basic"
-              price={99000}
+              price={39000}
               icon={Shield}
               features={[
                 "Post up to 3 jobs",
@@ -88,7 +88,7 @@ const PricingPage = () => {
             {/* Premium */}
             <PricingCard
               title="Premium"
-              price={299000}
+              price={89000}
               icon={Star}
               recommended={true}
               features={[
@@ -105,7 +105,7 @@ const PricingPage = () => {
             {/* Enterprise */}
             <PricingCard
               title="Enterprise"
-              price={999000}
+              price={123000}
               icon={Zap}
               features={[
                 "Everything in Premium",
