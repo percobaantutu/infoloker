@@ -1,11 +1,26 @@
 const Article = require("../../models/Article");
 const User = require("../../models/User");
+const sanitizeHtml = require('sanitize-html');
+
+const sanitizeOptions = {
+
+  allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img', 'h1', 'h2', 'span', 'iframe']),
+  allowedAttributes: {
+    ...sanitizeHtml.defaults.allowedAttributes,
+    '*': ['style', 'class', 'id'],
+    'iframe': ['src', 'width', 'height', 'frameborder', 'allowfullscreen'],
+    'img': ['src', 'alt', 'width', 'height']
+  }
+};
 
 // @desc    Create new article
 // @route   POST /api/articles
 // @access  Private (Admin)
 exports.createArticle = async (req, res) => {
   try {
+     if (req.body.content) {
+      req.body.content = sanitizeHtml(req.body.content, sanitizeOptions);
+    }
     const { title, excerpt, content, category, tags, status, readTime } = req.body;
 
     // Handle Cover Image
@@ -107,6 +122,9 @@ exports.getArticleBySlug = async (req, res) => {
 // @access  Private (Admin)
 exports.updateArticle = async (req, res) => {
   try {
+     if (req.body.content) {
+      req.body.content = sanitizeHtml(req.body.content, sanitizeOptions);
+    }
     let article = await Article.findById(req.params.id);
     if (!article) return res.status(404).json({ message: "Article not found" });
 

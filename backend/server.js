@@ -1,5 +1,8 @@
 require("dotenv").config(); 
 const express = require("express");
+const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
+const hpp = require("hpp");
 const cors = require("cors");
 const path = require("path");
 const connectDB = require("./config/db");
@@ -20,16 +23,91 @@ const subscriptionRoute = require("./route/subscriptionRoute");
 const adminSubscriptionRoute = require("./route/admin/subscriptionManagementRoute");
 const adminSettingsRoute = require("./route/admin/settingsRoute");
 const { checkMaintenance } = require("./middleware/maintenanceMiddleware");
-const app = express();
 
+const app = express();
 
 app.use(
   cors({
-    origin: "*", 
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: "http://localhost:5173", 
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "https://app.sandbox.midtrans.com", 
+          "https://app.midtrans.com",         
+          "https://accounts.google.com",      
+        ],
+        connectSrc: [
+          "'self'",
+          "http://localhost:8000",
+          "https://app.sandbox.midtrans.com",
+          "https://app.midtrans.com",
+          "https://accounts.google.com",
+          "https://api.cloudinary.com",
+        ],
+        frameSrc: [
+          "'self'",
+          "https://app.sandbox.midtrans.com",
+          "https://app.midtrans.com",
+          "https://accounts.google.com",
+        ],
+        imgSrc: [
+          "'self'",
+          "data:",
+          "https://res.cloudinary.com",      
+        ],
+      },
+    },
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+    crossOriginEmbedderPolicy: false,
+    
+  })
+);
+
+app.use(express.json({ limit: "1mb" })); 
+
+const sanitizeData = (obj) => {
+  if (obj instanceof Object) {
+    for (const key in obj) {
+      // If a key starts with $ (Mongo Injection) or contains a .
+      if (key.startsWith("$") || key.includes(".")) {
+        delete obj[key];
+      } else {
+        // Recursively check nested objects
+        sanitizeData(obj[key]);
+      }
+    }
+  }
+  return obj;
+};
+
+// 2. Custom Middleware to use the sanitizer
+app.use((req, res, next) => {
+  if (req.body) sanitizeData(req.body);
+  if (req.params) sanitizeData(req.params);
+  if (req.query) sanitizeData(req.query);
+  next();
+});
+
+
+
+app.use(hpp());
+
+
+
+
+
+
 
 
 connectDB(); 
