@@ -25,19 +25,23 @@ const Header = () => {
           
           {/* 1. Logo (Left) */}
           <div className="flex items-center cursor-pointer" onClick={() => navigate("/")}>
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-gray-900 p-2 rounded-lg flex mr-2 items-center justify-center shadow-md">
-              <Briefcase className="text-white w-6 h-6" />
+            <div className="mr-2">
+              <Briefcase className="text-blue-600 w-8 h-8" />
             </div>
-            <span className="text-xl font-bold text-gray-800 tracking-tight">infoloker</span>
+            <span className="text-xl font-bold text-gray-900 tracking-tight">infoloker</span>
           </div>
 
           {/* 2. Desktop Navigation (Right) */}
           <div className="hidden md:flex items-center space-x-6">
           {(!user || user.role !== "employer") && (
-    <Link to="/find-jobs" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">
-      {t('nav.findJobs')}
-    </Link>
-    
+            <>
+              <Link to="/find-jobs" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">
+                {t('nav.findJobs')}
+              </Link>
+              <Link to="/articles" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">
+                 {t('nav.articles', 'Articles')}
+              </Link>
+            </>
   )}
             
           

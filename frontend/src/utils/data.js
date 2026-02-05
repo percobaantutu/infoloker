@@ -56,9 +56,6 @@ export const NAVIGATION_MENU = [
   { id: "pricing", name: "Upgrade Plan", icon: CreditCard },
 ];
 
-// Categories
-// Note: You might want to add a "categories" section to your JSON later. 
-// For now, I kept them as is, but you can wrap them in t() in your component like: t(`categories.${category.value}`)
 export const CATEGORIES = [
   { value: "Engineering", label: "Engineering" },
   { value: "Design", label: "Design" },
