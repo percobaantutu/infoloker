@@ -2,6 +2,7 @@ const Job = require("../models/Job");
 const User = require("../models/User");
 const Application = require("../models/Application");
 const SavedJob = require("../models/SavedJob");
+const { invalidateJobCache } = require("../utils/cacheInvalidator");
 
 const JOB_LIMITS = {
   free: 1,
@@ -36,6 +37,10 @@ exports.createJob = async (req, res) => {
 
     
     const job = await Job.create({ ...req.body, company: req.user._id });
+    
+    // Invalidate Cache
+    await invalidateJobCache();
+
     res.status(201).json(job);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -134,6 +139,10 @@ exports.updateJob = async (req, res) => {
     }
 
     const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    
+    // Invalidate Cache
+    await invalidateJobCache(req.params.id);
+
     res.status(200).json(updatedJob);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -150,6 +159,10 @@ exports.deleteJob = async (req, res) => {
     }
 
     await job.deleteOne();
+
+    // Invalidate Cache
+    await invalidateJobCache(req.params.id);
+
     res.status(200).json({ message: "Job deleted successfully" });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -167,6 +180,10 @@ exports.toggleCloseJob = async (req, res) => {
 
     job.isClosed = !job.isClosed;
     await job.save();
+
+    // Invalidate Cache
+    await invalidateJobCache(req.params.id);
+
     res.status(200).json({ message: `Job is now ${job.isClosed ? "Closed" : "Open"}`, isClosed: job.isClosed });
   } catch (err) {
     res.status(500).json({ message: err.message });

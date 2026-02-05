@@ -12,13 +12,14 @@ const {
 const { protect } = require("../middleware/authMiddleware");
 const validate = require("../middleware/validationMiddleware"); 
 const { jobSchema } = require("../validators/jobValidator");   
+const cacheMiddleware = require("../middleware/cacheMiddleware");
 
 const router = express.Router();
 
 
 router.route("/")
   .post(protect, validate(jobSchema), createJob) 
-  .get(getJobs);
+  .get(cacheMiddleware(300), getJobs);
 
 
 router.route("/get-jobs-employer")
@@ -26,7 +27,7 @@ router.route("/get-jobs-employer")
 
 
 router.route("/:id")
-  .get(getJobById)
+  .get(cacheMiddleware(1800), getJobById)
   .put(protect, validate(jobSchema), updateJob) 
   .delete(protect, deleteJob);
 
