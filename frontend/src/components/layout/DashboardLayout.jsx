@@ -5,6 +5,7 @@ import { useAuth } from "../../context/AuthContext";
 import { NAVIGATION_MENU } from "../../utils/data";
 import NavigationItem from "./NavigationItem";
 import ProfileDropdown from "./ProfileDropdown";
+import NotificationDropdown from "./NotificationDropdown";
 import LanguageSwitcher from "../LanguageSwitcher";
 import { useTranslation } from "react-i18next";
 
@@ -115,6 +116,7 @@ const DashboardLayout = ({ activeMenu, children }) => {
           </div>
             <div className="flex items-center space-x-2">
               <LanguageSwitcher />
+              <NotificationDropdown />
               <ProfileDropdown profileRoute={user?.role === "Employer" ? "/company-profile" : "/profile"} showRole={true} />
             </div>
         </header>
