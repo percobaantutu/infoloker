@@ -2,6 +2,7 @@ const Application = require("../models/Application");
 const Job = require("../models/Job");
 const sendEmail = require("../utils/sendEmail");
 const Notification = require("../models/Notification");
+const sseService = require("../services/sseService");
 
 // @desc    Apply to a job
 // @route   POST /api/applications/:jobId
@@ -66,6 +67,13 @@ exports.applyToJob = async (req, res) => {
   type: "new_applicant",
   relatedId: application._id
 });
+      // Broadcast via SSE for real-time notification
+      sseService.sendToUser(job.company._id, {
+        type: "new_applicant",
+        message: `New applicant: ${req.user.name} for ${job.title}`,
+        relatedId: application._id,
+        createdAt: new Date().toISOString()
+      });
     } catch (emailError) {
       console.error("New Applicant Email Failed:", emailError);
     }
@@ -191,6 +199,13 @@ exports.updateStatus = async (req, res) => {
   type: "status_update",
   relatedId: application._id
 });
+      // Broadcast via SSE for real-time notification
+      sseService.sendToUser(application.applicant._id, {
+        type: "status_update",
+        message: `Status Update: Your application for ${application.job.title} is now ${status}`,
+        relatedId: application._id,
+        createdAt: new Date().toISOString()
+      });
     } catch (emailError) {
       console.error("Status Email Failed:", emailError);
       // We don't stop the request here, just log the error

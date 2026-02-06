@@ -57,6 +57,7 @@ export const API_PATHS = {
 NOTIFICATIONS: {
     GET_ALL: "/api/notifications",
     MARK_READ: "/api/notifications/read",
+    STREAM: "/api/notifications/stream",
   },
 
   ADMIN: {

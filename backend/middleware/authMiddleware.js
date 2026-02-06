@@ -6,11 +6,16 @@ const protect = async (req, res, next) => {
   try {
     let token = req.headers.authorization; // Get authorization header
 
-    // 1. Check for token and 'Bearer' format
+    // 1. Check for token in header (Bearer format) or query param (for SSE)
     if (token && token.startsWith("Bearer")) {
       // Extract the actual token string (removes "Bearer ")
       token = token.split(" ")[1];
+    } else if (req.query.token) {
+      // SSE connections pass token via query param (EventSource doesn't support headers)
+      token = req.query.token;
+    }
 
+    if (token) {
       // 2. Verify the token using the secret key
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
