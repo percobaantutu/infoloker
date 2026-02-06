@@ -266,7 +266,7 @@
   
   "landing": {
     "hero": {
-      "title": "Discover Your Dream Job with",
+      "title": "Discover Your Dream Job with infoloker",
       "subtitle": "Join thousands of job seekers and employers connecting daily. Find the perfect match for your career goals.",
       "findJobs": "Find Jobs Now",
       "postJob": "Post a Job"
@@ -316,6 +316,17 @@
       "jobsPosted": "Jobs Posted",
       "successfulHires": "Successful Hires",
       "matchRate": "Match Rate"
+    },
+    "categories": {
+      "title": "Explore by Category",
+      "subtitle": "Find the right job in your area of expertise.",
+      "exploreMore": "Explore more jobs"
+    },
+    "articles": {
+      "title": "Career Advice & Insights",
+      "subtitle": "Stay ahead of the curve with our latest articles on career growth and industry trends.",
+      "viewAll": "View all articles",
+      "noArticles": "No articles found."
     }
   },
   
@@ -356,5 +367,27 @@
     "tagline": "Connecting talented professionals with innovative companies worldwide. Your career success is our mission.",
     "copyright": "© {{year}} Restu Muhammad.",
     "madeWith": "Made with ❤️ Happy Coding"
+  },
+  
+  "articles": {
+    "careerBlog": "Career Blog",
+    "pageTitle": "Insights for your career journey",
+    "pageSubtitle": "Expert advice, industry trends, and tips to help you land your dream job and succeed in your career.",
+    "searchPlaceholder": "Search articles...",
+    "allPosts": "All Posts",
+    "noArticles": "No articles found",
+    "adjustFilters": "Try adjusting your search or category filter.",
+    "pageOf": "Page {{current}} of {{total}}"
+  },
+  
+  "articleCategories": {
+    "Career Tips": "Career Tips",
+    "Interview Guide": "Interview Guide",
+    "Salary Guide": "Salary Guide",
+    "Industry News": "Industry News",
+    "Company Culture": "Company Culture",
+    "Resume Writing": "Resume Writing",
+    "Skill Development": "Skill Development",
+    "Job Search Strategy": "Job Search Strategy"
   }
 }

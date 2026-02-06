@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Search, PenTool } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
@@ -10,6 +11,7 @@ import { useDebounce } from "../../hooks/useDebounce";
 import ArticleCard from "../../components/articles/Articlecard";
 
 const ArticlesPage = () => {
+  const { t } = useTranslation();
   const { 
     articles, 
     loading, 
@@ -48,13 +50,13 @@ const ArticlesPage = () => {
           <div className="max-w-4xl mx-auto text-center space-y-4">
             <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-bold tracking-wide uppercase">
               <PenTool className="w-3 h-3 mr-2" />
-              Career Blog
+              {t('articles.careerBlog', 'Career Blog')}
             </span>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 font-display">
-              Insights for your career journey
+              {t('articles.pageTitle', 'Insights for your career journey')}
             </h1>
             <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-              Expert advice, industry trends, and tips to help you land your dream job and succeed in your career.
+              {t('articles.pageSubtitle', 'Expert advice, industry trends, and tips to help you land your dream job and succeed in your career.')}
             </p>
 
             {/* Search Bar */}
@@ -64,7 +66,7 @@ const ArticlesPage = () => {
               </div>
               <input
                 type="text"
-                placeholder="Search articles..."
+                placeholder={t('articles.searchPlaceholder', 'Search articles...')}
                 value={filters.search}
                 onChange={handleSearchChange}
                 className="block w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all shadow-sm"
@@ -86,7 +88,7 @@ const ArticlesPage = () => {
                   : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
               }`}
             >
-              All Posts
+              {t('articles.allPosts', 'All Posts')}
             </button>
             {ARTICLE_CATEGORIES.map((cat) => (
               <button
@@ -98,7 +100,7 @@ const ArticlesPage = () => {
                     : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
                 }`}
               >
-                {cat.label}
+                {t(`articleCategories.${cat.value}`, cat.label)}
               </button>
             ))}
           </div>
@@ -119,8 +121,8 @@ const ArticlesPage = () => {
               <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Search className="w-8 h-8 text-gray-400" />
               </div>
-              <h3 className="text-lg font-bold text-gray-900">No articles found</h3>
-              <p className="text-gray-500">Try adjusting your search or category filter.</p>
+              <h3 className="text-lg font-bold text-gray-900">{t('articles.noArticles', 'No articles found')}</h3>
+              <p className="text-gray-500">{t('articles.adjustFilters', 'Try adjusting your search or category filter.')}</p>
             </div>
           )}
 
@@ -132,17 +134,17 @@ const ArticlesPage = () => {
                   onClick={() => setFilters(prev => ({ ...prev, page: prev.page - 1 }))}
                   className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium disabled:opacity-50 hover:bg-gray-50"
                 >
-                  Previous
+                  {t('common.previous', 'Previous')}
                 </button>
                 <span className="px-4 py-2 text-sm text-gray-600">
-                  Page {pagination.currentPage} of {pagination.totalPages}
+                  {t('articles.pageOf', 'Page {{current}} of {{total}}', { current: pagination.currentPage, total: pagination.totalPages })}
                 </span>
                 <button 
                   disabled={pagination.currentPage === pagination.totalPages}
                   onClick={() => setFilters(prev => ({ ...prev, page: prev.page + 1 }))}
                   className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium disabled:opacity-50 hover:bg-gray-50"
                 >
-                  Next
+                  {t('common.next', 'Next')}
                 </button>
              </div>
           )}

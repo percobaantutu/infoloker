@@ -1,6 +1,9 @@
 import { Briefcase } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const Footer = () => {
+  const { t } = useTranslation();
+  
   return (
     <footer className="relative bg-blue-600 text-white overflow-hidden">
       <div className="relative z-10 px-6 py-16 ">
@@ -15,13 +18,13 @@ export const Footer = () => {
                 </div>
                 <h3 className="text-2xl font-bold text-white">infoloker</h3>
               </div>
-              <p className="text-sm text-blue-100 max-w-md mx-auto">Connecting talented professionals with innovative companies worldwide. Your career success is our mission.</p>
+              <p className="text-sm text-blue-100 max-w-md mx-auto">{t('footer.tagline')}</p>
             </div>
 
             {/* Copyright */}
             <div className="space-y-2">
-              <p className="text-sm text-blue-100">© {new Date().getFullYear()} Restu Muhammad.</p>
-              <p className="text-xs text-blue-200">Made with ❤️ Happy Coding</p>
+              <p className="text-sm text-blue-100"><a href="https://www.instagram.com/restu__ibu">{t('footer.copyright', { year: new Date().getFullYear() })}</a></p>
+              
             </div>
           </div>
         </div>

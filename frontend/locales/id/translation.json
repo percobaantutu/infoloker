@@ -267,7 +267,7 @@
   
   "landing": {
     "hero": {
-      "title": "Temukan Pekerjaan Impian Anda dengan",
+      "title": "Temukan Pekerjaan Impian Anda dengan infoloker",
       "subtitle": "Bergabunglah dengan ribuan pencari kerja dan perusahaan yang terhubung setiap hari. Temukan kecocokan sempurna untuk tujuan karir Anda.",
       "findJobs": "Cari Lowongan Sekarang",
       "postJob": "Posting Lowongan"
@@ -317,6 +317,17 @@
       "jobsPosted": "Lowongan Diposting",
       "successfulHires": "Perekrutan Sukses",
       "matchRate": "Tingkat Kecocokan"
+    },
+    "categories": {
+      "title": "Jelajahi berdasarkan Kategori",
+      "subtitle": "Temukan pekerjaan yang tepat di bidang keahlian Anda.",
+      "exploreMore": "Jelajahi lowongan lainnya"
+    },
+    "articles": {
+      "title": "Saran Karir & Wawasan",
+      "subtitle": "Tetap terdepan dengan artikel terbaru kami tentang pertumbuhan karir dan tren industri.",
+      "viewAll": "Lihat semua artikel",
+      "noArticles": "Tidak ada artikel ditemukan."
     }
   },
   
@@ -357,5 +368,27 @@
     "tagline": "Menghubungkan profesional berbakat dengan perusahaan inovatif di seluruh dunia. Kesuksesan karir Anda adalah misi kami.",
     "copyright": "© {{year}} Restu Muhammad.",
     "madeWith": "Dibuat dengan ❤️ Happy Coding"
+  },
+  
+  "articles": {
+    "careerBlog": "Blog Karir",
+    "pageTitle": "Wawasan untuk perjalanan karir Anda",
+    "pageSubtitle": "Saran ahli, tren industri, dan tips untuk membantu Anda mendapatkan pekerjaan impian dan sukses dalam karir Anda.",
+    "searchPlaceholder": "Cari artikel...",
+    "allPosts": "Semua Artikel",
+    "noArticles": "Tidak ada artikel ditemukan",
+    "adjustFilters": "Coba sesuaikan pencarian atau filter kategori Anda.",
+    "pageOf": "Halaman {{current}} dari {{total}}"
+  },
+  
+  "articleCategories": {
+    "Career Tips": "Tips Karir",
+    "Interview Guide": "Panduan Wawancara",
+    "Salary Guide": "Panduan Gaji",
+    "Industry News": "Berita Industri",
+    "Company Culture": "Budaya Perusahaan",
+    "Resume Writing": "Penulisan Resume",
+    "Skill Development": "Pengembangan Keahlian",
+    "Job Search Strategy": "Strategi Pencarian Kerja"
   }
 }

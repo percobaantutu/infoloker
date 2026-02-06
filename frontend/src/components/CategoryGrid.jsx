@@ -47,7 +47,7 @@ const CategoryGrid = () => {
                     <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-100 transition-colors">
                         <Icon className="w-6 h-6 text-gray-600 group-hover:text-blue-600 transition-colors" />
                     </div>
-                    <h3 className="font-semibold text-gray-900 group-hover:text-blue-700 transition-colors">{cat.label}</h3>
+                    <h3 className="font-semibold text-gray-900 group-hover:text-blue-700 transition-colors">{t(`categories.${cat.value}`, cat.label)}</h3>
                    
                 </div>
             );
@@ -60,7 +60,7 @@ const CategoryGrid = () => {
                     <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-100 transition-colors">
                        🔍
                     </div>
-                    <h3 className="font-semibold text-gray-900 group-hover:text-blue-700 transition-colors">Explore more job</h3>
+                    <h3 className="font-semibold text-gray-900 group-hover:text-blue-700 transition-colors">{t('landing.categories.exploreMore', 'Explore more jobs')}</h3>
                     
                 </div>
       </div>
