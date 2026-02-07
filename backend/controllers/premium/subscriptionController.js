@@ -2,6 +2,8 @@ require("dotenv").config();
 const midtransClient = require("midtrans-client");
 const Subscription = require("../../models/Subscription");
 const User = require("../../models/User");
+const sendEmail = require("../../utils/sendEmail");
+const generateSubscriptionEmailTemplate = require("../../utils/subscriptionEmailTemplate");
 
 // Initialize Core API
 const snap = new midtransClient.Snap({
@@ -123,10 +125,37 @@ exports.midtransWebhook = async (req, res) => {
       await subscription.save();
 
       // Update User Profile
-      await User.findByIdAndUpdate(subscription.user, {
-        plan: subscription.planType, // Update their plan field
-        // You could add 'subscriptionEnd: endDate' to user model too for easy access
-      });
+      const user = await User.findByIdAndUpdate(
+        subscription.user, 
+        { plan: subscription.planType },
+        { new: true }
+      );
+
+      // Send confirmation email
+      if (user && user.email) {
+        try {
+          const emailHtml = generateSubscriptionEmailTemplate({
+            userName: user.name || user.companyName || "Employer",
+            planName: planDetails.name.replace(" Plan", ""),
+            amount: subscription.amount,
+            startDate: startDate,
+            endDate: endDate,
+            durationInDays: planDetails.durationInDays
+          });
+
+          await sendEmail({
+            email: user.email,
+            subject: `🎉 Langganan ${planDetails.name} Anda Telah Aktif! - Infoloker`,
+            message: `Terima kasih telah berlangganan ${planDetails.name}. Langganan Anda aktif hingga ${endDate.toLocaleDateString('id-ID')}.`,
+            html: emailHtml
+          });
+
+          console.log(`Confirmation email sent to ${user.email}`);
+        } catch (emailError) {
+          console.error("Failed to send confirmation email:", emailError);
+          // Don't fail the webhook if email fails
+        }
+      }
 
       console.log(`Subscription activated for ${subscription.user}`);
     } else if (newStatus === "failed") {

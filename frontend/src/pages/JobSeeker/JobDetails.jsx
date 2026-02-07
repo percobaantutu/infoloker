@@ -17,6 +17,7 @@ import {
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import LoadingSpinner from "../../components/layout/LoadingSpinner";
+import PremiumBadge from "../../components/ui/PremiumBadge";
 import { formatRupiah } from "../../utils/formatRupiah";
 import { useJobDetails } from "../../hooks/useJobDetails";
 import { useTranslation } from "react-i18next";
@@ -121,9 +122,12 @@ const JobDetails = () => {
                     </div>
                     <div>
                       <h1 className="text-2xl font-bold text-gray-900">{job.title}</h1>
-                      <div className="flex items-center text-gray-500 mt-1 font-medium">
-                        {job.company?.companyName || t('job.confidentialCompany')}
-                        <span className="mx-2">•</span>
+                      <div className="flex items-center text-gray-500 mt-1 font-medium gap-2">
+                        <span className="flex items-center gap-1.5">
+                          {job.company?.companyName || t('job.confidentialCompany')}
+                          <PremiumBadge plan={job.company?.plan} size="sm" />
+                        </span>
+                        <span>•</span>
                         <span className="text-blue-600">{job.location}</span>
                       </div>
                     </div>

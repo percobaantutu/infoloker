@@ -5,6 +5,7 @@ import "moment/locale/id"; // Import Indonesian locale for moment
 import { formatRupiah } from "../../utils/formatRupiah";
 import { useTranslation } from "react-i18next";
 import { JOB_TYPES } from "../../utils/data"; // Import to match values to translation keys
+import PremiumBadge from "../ui/PremiumBadge";
 
 const JobCard = ({ job, onToggleSave }) => {
   const navigate = useNavigate();
@@ -58,9 +59,12 @@ const JobCard = ({ job, onToggleSave }) => {
               <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-1">
                 {job.title}
               </h3>
-              <p className="text-sm text-gray-500 font-medium mb-2">
-                {job.company?.companyName || t('job.unknownCompany')}
-              </p>
+              <div className="flex items-center gap-1.5 mb-2">
+                <p className="text-sm text-gray-500 font-medium">
+                  {job.company?.companyName || t('job.unknownCompany')}
+                </p>
+                <PremiumBadge plan={job.company?.plan} size="sm" showLabel={false} />
+              </div>
             </div>
             
             {/* Save Button */}

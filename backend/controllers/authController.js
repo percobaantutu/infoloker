@@ -192,6 +192,7 @@ exports.login = async (req, res) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      plan: user.plan || "free",
       token: generateToken(user._id),
 
       // Include optional fields, defaulting to an empty string if not present
@@ -326,6 +327,7 @@ exports.googleLogin = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        plan: user.plan || "free",
         avatar: user.avatar,
         token: generateToken(user._id),
         // Add other fields needed for context
@@ -353,6 +355,7 @@ exports.googleLogin = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        plan: user.plan || "free",
         avatar: user.avatar,
         token: generateToken(user._id),
         // Defaults for new user

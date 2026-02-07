@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema(
       expertise: [String],
       articlesPublished: { type: Number, default: 0 }
     },
-    plan: { type: String, enum: ["free", "basic", "premium"], default: "free" },
+    plan: { type: String, enum: ["free", "basic", "premium", "enterprise"], default: "free" },
 
 
   
@@ -81,7 +81,5 @@ userSchema.methods.getResetPasswordToken = function () {
 
   return resetToken;
 };
-
-module.exports = mongoose.model("User", userSchema);
 
 module.exports = mongoose.model("User", userSchema);

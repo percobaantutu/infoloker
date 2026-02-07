@@ -3,6 +3,7 @@ import { ChevronDown, User as UserIcon, LogOut, FileText, Heart, UserCircle, Lay
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useTranslation } from "react-i18next";
+import PremiumBadge from "../ui/PremiumBadge";
 
 const ProfileDropdown = () => {
   const { user, logout } = useAuth();
@@ -57,7 +58,10 @@ const ProfileDropdown = () => {
             
             {/* User Header */}
             <div className="px-4 py-3 border-b border-gray-50 mb-1">
-              <p className="text-sm font-semibold text-gray-900 truncate">{user.name}</p>
+              <div className="flex items-center gap-1.5">
+                <p className="text-sm font-semibold text-gray-900 truncate">{user.name}</p>
+                {user.role === 'employer' && <PremiumBadge plan={user.plan} size="sm" showLabel={false} />}
+              </div>
               <p className="text-xs text-gray-500 truncate">{user.email}</p>
             </div>
 

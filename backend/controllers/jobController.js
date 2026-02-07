@@ -8,7 +8,7 @@ const JOB_LIMITS = {
   free: 1,
   basic: 3,
   premium: Infinity,
-  enterprise: Infinity
+  enterprise: Infinity,
 };
 
 exports.createJob = async (req, res) => {
@@ -17,27 +17,25 @@ exports.createJob = async (req, res) => {
       return res.status(403).json({ message: "Access denied" });
     }
 
-   
-    const userPlan = req.user.plan || "free"; 
+    // Refresh user to get the latest plan from DB (in case subscription was just activated)
+    const freshUser = await User.findById(req.user._id).select("plan");
+    const userPlan = freshUser?.plan || "free";
     const limit = JOB_LIMITS[userPlan];
 
-
-    const activeJobsCount = await Job.countDocuments({ 
+    const activeJobsCount = await Job.countDocuments({
       company: req.user._id,
-      isClosed: false 
+      isClosed: false,
     });
 
-    
     if (activeJobsCount >= limit) {
-      return res.status(403).json({ 
-        message: "LIMIT_REACHED", 
-        detail: `You have reached the limit of ${limit} active jobs for the ${userPlan} plan. Please upgrade to post more.` 
+      return res.status(403).json({
+        message: "LIMIT_REACHED",
+        detail: `You have reached the limit of ${limit} active jobs for the ${userPlan} plan. Please upgrade to post more.`,
       });
     }
 
-    
     const job = await Job.create({ ...req.body, company: req.user._id });
-    
+
     // Invalidate Cache
     await invalidateJobCache();
 
@@ -48,7 +46,8 @@ exports.createJob = async (req, res) => {
 };
 
 exports.getJobs = async (req, res) => {
-  const { keyword, location, category, type, minSalary, maxSalary, userId } = req.query;
+  const { keyword, location, category, type, minSalary, maxSalary, userId } =
+    req.query;
 
   const query = {
     isClosed: false,
@@ -66,16 +65,22 @@ exports.getJobs = async (req, res) => {
   }
 
   try {
-    const jobs = await Job.find(query).populate("company", "name companyName companyLogo location").sort({ createdAt: -1 });
+    const jobs = await Job.find(query)
+      .populate("company", "name companyName companyLogo location plan")
+      .sort({ createdAt: -1 });
 
     let savedJobsIds = [];
     let appliedJobStatusMap = {};
 
     if (userId && userId !== "undefined") {
-      const savedJobs = await SavedJob.find({ jobseeker: userId }).select("job");
+      const savedJobs = await SavedJob.find({ jobseeker: userId }).select(
+        "job",
+      );
       savedJobsIds = savedJobs.map((sj) => sj.job.toString());
 
-      const applications = await Application.find({ applicant: userId }).select("job status");
+      const applications = await Application.find({ applicant: userId }).select(
+        "job status",
+      );
       applications.forEach((app) => {
         appliedJobStatusMap[app.job.toString()] = app.status;
       });
@@ -99,7 +104,10 @@ exports.getJobs = async (req, res) => {
 
 exports.getJobById = async (req, res) => {
   try {
-    const job = await Job.findById(req.params.id).populate("company", "name companyName companyLogo companyDescription email");
+    const job = await Job.findById(req.params.id).populate(
+      "company",
+      "name companyName companyLogo companyDescription email plan",
+    );
     if (!job) return res.status(404).json({ message: "Job not found" });
     res.status(200).json(job);
   } catch (err) {
@@ -112,7 +120,9 @@ exports.getJobsEmployer = async (req, res) => {
     if (req.user.role !== "employer") {
       return res.status(403).json({ message: "Access denied" });
     }
-    const jobs = await Job.find({ company: req.user._id }).sort({ createdAt: -1 }).lean();
+    const jobs = await Job.find({ company: req.user._id })
+      .sort({ createdAt: -1 })
+      .lean();
     const jobsWithStats = await Promise.all(
       jobs.map(async (job) => {
         const count = await Application.countDocuments({ job: job._id });
@@ -120,7 +130,7 @@ exports.getJobsEmployer = async (req, res) => {
           ...job,
           applicationsCount: count,
         };
-      })
+      }),
     );
 
     res.status(200).json(jobsWithStats);
@@ -135,11 +145,15 @@ exports.updateJob = async (req, res) => {
     if (!job) return res.status(404).json({ message: "Job not found" });
 
     if (job.company.toString() !== req.user._id.toString()) {
-      return res.status(401).json({ message: "Not authorized to update this job" });
+      return res
+        .status(401)
+        .json({ message: "Not authorized to update this job" });
     }
 
-    const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    
+    const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+
     // Invalidate Cache
     await invalidateJobCache(req.params.id);
 
@@ -155,7 +169,9 @@ exports.deleteJob = async (req, res) => {
     if (!job) return res.status(404).json({ message: "Job not found" });
 
     if (job.company.toString() !== req.user._id.toString()) {
-      return res.status(401).json({ message: "Not authorized to delete this job" });
+      return res
+        .status(401)
+        .json({ message: "Not authorized to delete this job" });
     }
 
     await job.deleteOne();
@@ -184,7 +200,12 @@ exports.toggleCloseJob = async (req, res) => {
     // Invalidate Cache
     await invalidateJobCache(req.params.id);
 
-    res.status(200).json({ message: `Job is now ${job.isClosed ? "Closed" : "Open"}`, isClosed: job.isClosed });
+    res
+      .status(200)
+      .json({
+        message: `Job is now ${job.isClosed ? "Closed" : "Open"}`,
+        isClosed: job.isClosed,
+      });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
