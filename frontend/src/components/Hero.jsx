@@ -44,7 +44,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.6 }} 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-6 mb-6 tracking-tight"
           >
             {t('landing.hero.title', 'Find the job that fits your life')}
           </motion.h1>

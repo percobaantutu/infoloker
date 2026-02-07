@@ -33,7 +33,8 @@ const Header = () => {
 
           {/* 2. Desktop Navigation (Right) */}
           <div className="hidden md:flex items-center space-x-6">
-          {(!user || user.role !== "employer") && (
+          {/* Show Find Jobs and Articles only for non-admin users */}
+          {(!user || (user.role !== "employer" && user.role !== "admin")) && (
             <>
               <Link to="/find-jobs" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">
                 {t('nav.findJobs')}
@@ -42,7 +43,14 @@ const Header = () => {
                  {t('nav.articles', 'Articles')}
               </Link>
             </>
-  )}
+          )}
+          
+          {/* Show Admin Dashboard link for admin users */}
+          {user?.role === "admin" && (
+            <Link to="/admin/dashboard" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">
+              {t('nav.adminDashboard', 'Admin Dashboard')}
+            </Link>
+          )}
             
           
             {isAuthenticated ? (
@@ -69,7 +77,8 @@ const Header = () => {
 
           {/* 3. Mobile Hamburger (Right) */}
           <div className="md:hidden flex items-center space-x-2">
-            <NotificationDropdown />
+            <LanguageSwitcher />
+            {isAuthenticated && <NotificationDropdown />}
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg"
@@ -83,13 +92,16 @@ const Header = () => {
       {/* 4. Mobile Menu Overlay */}
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-16 left-0 w-full bg-white border-b border-gray-100 shadow-xl p-4 flex flex-col space-y-4 animate-in slide-in-from-top-5">
-          <Link 
-            to="/find-jobs" 
-            className="text-base font-medium text-gray-700 py-2 border-b border-gray-50"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            {t('nav.findJobs')}
-          </Link>
+          {/* Show Find Jobs only for non-admin/non-employer users */}
+          {(!user || (user.role !== "employer" && user.role !== "admin")) && (
+            <Link 
+              to="/find-jobs" 
+              className="text-base font-medium text-gray-700 py-2 border-b border-gray-50"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {t('nav.findJobs')}
+            </Link>
+          )}
 
           {isAuthenticated ? (
             <div className="space-y-3 pt-2">
@@ -103,7 +115,14 @@ const Header = () => {
                 </div>
               </div>
               
-              {user.role === 'employer' ? (
+              {user.role === 'admin' ? (
+                <>
+                  <Link to="/admin/dashboard" onClick={() => setMobileMenuOpen(false)} className="block text-gray-600 py-2">{t('nav.adminDashboard', 'Admin Dashboard')}</Link>
+                  <button onClick={handleLogout} className="w-full text-center py-2.5 text-sm text-red-600 hover:bg-red-50 flex items-center">
+                    <LogOut className="w-4 h-4 mr-2" /> {t('nav.logout')}
+                  </button>
+                </>
+              ) : user.role === 'employer' ? (
                 <>
                  <Link to="/employer-dashboard" onClick={() => setMobileMenuOpen(false)} className="block text-gray-600 py-2">{t('nav.dashboard')}</Link>
                  <Link to="/company-profile" onClick={() => setMobileMenuOpen(false)} className="block text-gray-600 py-2">{t('nav.companyProfile')}</Link>
@@ -126,14 +145,22 @@ const Header = () => {
             </div>
           ) : (
             <div className="flex flex-col space-y-3 pt-2">
-              <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="w-full text-center py-2.5 border border-gray-200 rounded-lg text-gray-700 font-medium">
-                {t('nav.login')}
+       
+              <Link 
+                to="/articles" 
+                onClick={() => setMobileMenuOpen(false)} 
+                className="block text-gray-700 py-2 border-b border-gray-50 font-medium"
+              >
+                {t('nav.articles', 'Articles')}
               </Link>
-              <Link to="/signup" onClick={() => setMobileMenuOpen(false)} className="w-full text-center py-2.5 bg-blue-600 text-white rounded-lg font-medium">
-                {t('nav.signup')}
-              </Link>
-              
-               
+              <div className="pt-2 space-y-3">
+                <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="w-full text-center py-2.5 border border-gray-200 rounded-lg text-gray-700 font-medium block">
+                  {t('nav.login')}
+                </Link>
+                <Link to="/signup" onClick={() => setMobileMenuOpen(false)} className="w-full text-center py-2.5 bg-blue-600 text-white rounded-lg font-medium block">
+                  {t('nav.signup')}
+                </Link>
+              </div>
             </div>
           )}
         </div>
