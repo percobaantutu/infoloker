@@ -328,7 +328,12 @@
       "subtitle": "Tetap terdepan dengan artikel terbaru kami tentang pertumbuhan karir dan tren industri.",
       "viewAll": "Lihat semua artikel",
       "noArticles": "Tidak ada artikel ditemukan."
-    }
+    },
+    "latestJobs": "Lowongan Terbaru",
+    "latestJobsSubtitle": "Temukan peluang baru",
+    "ctaTitle": "Ingin memposting lowongan?",
+    "ctaSubtitle": "Jangkau ribuan kandidat berkualitas. Buat akun perusahaan Anda hari ini!",
+    "ctaButton": "Daftar sebagai Perusahaan"
   },
   
   "notification": {

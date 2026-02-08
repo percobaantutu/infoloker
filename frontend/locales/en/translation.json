@@ -327,7 +327,12 @@
       "subtitle": "Stay ahead of the curve with our latest articles on career growth and industry trends.",
       "viewAll": "View all articles",
       "noArticles": "No articles found."
-    }
+    },
+    "latestJobs": "Latest Jobs",
+    "latestJobsSubtitle": "Discover new opportunities",
+    "ctaTitle": "Want to post a job?",
+    "ctaSubtitle": "Reach thousands of qualified candidates. Create your employer account today!",
+    "ctaButton": "Sign Up as Employer"
   },
   
   "notification": {

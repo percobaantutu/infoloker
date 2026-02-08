@@ -6,6 +6,7 @@ import Feature from "../../components/Feature";
 import Footer from "../../components/Footer";
 import ArticlesSection from "../../components/ArticlesSection";
 import CategoryGrid from "../../components/CategoryGrid";
+import LatestJobsCarousel from "../../components/LatestJobsCarousel";
 
 const LandingPage = () => {
   return (
@@ -13,6 +14,7 @@ const LandingPage = () => {
       <Header />
       <Hero />
       <CategoryGrid />
+      <LatestJobsCarousel />
       <div className="py-8">
         <Feature />
       </div>
@@ -23,3 +25,4 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
+
