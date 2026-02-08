@@ -25,6 +25,7 @@ const jobSchema = new mongoose.Schema(
     salaryMax: { type: Number },
 
     // Job status
+    isFeatured: { type: Boolean, default: false },
     isClosed: { type: Boolean, default: false },
   },
   { timestamps: true }

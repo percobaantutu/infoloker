@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import DashboardLayout from "../../components/layout/DashboardLayout";
-import { AlertCircle, MapPin, DollarSign, Briefcase, Users, Eye, Send, Loader } from "lucide-react";
+import { AlertCircle, MapPin, DollarSign, Briefcase, Users, Eye, Send, Loader, Sparkles } from "lucide-react";
 import { CATEGORIES, JOB_TYPES } from "../../utils/data";
 import InputField from "../../components/Input/InputField";
 import SelectField from "../../components/Input/SelectField";
@@ -10,12 +10,25 @@ import { formatRupiah } from "../../utils/formatRupiah";
 import { useJobForm } from "../../hooks/useJobForm";
 import LocationSelect from "../../components/Input/LocationSelect";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../context/AuthContext";
+
+const FEATURED_LIMITS = {
+  free: 0,
+  basic: 1,
+  premium: 3,
+  enterprise: Infinity,
+};
 
 const JobPostingForm = () => {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const { formData, errors, isSubmitting, handleInputChange, handleSubmit, isFormValid, isLoading, isEditMode } = useJobForm();
 
   const [isPreview, setIsPreview] = useState(false);
+
+  const userPlan = user?.plan || "free";
+  const featuredLimit = FEATURED_LIMITS[userPlan] || 0;
+  const canFeature = featuredLimit > 0;
 
   // Translate Categories and Job Types for the SelectFields
   const translatedCategories = CATEGORIES.map(cat => ({
@@ -171,6 +184,34 @@ const JobPostingForm = () => {
                   </div>
                 )}
               </div>
+
+              {/* Featured Job Toggle - Only for Premium Users */}
+              {canFeature && (
+                <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-r from-amber-400 to-orange-500 rounded-lg flex items-center justify-center">
+                        <Sparkles className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900">Feature this job</p>
+                        <p className="text-sm text-gray-600">
+                          Featured jobs appear first in search results ({featuredLimit === Infinity ? 'Unlimited' : `${featuredLimit} slots`})
+                        </p>
+                      </div>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={formData.isFeatured}
+                        onChange={(e) => handleInputChange("isFeatured", e.target.checked)}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gradient-to-r peer-checked:from-amber-400 peer-checked:to-orange-500"></div>
+                    </label>
+                  </div>
+                </div>
+              )}
 
               {/* Action Buttons */}
               <div className="pt-2">

@@ -6,6 +6,7 @@ import { formatRupiah } from "../../utils/formatRupiah";
 import { useTranslation } from "react-i18next";
 import { JOB_TYPES } from "../../utils/data"; // Import to match values to translation keys
 import PremiumBadge from "../ui/PremiumBadge";
+import FeaturedBadge from "../ui/FeaturedBadge";
 
 const JobCard = ({ job, onToggleSave }) => {
   const navigate = useNavigate();
@@ -40,8 +41,17 @@ const JobCard = ({ job, onToggleSave }) => {
   return (
     <div 
       onClick={handleCardClick}
-      className="bg-white rounded-2xl border border-gray-100 p-5 hover:shadow-lg transition-all duration-300 cursor-pointer group relative"
+      className={`bg-white rounded-2xl border p-5 hover:shadow-lg transition-all duration-300 cursor-pointer group relative ${
+        job.isFeatured ? 'border-amber-300 ring-1 ring-amber-200' : 'border-gray-100'
+      }`}
     >
+      {/* Featured Badge - Top Right */}
+      {job.isFeatured && (
+        <div className="absolute top-3 right-3">
+          <FeaturedBadge size="sm" />
+        </div>
+      )}
+
       <div className="flex items-start gap-4">
         {/* Company Logo */}
         <div className="w-14 h-14 bg-gray-50 rounded-xl flex items-center justify-center border border-gray-100 overflow-hidden shrink-0">

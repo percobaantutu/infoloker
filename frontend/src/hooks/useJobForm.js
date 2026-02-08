@@ -19,6 +19,7 @@ export const useJobForm = () => {
     requirements: "",
     salaryMin: "",
     salaryMax: "",
+    isFeatured: false,
   });
 
   const [errors, setErrors] = useState({});
@@ -42,6 +43,7 @@ export const useJobForm = () => {
             requirements: job.requirements,
             salaryMin: String(job.salaryMin),
             salaryMax: String(job.salaryMax),
+            isFeatured: job.isFeatured || false,
           });
         } catch (error) {
           console.error("Fetch error:", error);
@@ -83,6 +85,7 @@ export const useJobForm = () => {
       type: formData.jobType,
       salaryMin: formData.salaryMin,
       salaryMax: formData.salaryMax,
+      isFeatured: formData.isFeatured,
     };
 
     try {

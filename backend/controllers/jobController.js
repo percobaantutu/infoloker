@@ -11,6 +11,13 @@ const JOB_LIMITS = {
   enterprise: Infinity,
 };
 
+const FEATURED_LIMITS = {
+  free: 0,
+  basic: 1,
+  premium: 3,
+  enterprise: Infinity,
+};
+
 exports.createJob = async (req, res) => {
   try {
     if (req.user.role !== "employer") {
@@ -32,6 +39,23 @@ exports.createJob = async (req, res) => {
         message: "LIMIT_REACHED",
         detail: `You have reached the limit of ${limit} active jobs for the ${userPlan} plan. Please upgrade to post more.`,
       });
+    }
+
+    // Check featured limit if trying to feature the job
+    if (req.body.isFeatured) {
+      const featuredLimit = FEATURED_LIMITS[userPlan];
+      const featuredJobsCount = await Job.countDocuments({
+        company: req.user._id,
+        isFeatured: true,
+        isClosed: false,
+      });
+
+      if (featuredJobsCount >= featuredLimit) {
+        return res.status(403).json({
+          message: "FEATURED_LIMIT_REACHED",
+          detail: `You have reached the limit of ${featuredLimit} featured jobs for the ${userPlan} plan.`,
+        });
+      }
     }
 
     const job = await Job.create({ ...req.body, company: req.user._id });
@@ -67,7 +91,7 @@ exports.getJobs = async (req, res) => {
   try {
     const jobs = await Job.find(query)
       .populate("company", "name companyName companyLogo location plan")
-      .sort({ createdAt: -1 });
+      .sort({ isFeatured: -1, createdAt: -1 });
 
     let savedJobsIds = [];
     let appliedJobStatusMap = {};

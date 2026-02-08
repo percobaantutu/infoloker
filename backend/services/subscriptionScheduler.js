@@ -6,6 +6,7 @@
 const cron = require("node-cron");
 const Subscription = require("../models/Subscription");
 const User = require("../models/User");
+const Job = require("../models/Job");
 const sendEmail = require("../utils/sendEmail");
 const {
   generateExpirationReminderTemplate,
@@ -43,6 +44,13 @@ const expireSubscriptions = async () => {
 
         // 2. Downgrade user plan to free
         await User.findByIdAndUpdate(subscription.user._id, { plan: "free" });
+
+        // 3. Un-feature all jobs from this employer
+        await Job.updateMany(
+          { company: subscription.user._id, isFeatured: true },
+          { isFeatured: false }
+        );
+        console.log(`[Scheduler] Un-featured all jobs for user ${subscription.user._id}`);
 
         // 3. Send expiration notification email
         if (subscription.user?.email) {
