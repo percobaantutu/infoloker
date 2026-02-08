@@ -28,14 +28,119 @@ const Hero = () => {
 
   return (
     <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
-          alt="Office Background" 
-          className="w-full h-full object-cover"
+      {/* Geometric Blob Background */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#215E61] via-[#1a4b4e] to-[#233D4D]">
+        {/* Animated Blobs */}
+        <svg
+          className="absolute inset-0 w-full h-full"
+          viewBox="0 0 1200 600"
+          preserveAspectRatio="xMidYMid slice"
+        >
+          {/* Large Orange Blob - Top Right */}
+          <motion.ellipse
+            cx="1000"
+            cy="100"
+            rx="300"
+            ry="250"
+            fill="#FE7F2D"
+            opacity="0.15"
+            initial={{ scale: 1, x: 0, y: 0 }}
+            animate={{ 
+              scale: [1, 1.1, 1],
+              x: [0, 20, 0],
+              y: [0, -10, 0],
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          
+          {/* Medium Lime Blob - Left Center */}
+          <motion.ellipse
+            cx="100"
+            cy="300"
+            rx="200"
+            ry="180"
+            fill="#F5FBE6"
+            opacity="0.08"
+            initial={{ scale: 1 }}
+            animate={{ 
+              scale: [1, 1.15, 1],
+              x: [0, 15, 0],
+              y: [0, 20, 0],
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          />
+          
+          {/* Small Orange Blob - Bottom Left */}
+          <motion.circle
+            cx="200"
+            cy="500"
+            r="120"
+            fill="#FE7F2D"
+            opacity="0.12"
+            initial={{ scale: 1 }}
+            animate={{ 
+              scale: [1, 1.2, 1],
+              x: [0, -10, 0],
+            }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          />
+          
+          {/* Large Lime Blob - Top Left */}
+          <motion.ellipse
+            cx="300"
+            cy="50"
+            rx="250"
+            ry="150"
+            fill="#F5FBE6"
+            opacity="0.06"
+            initial={{ scale: 1 }}
+            animate={{ 
+              scale: [1, 1.08, 1],
+              y: [0, 15, 0],
+            }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          />
+          
+          {/* Medium Orange Blob - Right Center */}
+          <motion.ellipse
+            cx="1100"
+            cy="400"
+            rx="180"
+            ry="220"
+            fill="#FE7F2D"
+            opacity="0.1"
+            initial={{ scale: 1 }}
+            animate={{ 
+              scale: [1, 1.12, 1],
+              x: [0, -15, 0],
+              y: [0, 10, 0],
+            }}
+            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+          />
+          
+          {/* Accent Lime Circle - Center */}
+          <motion.circle
+            cx="600"
+            cy="300"
+            r="80"
+            fill="#F5FBE6"
+            opacity="0.05"
+            initial={{ scale: 1 }}
+            animate={{ 
+              scale: [1, 1.3, 1],
+            }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+          />
+        </svg>
+        
+        {/* Subtle Grid Pattern Overlay */}
+        <div 
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `radial-gradient(circle, #F5FBE6 1px, transparent 1px)`,
+            backgroundSize: '40px 40px',
+          }}
         />
-        <div className="absolute inset-0 bg-blue-950/80"></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10 w-full max-w-5xl">
