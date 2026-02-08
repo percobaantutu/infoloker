@@ -26,7 +26,7 @@ const Header = () => {
           {/* 1. Logo (Left) */}
           <div className="flex items-center cursor-pointer" onClick={() => navigate("/")}>
             <div className="mr-2">
-              <Briefcase className="text-blue-600 w-8 h-8" />
+              <img src="/infoloker_logo.png" alt="Logo" className="w-8 h-8" />
             </div>
             <span className="text-xl font-bold text-gray-900 tracking-tight">infoloker</span>
           </div>
