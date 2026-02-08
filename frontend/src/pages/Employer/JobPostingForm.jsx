@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import DashboardLayout from "../../components/layout/DashboardLayout";
-import { AlertCircle, MapPin, DollarSign, Briefcase, Users, Eye, Send, Loader, Sparkles } from "lucide-react";
+import { AlertCircle, MapPin, DollarSign, Briefcase, Users, Eye, Send, Loader, Sparkles, Building2 } from "lucide-react";
 import { CATEGORIES, JOB_TYPES } from "../../utils/data";
 import InputField from "../../components/Input/InputField";
 import SelectField from "../../components/Input/SelectField";
@@ -11,6 +11,7 @@ import { useJobForm } from "../../hooks/useJobForm";
 import LocationSelect from "../../components/Input/LocationSelect";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const FEATURED_LIMITS = {
   free: 0,
@@ -29,6 +30,9 @@ const JobPostingForm = () => {
   const userPlan = user?.plan || "free";
   const featuredLimit = FEATURED_LIMITS[userPlan] || 0;
   const canFeature = featuredLimit > 0;
+
+  // Check if company profile is complete
+  const isProfileComplete = user?.companyName && user?.companyDescription && user?.companyLogo;
 
   // Translate Categories and Job Types for the SelectFields
   const translatedCategories = CATEGORIES.map(cat => ({
@@ -57,6 +61,29 @@ const JobPostingForm = () => {
     <DashboardLayout activeMenu="post-job">
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
+          {/* Profile Incomplete Warning */}
+          {!isProfileComplete && (
+            <div className="mb-6 bg-amber-50 border border-amber-200 rounded-xl p-4">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center shrink-0">
+                  <Building2 className="w-5 h-5 text-amber-600" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-amber-800">Complete Your Company Profile</h3>
+                  <p className="text-sm text-amber-700 mt-1">
+                    Before posting jobs, please complete your company profile including company name, description, and logo.
+                  </p>
+                  <Link 
+                    to="/company-profile" 
+                    className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-amber-700 hover:text-amber-900 underline"
+                  >
+                    Go to Company Profile →
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="bg-white shadow-xl rounded-2xl p-6">
             {/* Header */}
             <div className="flex items-center justify-between mb-8">
@@ -68,7 +95,7 @@ const JobPostingForm = () => {
               </div>
               <button
                 onClick={() => setIsPreview(true)}
-                disabled={!isFormValid()}
+                disabled={!isFormValid() || !isProfileComplete}
                 className="group flex items-center space-x-2 px-6 py-3 text-sm font-medium text-gray-600 hover:text-white bg-white/50 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 border border-gray-200 hover:border-transparent rounded-xl transition-all duration-300 shadow-lg disabled:opacity-50"
               >
                 <Eye className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
@@ -77,7 +104,7 @@ const JobPostingForm = () => {
             </div>
 
             {/* Form Fields */}
-            <div className="space-y-6">
+            <div className={`space-y-6 ${!isProfileComplete ? 'opacity-50 pointer-events-none' : ''}`}>
               <InputField
                 label={t('job.title')}
                 id="jobTitle"

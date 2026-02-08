@@ -24,6 +24,20 @@ exports.createJob = async (req, res) => {
       return res.status(403).json({ message: "Access denied" });
     }
 
+    // Check if company profile is complete
+    const missingFields = [];
+    if (!req.user.companyName) missingFields.push("companyName");
+    if (!req.user.companyDescription) missingFields.push("companyDescription");
+    if (!req.user.companyLogo) missingFields.push("companyLogo");
+
+    if (missingFields.length > 0) {
+      return res.status(403).json({
+        message: "PROFILE_INCOMPLETE",
+        detail: "Please complete your company profile before posting jobs.",
+        missing: missingFields,
+      });
+    }
+
     // Refresh user to get the latest plan from DB (in case subscription was just activated)
     const freshUser = await User.findById(req.user._id).select("plan");
     const userPlan = freshUser?.plan || "free";
