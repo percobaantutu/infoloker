@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { validateEmail, validatePassword, validateAvatar } from "../utils/helper";
 import axiosInstance from "../utils/axiosInstance";
 import { API_PATHS } from "../utils/apiPaths";
+import { encryptCredential } from "../utils/encryptPayload";
 
 export const useSignUp = () => {
   const { login } = useAuth();
@@ -85,11 +86,14 @@ export const useSignUp = () => {
 
     setStatus((prev) => ({ ...prev, loading: true, error: null }));
 
+    // Encrypt password before sending
+    const encryptedPassword = await encryptCredential(formData.password);
+
     // Prepare FormData
     const data = new FormData();
     data.append("name", formData.fullName);
     data.append("email", formData.email);
-    data.append("password", formData.password);
+    data.append("password", encryptedPassword);
     data.append("role", formData.role);
     if (formData.avatar) {
       data.append("avatar", formData.avatar);

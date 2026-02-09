@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const fs = require("fs");
+const path = require("path");
 
 // Controllers
 const { 
@@ -13,6 +15,29 @@ const {
   resendOtp, 
   googleLogin  
 } = require("../controllers/authController");
+
+// Get Public Key for credential encryption
+const getPublicKey = (req, res) => {
+  try {
+    // First try environment variable (production)
+    if (process.env.RSA_PUBLIC_KEY) {
+      return res.json({ publicKey: process.env.RSA_PUBLIC_KEY.replace(/\\n/g, '\n') });
+    }
+    
+    // Fall back to file (development)
+    const keyPath = path.join(__dirname, "../config/keys/public.pem");
+    if (fs.existsSync(keyPath)) {
+      const publicKey = fs.readFileSync(keyPath, "utf8");
+      return res.json({ publicKey });
+    }
+    
+    // No key available - encryption disabled
+    return res.json({ publicKey: null, message: "Encryption not configured" });
+  } catch (error) {
+    console.error("Error reading public key:", error);
+    res.status(500).json({ message: "Failed to retrieve public key" });
+  }
+};
 
 // Middlewares
 const { protect } = require("../middleware/authMiddleware");
@@ -53,6 +78,7 @@ router.get("/me", protect, getMe);
 
 // TEST/UTIL
 router.post("/test-email", testEmail);
+router.get("/public-key", getPublicKey); // For credential encryption
 router.post("/upload-image", upload.single("image"), (req, res) => {
   if (!req.file) return res.status(400).json({ message: "No file uploaded" });
   res.status(200).json({ imageUrl: req.file.path });

@@ -4,6 +4,7 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
+const { decryptPasswordIfNeeded } = require("../utils/decryptPayload");
 
 // Generate JWT token
 const generateToken = (id) => {
@@ -17,7 +18,9 @@ const generateOTP = () => {
 // @desc Register new user
 exports.register = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, role } = req.body;
+    // Decrypt password if it was encrypted by frontend
+    const password = decryptPasswordIfNeeded(req.body.password);
 
     const allowedRoles = ["jobseeker", "employer"];
     if (role && !allowedRoles.includes(role)) {
@@ -170,8 +173,10 @@ exports.resendOtp = async (req, res) => {
 // @desc Login user
 exports.login = async (req, res) => {
   try {
-    // Destructure email and password from the request body
-    const { email, password } = req.body;
+    // Destructure email from the request body
+    const { email } = req.body;
+    // Decrypt password if it was encrypted by frontend
+    const password = decryptPasswordIfNeeded(req.body.password);
 
     // 1. Find the user by email
     const user = await User.findOne({ email });

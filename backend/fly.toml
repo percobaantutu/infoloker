@@ -1,31 +1,31 @@
-# ===========================================
-# FLY.IO CONFIGURATION - INFOLOKER BACKEND
-# ===========================================
-# Run `fly launch` first, then replace app name below
+# fly.toml app configuration file generated for infoloker-api on 2026-02-09T08:26:56+07:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-app = "infoloker-api"
-primary_region = "sin"  # Singapore - closest to Indonesia
+app = 'infoloker-api'
+primary_region = 'sin'
 
 [build]
-  dockerfile = "Dockerfile"
+  dockerfile = 'Dockerfile'
 
 [env]
-  PORT = "8080"
-  NODE_ENV = "production"
+  NODE_ENV = 'production'
+  PORT = '8080'
 
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = true
+  auto_stop_machines = 'stop'
   auto_start_machines = true
   min_machines_running = 1
 
   [http_service.concurrency]
-    type = "connections"
+    type = 'connections'
     hard_limit = 100
     soft_limit = 80
 
 [[vm]]
-  memory = "512mb"
-  cpu_kind = "shared"
+  memory = '512mb'
   cpus = 1
+  memory_mb = 512

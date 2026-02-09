@@ -4,6 +4,7 @@ import axiosInstance from "../utils/axiosInstance";
 import { API_PATHS } from "../utils/apiPaths";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { encryptCredential } from "../utils/encryptPayload";
 
 export const useLogin = () => {
   const { login } = useAuth();
@@ -51,7 +52,13 @@ export const useLogin = () => {
     setStatus((prev) => ({ ...prev, loading: true, error: null }));
 
     try {
-      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, formData);
+      // Encrypt password before sending
+      const encryptedPassword = await encryptCredential(formData.password);
+      
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
+        email: formData.email,
+        password: encryptedPassword,
+      });
       const { token, role } = response.data; // Ensure your backend sends 'role' in top level or inside user object
 
       // Login Context
