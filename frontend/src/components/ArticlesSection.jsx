@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import { usePublicArticles } from '../hooks/usePublicArticles';
-import ArticleCard from './articles/Articlecard';
+import ArticleCard from './articles/ArticleCard';
 import LoadingSpinner from './layout/LoadingSpinner';
 
 const ArticlesSection = () => {

@@ -8,7 +8,7 @@ import LoadingSpinner from "../../components/layout/LoadingSpinner";
 import { usePublicArticles } from "../../hooks/usePublicArticles";
 import { ARTICLE_CATEGORIES } from "../../utils/data";
 import { useDebounce } from "../../hooks/useDebounce";
-import ArticleCard from "../../components/articles/Articlecard";
+import ArticleCard from "../../components/articles/ArticleCard";
 
 const ArticlesPage = () => {
   const { t } = useTranslation();
