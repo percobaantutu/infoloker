@@ -6,7 +6,7 @@ const updateStatusSchema = yup.object({
     .string()
     .required("Status is required")
     .oneOf(
-      ["applied", "inReview", "interview", "accepted", "rejected"],
+      ["Applied", "In Review", "Interview", "Accepted", "Rejected"],
       "Invalid status value"
     ),
 });
