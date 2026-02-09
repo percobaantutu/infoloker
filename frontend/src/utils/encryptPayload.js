@@ -3,6 +3,8 @@
  * Uses RSA-OAEP to encrypt sensitive data before sending to backend
  */
 
+import { BASE_URL } from "./apiPaths";
+
 let publicKeyCache = null;
 let publicKeyPromise = null;
 
@@ -18,8 +20,9 @@ const fetchPublicKey = async () => {
   
   publicKeyPromise = (async () => {
     try {
-      const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
-      const response = await fetch(`${API_BASE}/api/auth/public-key`);
+      // Remove trailing slash from BASE_URL if present
+      const apiBase = BASE_URL.replace(/\/$/, '');
+      const response = await fetch(`${apiBase}/api/auth/public-key`);
       const data = await response.json();
       
       if (!data.publicKey) {
