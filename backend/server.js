@@ -26,6 +26,9 @@ const { checkMaintenance } = require("./middleware/maintenanceMiddleware");
 
 const app = express();
 
+// Trust proxy for rate limiting behind Fly.io / reverse proxy
+app.set('trust proxy', 1);
+
 // Environment-based URLs
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
 const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8000";
