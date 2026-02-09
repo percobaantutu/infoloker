@@ -26,9 +26,13 @@ const { checkMaintenance } = require("./middleware/maintenanceMiddleware");
 
 const app = express();
 
+// Environment-based URLs
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8000";
+
 app.use(
   cors({
-    origin: "http://localhost:5173", 
+    origin: FRONTEND_URL, 
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -49,7 +53,7 @@ app.use(
         ],
         connectSrc: [
           "'self'",
-          "http://localhost:8000",
+          BACKEND_URL,
           "https://app.sandbox.midtrans.com",
           "https://app.midtrans.com",
           "https://accounts.google.com",
