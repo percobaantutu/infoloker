@@ -35,31 +35,31 @@ const AdminDashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatCard 
             title="Total Users" 
-            value={stats?.users?.total || 0} 
+            value={stats?.summary?.users?.total || 0} 
             icon={Users} 
             color="bg-blue-500" 
           />
           <StatCard 
             title="Active Jobs" 
-            value={stats?.jobs?.active || 0} 
+            value={stats?.summary?.jobs?.active || 0} 
             icon={Briefcase} 
             color="bg-green-500" 
           />
           <StatCard 
             title="Total Applications" 
-            value={stats?.applications?.total || 0} 
+            value={stats?.summary?.applications?.total || 0} 
             icon={Activity} 
             color="bg-purple-500" 
           />
           <StatCard 
             title="Published Articles" 
-            value={stats?.articles?.total || 0} 
+            value={stats?.summary?.articles?.total || 0} 
             icon={FileText} 
             color="bg-orange-500" 
           />
           <StatCard 
             title="Total Revenue" 
-            value={`Rp ${formatRupiah(String(stats?.revenue?.total || 0))}`} 
+            value={`Rp ${formatRupiah(String(stats?.summary?.revenue?.total || 0))}`} 
             icon={DollarSign} 
             color="bg-emerald-600" 
           />
