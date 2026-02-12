@@ -41,7 +41,7 @@ const NotificationDropdown = () => {
 
       {/* Dropdown Panel */}
       {isOpen && (
-        <div className="absolute right-0 mt-3 w-80 sm:w-96 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-100">
+        <div className="fixed left-3 right-3 top-[4.5rem] sm:absolute sm:left-auto sm:top-auto sm:right-0 sm:mt-3 w-auto sm:w-96 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-100">
           <div className="px-4 py-3 border-b border-gray-50 flex justify-between items-center bg-gray-50/50">
             <h3 className="font-semibold text-gray-900">Notifications</h3>
             <span className="text-xs text-gray-500">{notifications.length} recent</span>

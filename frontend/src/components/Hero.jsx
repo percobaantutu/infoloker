@@ -27,7 +27,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[600px] pt-16 pb-8 flex items-center justify-center overflow-hidden">
       {/* Geometric Blob Background */}
       <div className="absolute inset-0 z-0 bg-gradient-to-br from-[#215E61] via-[#1a4b4e] to-[#233D4D]">
         {/* Animated Blobs */}
@@ -143,13 +143,13 @@ const Hero = () => {
         />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10 w-full max-w-5xl">
+      <div className="container mx-auto px-6 sm:px-4 relative z-10 w-full max-w-5xl">
         <div className="text-center mb-10">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.6 }} 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-6 mb-6 tracking-tight"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-6 mb-6 tracking-tight"
           >
             {t('landing.hero.title', 'Find the job that fits your life')}
           </motion.h1>
