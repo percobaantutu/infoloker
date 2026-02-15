@@ -27,6 +27,10 @@ const jobSchema = new mongoose.Schema(
     // Job status
     isFeatured: { type: Boolean, default: false },
     isClosed: { type: Boolean, default: false },
+
+    // Admin-posted job fields
+    isAdminPosted: { type: Boolean, default: false },
+    adminCompanyName: { type: String },
   },
   { timestamps: true }
 );

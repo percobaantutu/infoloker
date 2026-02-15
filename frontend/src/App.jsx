@@ -34,6 +34,7 @@ import UserManagement from "./pages/Admin/UserManagement";
 import JobManagement from "./pages/Admin/JobManagement";
 import SubscriptionManagement from "./pages/Admin/SubscriptionManagement";
 import SystemSettings from "./pages/Admin/SystemSettings";
+import AdminJobForm from "./pages/Admin/AdminJobForm";
 
 
 function App() {
@@ -98,6 +99,7 @@ function App() {
 <Route path="/admin/articles/edit/:id" element={<ArticleEditor />} />
 <Route path="/admin/users" element={<UserManagement />} />
 <Route path="/admin/jobs" element={<JobManagement />} />
+<Route path="/admin/jobs/create" element={<AdminJobForm />} />
 <Route path="/admin/subscriptions" element={< SubscriptionManagement/>}/>
 <Route path="/admin/settings" element={<SystemSettings />} />
 </Route>

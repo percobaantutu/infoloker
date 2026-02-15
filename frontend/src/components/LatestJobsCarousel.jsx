@@ -178,9 +178,15 @@ const LatestJobsCarousel = () => {
                       </h3>
                       <div className="flex items-center gap-1 mt-0.5">
                         <p className="text-xs text-gray-500 line-clamp-1">
-                          {job.company?.companyName || "Company"}
+                          {job.isAdminPosted ? job.adminCompanyName : (job.company?.companyName || "Company")}
                         </p>
-                        <PremiumBadge plan={job.company?.plan} size="sm" showLabel={false} />
+                        {job.isAdminPosted ? (
+                          <span className="inline-flex items-center px-1 py-0.5 rounded text-[9px] font-semibold bg-red-100 text-red-700 border border-red-200">
+                            Admin
+                          </span>
+                        ) : (
+                          <PremiumBadge plan={job.company?.plan} size="sm" showLabel={false} />
+                        )}
                       </div>
                     </div>
                   </div>

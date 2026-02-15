@@ -69,6 +69,7 @@ NOTIFICATIONS: {
     USER_SUSPEND: (id) => `/api/admin/users/${id}/suspend`,
     USER_DELETE: (id) => `/api/admin/users/${id}`,
     JOBS: "/api/admin/jobs",
+    JOB_CREATE: "/api/admin/jobs",
     JOB_DELETE: (id) => `/api/admin/jobs/${id}`,
     JOB_FEATURE: (id) => `/api/admin/jobs/${id}/feature`,
     SUBSCRIPTIONS: "/api/admin/subscriptions",

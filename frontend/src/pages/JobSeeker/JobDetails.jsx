@@ -124,8 +124,14 @@ const JobDetails = () => {
                       <h1 className="text-2xl font-bold text-gray-900">{job.title}</h1>
                       <div className="flex items-center text-gray-500 mt-1 font-medium gap-2">
                         <span className="flex items-center gap-1.5">
-                          {job.company?.companyName || t('job.confidentialCompany')}
-                          <PremiumBadge plan={job.company?.plan} size="sm" />
+                          {job.isAdminPosted ? job.adminCompanyName : (job.company?.companyName || t('job.confidentialCompany'))}
+                          {job.isAdminPosted ? (
+                            <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-red-100 text-red-700 border border-red-200">
+                              Admin
+                            </span>
+                          ) : (
+                            <PremiumBadge plan={job.company?.plan} size="sm" />
+                          )}
                         </span>
                         <span>•</span>
                         <span className="text-blue-600">{job.location}</span>
@@ -294,12 +300,12 @@ const JobDetails = () => {
                             )}
                         </div>
                         <div>
-                            <h4 className="font-bold text-gray-900 text-sm">{job.company?.companyName}</h4>
-                            <p className="text-xs text-gray-500">{t('employer.hiringCompany')}</p>
+                            <h4 className="font-bold text-gray-900 text-sm">{job.isAdminPosted ? job.adminCompanyName : job.company?.companyName}</h4>
+                            <p className="text-xs text-gray-500">{job.isAdminPosted ? 'Posted by Admin' : t('employer.hiringCompany')}</p>
                         </div>
                     </div>
                     <p className="text-sm text-gray-600 line-clamp-3">
-                        {job.company?.companyDescription || t('employer.noDescription')}
+                        {job.isAdminPosted ? 'This job was posted by the site administrator.' : (job.company?.companyDescription || t('employer.noDescription'))}
                     </p>
                 </div>
 

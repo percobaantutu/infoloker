@@ -1,9 +1,10 @@
 import React from "react";
 import AdminLayout from "../../components/admin/layout/AdminLayout";
 import { useAdminJobs } from "../../hooks/admin/useAdminJobs";
-import { Search, Trash2, Star } from "lucide-react";
+import { Search, Trash2, Star, Plus } from "lucide-react";
 import LoadingSpinner from "../../components/layout/LoadingSpinner";
 import moment from "moment";
+import { Link } from "react-router-dom";
 import { 
   Table, 
   TableBody, 
@@ -29,6 +30,13 @@ const JobManagement = () => {
             <h1 className="text-2xl font-bold text-gray-900">Job Management</h1>
             <p className="text-sm text-gray-500 mt-1">Total Jobs: {pagination.totalJobs}</p>
           </div>
+          <Link
+            to="/admin/jobs/create"
+            className="flex items-center gap-2 px-4 py-2.5 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors shadow-sm"
+          >
+            <Plus className="w-4 h-4" />
+            Add Job
+          </Link>
         </div>
 
         {/* Filters */}
@@ -79,7 +87,14 @@ const JobManagement = () => {
                       )}
                     </TableCell>
                     <TableCell className="px-6 py-4 text-gray-600">
-                      {job.company?.companyName || job.company?.name || "Unknown"}
+                      {job.isAdminPosted ? (
+                        <span className="flex items-center gap-1.5">
+                          {job.adminCompanyName}
+                          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-red-100 text-red-700 border border-red-200">Admin</span>
+                        </span>
+                      ) : (
+                        job.company?.companyName || job.company?.name || "Unknown"
+                      )}
                     </TableCell>
                     <TableCell className="px-6 py-4">
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${

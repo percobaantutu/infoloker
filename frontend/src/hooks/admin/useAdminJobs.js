@@ -77,6 +77,19 @@ export const useAdminJobs = () => {
     setFilters(prev => ({ ...prev, page: newPage }));
   };
 
+  const createJob = async (jobData) => {
+    try {
+      await axiosInstance.post(API_PATHS.ADMIN.JOB_CREATE, jobData);
+      toast.success("Job created successfully");
+      fetchJobs();
+      return true;
+    } catch (error) {
+      const msg = error.response?.data?.message || "Failed to create job";
+      toast.error(msg);
+      return false;
+    }
+  };
+
   return {
     jobs,
     isLoading,
@@ -85,6 +98,7 @@ export const useAdminJobs = () => {
     setFilters,
     deleteJob,
     toggleFeature,
-    handlePageChange
+    handlePageChange,
+    createJob
   };
 };

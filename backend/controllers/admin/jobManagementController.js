@@ -1,4 +1,38 @@
 const Job = require("../../models/Job");
+const { invalidateJobCache } = require("../../utils/cacheInvalidator");
+
+// @desc    Create a job as Admin
+// @route   POST /api/admin/jobs
+exports.createJobAdmin = async (req, res) => {
+  try {
+    const { title, description, requirements, location, category, type, salaryMin, salaryMax, isFeatured, adminCompanyName } = req.body;
+
+    if (!adminCompanyName || !adminCompanyName.trim()) {
+      return res.status(400).json({ message: "Company name is required for admin-posted jobs" });
+    }
+
+    const job = await Job.create({
+      title,
+      description,
+      requirements,
+      location,
+      category,
+      type,
+      salaryMin,
+      salaryMax,
+      isFeatured: isFeatured || false,
+      company: req.user._id,
+      isAdminPosted: true,
+      adminCompanyName: adminCompanyName.trim(),
+    });
+
+    await invalidateJobCache();
+
+    res.status(201).json(job);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 // @desc    Get all jobs (Admin view)
 // @route   GET /api/admin/jobs

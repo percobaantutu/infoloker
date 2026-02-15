@@ -71,9 +71,15 @@ const JobCard = ({ job, onToggleSave }) => {
               </h3>
               <div className="flex items-center gap-1.5 mb-2">
                 <p className="text-sm text-gray-500 font-medium">
-                  {job.company?.companyName || t('job.unknownCompany')}
+                  {job.isAdminPosted ? job.adminCompanyName : (job.company?.companyName || t('job.unknownCompany'))}
                 </p>
-                <PremiumBadge plan={job.company?.plan} size="sm" showLabel={false} />
+                {job.isAdminPosted ? (
+                  <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-red-100 text-red-700 border border-red-200">
+                    Admin
+                  </span>
+                ) : (
+                  <PremiumBadge plan={job.company?.plan} size="sm" showLabel={false} />
+                )}
               </div>
             </div>
             
