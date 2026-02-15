@@ -1,21 +1,43 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import { usePublicArticles } from '../hooks/usePublicArticles';
 import ArticleCard from './articles/ArticleCard';
 import LoadingSpinner from './layout/LoadingSpinner';
+import { getCachedData, setCachedData } from '../utils/cacheUtils';
+
+const CACHE_KEY = "swr_landing_articles";
 
 const ArticlesSection = () => {
     const { t } = useTranslation();
-    const { articles, loading, fetchArticles } = usePublicArticles();
+    const { articles, loading: hookLoading, fetchArticles } = usePublicArticles();
+    const [displayArticles, setDisplayArticles] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        // 1. Restore cached articles immediately
+        const cached = getCachedData(CACHE_KEY);
+        if (cached?.data?.length) {
+            setDisplayArticles(cached.data);
+            setLoading(false);
+        }
+
+        // 2. Fetch fresh data in background
         fetchArticles();
     }, []);
 
-    // Get latest 3 articles
-    const latestArticles = articles?.slice(0, 3) || [];
+    // When hook's articles update (after background fetch), update display + cache
+    useEffect(() => {
+        if (articles?.length > 0) {
+            const latest = articles.slice(0, 3);
+            setDisplayArticles(latest);
+            setCachedData(CACHE_KEY, latest);
+            setLoading(false);
+        } else if (!hookLoading) {
+            setLoading(false);
+        }
+    }, [articles, hookLoading]);
 
   return (
     <section className="py-20 bg-gray-50">
@@ -43,9 +65,9 @@ const ArticlesSection = () => {
             <div className="flex justify-center py-12">
                 <LoadingSpinner />
             </div>
-        ) : latestArticles.length > 0 ? (
+        ) : displayArticles.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {latestArticles.map((article) => (
+            {displayArticles.map((article) => (
                 <div key={article._id} className="h-full">
                     <ArticleCard article={article} />
                 </div>

@@ -6,6 +6,9 @@ import axiosInstance from "../utils/axiosInstance";
 import { API_PATHS } from "../utils/apiPaths";
 import FeaturedBadge from "./ui/FeaturedBadge";
 import PremiumBadge from "./ui/PremiumBadge";
+import { getCachedData, setCachedData } from "../utils/cacheUtils";
+
+const CACHE_KEY = "swr_carousel_jobs";
 
 const LatestJobsCarousel = () => {
   const { t } = useTranslation();
@@ -20,13 +23,23 @@ const LatestJobsCarousel = () => {
   const [cardsPerView, setCardsPerView] = useState(4);
 
   useEffect(() => {
+    // 1. Restore cached data immediately
+    const cached = getCachedData(CACHE_KEY);
+    if (cached?.data?.length) {
+      setJobs(cached.data);
+      setLoading(false);
+    }
+
+    // 2. Fetch fresh data in background
     const fetchJobs = async () => {
       try {
         const response = await axiosInstance.get(API_PATHS.JOBS.GET_ALL_JOBS);
-        // Get latest 10 jobs
-        setJobs(response.data.slice(0, 10));
+        const latest = response.data.slice(0, 10);
+        setJobs(latest);
+        setCachedData(CACHE_KEY, latest);
       } catch (error) {
-        console.error("Failed to fetch jobs:", error);
+        console.error("Failed to fetch carousel jobs:", error);
+        // If we have no cached data either, leave loading as-is
       } finally {
         setLoading(false);
       }

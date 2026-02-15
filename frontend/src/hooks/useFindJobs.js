@@ -1,10 +1,13 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import axiosInstance from "../utils/axiosInstance";
 import { API_PATHS } from "../utils/apiPaths";
 import { useDebounce } from "./useDebounce";
+import { getCachedData, setCachedData } from "../utils/cacheUtils";
 import toast from "react-hot-toast";
+
+const CACHE_KEY_JOBS = "swr_jobs";
 
 export const useFindJobs = () => {
   const { user, isAuthenticated } = useAuth();
@@ -13,6 +16,7 @@ export const useFindJobs = () => {
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const hasRestoredCache = useRef(false);
 
   const [filters, setFilters] = useState({
     keyword: searchParams.get("keyword") || "",
@@ -29,6 +33,22 @@ export const useFindJobs = () => {
   const debouncedMinSalary = useDebounce(filters.salaryMin, 500);
   const debouncedMaxSalary = useDebounce(filters.salaryMax, 500);
 
+  const isDefaultFilter = !debouncedKeyword && !debouncedLocation && !filters.category && !filters.type && !debouncedMinSalary && !debouncedMaxSalary;
+
+  // Restore cached data on first mount (only for default/unfiltered view)
+  useEffect(() => {
+    if (hasRestoredCache.current) return;
+    hasRestoredCache.current = true;
+
+    if (isDefaultFilter) {
+      const cached = getCachedData(CACHE_KEY_JOBS);
+      if (cached?.data) {
+        setJobs(cached.data);
+        setIsLoading(false);
+      }
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     const params = new URLSearchParams();
     if (debouncedKeyword) params.set("keyword", debouncedKeyword);
@@ -43,7 +63,10 @@ export const useFindJobs = () => {
   }, [debouncedKeyword, debouncedLocation, filters.category, filters.type, debouncedMinSalary, debouncedMaxSalary, setSearchParams]);
 
   const fetchJobs = useCallback(async () => {
-    setIsLoading(true);
+    // Only show loading spinner if we don't have any jobs to display yet
+    if (jobs.length === 0) {
+      setIsLoading(true);
+    }
     setError(null);
 
     try {
@@ -60,13 +83,23 @@ export const useFindJobs = () => {
 
       const response = await axiosInstance.get(`${API_PATHS.JOBS.GET_ALL_JOBS}?${params.toString()}`);
       setJobs(response.data);
+
+      // Cache only default (unfiltered) results
+      if (isDefaultFilter) {
+        setCachedData(CACHE_KEY_JOBS, response.data);
+      }
     } catch (err) {
       console.error("Fetch Jobs Error:", err);
-      setError("Failed to load jobs.");
+      // Only set error if we have no cached data to show
+      if (jobs.length === 0) {
+        setError("Failed to load jobs.");
+      } else {
+        toast.error("Could not refresh jobs. Showing cached data.");
+      }
     } finally {
       setIsLoading(false);
     }
-  }, [debouncedKeyword, debouncedLocation, filters.category, filters.type, debouncedMinSalary, debouncedMaxSalary, user?._id]);
+  }, [debouncedKeyword, debouncedLocation, filters.category, filters.type, debouncedMinSalary, debouncedMaxSalary, user?._id, isDefaultFilter]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     fetchJobs();
