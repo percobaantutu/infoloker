@@ -5,7 +5,7 @@ const { invalidateJobCache } = require("../../utils/cacheInvalidator");
 // @route   POST /api/admin/jobs
 exports.createJobAdmin = async (req, res) => {
   try {
-    const { title, description, requirements, location, category, type, salaryMin, salaryMax, isFeatured, adminCompanyName } = req.body;
+    const { title, description, requirements, location, category, type, salaryMin, salaryMax, isFeatured, adminCompanyName, adminCompanyEmail } = req.body;
 
     if (!adminCompanyName || !adminCompanyName.trim()) {
       return res.status(400).json({ message: "Company name is required for admin-posted jobs" });
@@ -24,6 +24,7 @@ exports.createJobAdmin = async (req, res) => {
       company: req.user._id,
       isAdminPosted: true,
       adminCompanyName: adminCompanyName.trim(),
+      adminCompanyEmail: adminCompanyEmail?.trim() || undefined,
     });
 
     await invalidateJobCache();

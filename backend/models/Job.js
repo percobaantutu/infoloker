@@ -31,6 +31,7 @@ const jobSchema = new mongoose.Schema(
     // Admin-posted job fields
     isAdminPosted: { type: Boolean, default: false },
     adminCompanyName: { type: String },
+    adminCompanyEmail: { type: String },
   },
   { timestamps: true }
 );

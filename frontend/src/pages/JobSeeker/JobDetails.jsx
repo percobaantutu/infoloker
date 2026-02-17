@@ -43,7 +43,11 @@ const JobDetails = () => {
   } = useJobDetails();
 
   const handleEmailApply = () => {
-    if (!job?.company?.email) {
+    // For admin-posted jobs, use the admin-provided company email
+    const emailAddress = job.isAdminPosted ? job.adminCompanyEmail : job.company?.email;
+    const companyName = job.isAdminPosted ? job.adminCompanyName : (job.company?.companyName || t('job.theCompany'));
+
+    if (!emailAddress) {
       toast.error(t('job.emailNotAvailable')); 
       return;
     }
@@ -52,13 +56,13 @@ const JobDetails = () => {
     const subject = encodeURIComponent(t('job.emailSubject', { title: job.title }));
     const body = encodeURIComponent(
       t('job.emailBody', {
-        company: job.company.companyName || t('job.theCompany'),
+        company: companyName,
         title: job.title,
         source: "Infoloker"
       })
     );
 
-    window.location.href = `mailto:${job.company.email}?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${emailAddress}?subject=${subject}&body=${body}`;
   };
 
   if (loading) return <LoadingSpinner />;

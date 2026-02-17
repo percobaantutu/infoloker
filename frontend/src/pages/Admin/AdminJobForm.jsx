@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminLayout from "../../components/admin/layout/AdminLayout";
-import { Briefcase, DollarSign, Send, Loader, Sparkles, Building2 } from "lucide-react";
+import { Briefcase, DollarSign, Send, Loader, Sparkles, Building2, Mail } from "lucide-react";
 import { CATEGORIES, JOB_TYPES } from "../../utils/data";
 import { formatRupiah } from "../../utils/formatRupiah";
 import axiosInstance from "../../utils/axiosInstance";
@@ -14,6 +14,7 @@ const AdminJobForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     adminCompanyName: "",
+    adminCompanyEmail: "",
     title: "",
     location: "",
     category: "",
@@ -105,6 +106,24 @@ const AdminJobForm = () => {
               />
             </div>
             {errors.adminCompanyName && <p className="text-xs text-red-600 mt-1">{errors.adminCompanyName}</p>}
+          </div>
+
+          {/* Company Email */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Company Email</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Mail className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type="email"
+                placeholder="e.g. hr@company.com (for Apply via Email)"
+                value={formData.adminCompanyEmail}
+                onChange={(e) => handleChange("adminCompanyEmail", e.target.value)}
+                className={`${inputClass("adminCompanyEmail")} pl-10`}
+              />
+            </div>
+            <p className="text-xs text-gray-400 mt-1">Job seekers will use this email when applying via email</p>
           </div>
 
           {/* Job Title */}
