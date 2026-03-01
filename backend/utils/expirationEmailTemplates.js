@@ -21,7 +21,7 @@ const generateExpirationReminderTemplate = ({ userName, planName, endDate, daysL
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Subscription Expiring Soon - Infoloker</title>
+  <title>Subscription Expiring Soon - lokerbaru.id</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #F3F4F6;">
   <table role="presentation" cellspacing="0" cellpadding="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
@@ -73,7 +73,7 @@ const generateExpirationReminderTemplate = ({ userName, planName, endDate, daysL
     <tr>
       <td style="background-color: #F9FAFB; padding: 30px; text-align: center; border-top: 1px solid #E5E7EB;">
         <p style="margin: 0; color: #9CA3AF; font-size: 12px;">
-          © ${new Date().getFullYear()} Infoloker. All rights reserved.
+          © ${new Date().getFullYear()} lokerbaru.id. All rights reserved.
         </p>
       </td>
     </tr>
@@ -94,7 +94,7 @@ const generateExpiredNotificationTemplate = ({ userName, planName }) => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Subscription Expired - Infoloker</title>
+  <title>Subscription Expired - lokerbaru.id</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #F3F4F6;">
   <table role="presentation" cellspacing="0" cellpadding="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
@@ -146,7 +146,7 @@ const generateExpiredNotificationTemplate = ({ userName, planName }) => {
     <tr>
       <td style="background-color: #F9FAFB; padding: 30px; text-align: center; border-top: 1px solid #E5E7EB;">
         <p style="margin: 0; color: #9CA3AF; font-size: 12px;">
-          © ${new Date().getFullYear()} Infoloker. All rights reserved.
+          © ${new Date().getFullYear()} lokerbaru.id. All rights reserved.
         </p>
       </td>
     </tr>

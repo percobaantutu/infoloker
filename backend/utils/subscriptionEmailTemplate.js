@@ -58,7 +58,7 @@ const generateSubscriptionEmailTemplate = ({
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Subscription Confirmation - Infoloker</title>
+  <title>Subscription Confirmation - lokerbaru.id</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #F3F4F6;">
   <table role="presentation" cellspacing="0" cellpadding="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
@@ -82,7 +82,7 @@ const generateSubscriptionEmailTemplate = ({
           Halo <strong>${userName}</strong>,
         </p>
         <p style="margin: 0 0 30px; color: #374151; font-size: 16px; line-height: 1.6;">
-          Terima kasih telah berlangganan <strong style="color: ${colors.primary};">${planName} Plan</strong> di Infoloker! Pembayaran Anda telah berhasil diproses.
+          Terima kasih telah berlangganan <strong style="color: ${colors.primary};">${planName} Plan</strong> di lokerbaru.id! Pembayaran Anda telah berhasil diproses.
         </p>
 
         <!-- Plan Details Card -->
@@ -159,11 +159,11 @@ const generateSubscriptionEmailTemplate = ({
         <p style="margin: 0 0 10px; color: #6B7280; font-size: 14px;">
           Butuh bantuan? Hubungi kami di
         </p>
-        <a href="mailto:support@infoloker.com" style="color: ${colors.primary}; text-decoration: none; font-weight: 500;">
-          support@infoloker.com
+        <a href="mailto:support@lokerbaru.id.com" style="color: ${colors.primary}; text-decoration: none; font-weight: 500;">
+          support@lokerbaru.id.com
         </a>
         <p style="margin: 20px 0 0; color: #9CA3AF; font-size: 12px;">
-          © ${new Date().getFullYear()} Infoloker. All rights reserved.
+          © ${new Date().getFullYear()} lokerbaru.id. All rights reserved.
         </p>
       </td>
     </tr>

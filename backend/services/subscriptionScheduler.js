@@ -61,7 +61,7 @@ const expireSubscriptions = async () => {
 
           await sendEmail({
             email: subscription.user.email,
-            subject: "📋 Langganan Anda Telah Berakhir - Infoloker",
+            subject: "📋 Langganan Anda Telah Berakhir - lokerbaru.id",
             message: `Langganan ${PLAN_NAMES[subscription.planType]} Anda telah berakhir. Akun Anda telah dikembalikan ke paket Free.`,
             html: emailHtml,
           });
@@ -121,7 +121,7 @@ const sendExpirationReminders = async () => {
 
           await sendEmail({
             email: subscription.user.email,
-            subject: `⏰ Langganan Anda Akan Berakhir dalam ${daysLeft} Hari - Infoloker`,
+            subject: `⏰ Langganan Anda Akan Berakhir dalam ${daysLeft} Hari - lokerbaru.id`,
             message: `Langganan ${PLAN_NAMES[subscription.planType]} Anda akan berakhir dalam ${daysLeft} hari.`,
             html: emailHtml,
           });

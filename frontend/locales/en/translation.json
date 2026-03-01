@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "infoloker",
+    "appName": "lokerbaru.id",
     "loading": "Loading...",
     "save": "Save",
     "saving": "Saving...",
@@ -44,7 +44,7 @@
     "forgotPassword": "Forgot password?",
     "dontHaveAccount": "Don't have an account?",
     "accountCreated": "Account created!",
-  "accountCreatedDesc": "Welcome to infoloker! Your account has been successfully created",
+  "accountCreatedDesc": "Welcome to lokerbaru.id! Your account has been successfully created",
   "redirectingDashboard": "Redirecting to your dashboard...",
   "signupSubtitle": "Join thousands of professionals finding their dream jobs",
   "enterFullName": "Enter your full name",
@@ -69,7 +69,7 @@
       "jobseekerDesc": "Looking for opportunities",
       "employerDesc": "Hiring talent"
     },
-    "subtitle": "Sign in to your infoloker account",
+    "subtitle": "Sign in to your lokerbaru.id account",
   "enterEmail": "Enter your email",
   "enterPassword": "Enter your password",
   "orContinueWith": "Or continue with",
@@ -266,7 +266,7 @@
   
   "landing": {
     "hero": {
-      "title": "Discover Your Dream Job with infoloker",
+      "title": "Discover Your Dream Job with lokerbaru.id",
       "subtitle": "Join thousands of job seekers and employers connecting daily. Find the perfect match for your career goals.",
       "findJobs": "Find Jobs Now",
       "postJob": "Post a Job"

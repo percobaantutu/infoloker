@@ -68,7 +68,7 @@ const DashboardLayout = ({ activeMenu, children }) => {
             <div className="h-8 w-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center text-white">
               <Briefcase size={20} />
             </div>
-            {!isCollapsed && <span className="text-xl font-bold text-gray-900">infoloker</span>}
+            {!isCollapsed && <span className="text-xl font-bold text-gray-900">lokerbaru.id</span>}
           </Link>
           {/* Close button for mobile */}
           {isMobile && (

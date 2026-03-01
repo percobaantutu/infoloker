@@ -58,7 +58,7 @@ const JobDetails = () => {
       t('job.emailBody', {
         company: companyName,
         title: job.title,
-        source: "Infoloker"
+        source: "lokerbaru.id"
       })
     );
 

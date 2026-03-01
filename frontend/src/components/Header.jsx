@@ -28,7 +28,7 @@ const Header = () => {
             <div className="mr-2">
               <img src="/infoloker_logo.png" alt="Logo" className="w-8 h-8" />
             </div>
-            <span className="text-xl font-bold text-gray-900 tracking-tight">infoloker</span>
+            <span className="text-xl font-bold text-gray-900 tracking-tight">lokerbaru.id</span>
           </div>
 
           {/* 2. Desktop Navigation (Right) */}

@@ -61,7 +61,7 @@ exports.register = async (req, res) => {
       try {
         await sendEmail({
           email: user.email,
-          subject: "Verify Your Account - Infoloker",
+          subject: "Verify Your Account - lokerbaru.id",
           message,
         });
       } catch (emailError) {
@@ -159,7 +159,7 @@ exports.resendOtp = async (req, res) => {
     // Send Email
     await sendEmail({
       email: user.email,
-      subject: "New Verification Code - Infoloker",
+      subject: "New Verification Code - lokerbaru.id",
       message: `Your new verification code is: ${otp}`,
     });
 
@@ -222,7 +222,7 @@ exports.testEmail = async (req, res) => {
   try {
     await sendEmail({
       email: req.body.email, // We will send it to ourselves via Postman
-      subject: "Infoloker Email Test",
+      subject: "lokerbaru.id Email Test",
       message: "Hello! If you see this, the email system is working perfectly.",
     });
 

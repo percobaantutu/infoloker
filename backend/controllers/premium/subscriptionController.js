@@ -145,7 +145,7 @@ exports.midtransWebhook = async (req, res) => {
 
           await sendEmail({
             email: user.email,
-            subject: `🎉 Langganan ${planDetails.name} Anda Telah Aktif! - Infoloker`,
+            subject: `🎉 Langganan ${planDetails.name} Anda Telah Aktif! - lokerbaru.id`,
             message: `Terima kasih telah berlangganan ${planDetails.name}. Langganan Anda aktif hingga ${endDate.toLocaleDateString('id-ID')}.`,
             html: emailHtml
           });

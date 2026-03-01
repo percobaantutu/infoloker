@@ -16,7 +16,7 @@ export const Footer = () => {
                 <div className="w-10 h-10 bg-white flex items-center justify-center rounded-lg">
                   <Briefcase className="w-6 h-6 text-blue-600" />
                 </div>
-                <h3 className="text-2xl font-bold text-white">infoloker</h3>
+                <h3 className="text-2xl font-bold text-white">lokerbaru.id</h3>
               </div>
               <p className="text-sm text-blue-100 max-w-md mx-auto">{t('footer.tagline')}</p>
             </div>

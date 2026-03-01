@@ -4,7 +4,7 @@ const cloudinary = require("../config/cloudinary"); // Import Cloudinary config
 // Helper to extract public ID from Cloudinary URL
 const getPublicIdFromUrl = (url) => {
   try {
-    // Splits url: ".../upload/v1234/infoloker-uploads/filename.jpg"
+    // Splits url: ".../upload/v1234/lokerbaru.id-uploads/filename.jpg"
     const regex = /\/upload\/(?:v\d+\/)?(.+)\.[a-z]+$/;
     const match = url.match(regex);
     return match ? match[1] : null;

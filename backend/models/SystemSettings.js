@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const systemSettingsSchema = new mongoose.Schema(
   {
-    siteName: { type: String, default: "Infoloker" },
-    supportEmail: { type: String, default: "support@infoloker.com" },
+    siteName: { type: String, default: "lokerbaru.id" },
+    supportEmail: { type: String, default: "support@lokerbaru.id" },
     
     // Toggles
     maintenanceMode: { type: Boolean, default: false },

@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "infoloker",
+    "appName": "lokerbaru.id",
     "loading": "Memuat...",
     "save": "Simpan",
     "cancel": "Batal",
@@ -43,7 +43,7 @@
     "fullName": "Nama Lengkap",
     "forgotPassword": "Lupa kata sandi?",
     "accountCreated": "Akun berhasil dibuat!",
-  "accountCreatedDesc": "Selamat datang di infoloker! Akun Anda telah berhasil dibuat",
+  "accountCreatedDesc": "Selamat datang di lokerbaru.id! Akun Anda telah berhasil dibuat",
   "redirectingDashboard": "Mengalihkan ke dasbor Anda...",
   "signupSubtitle": "Bergabunglah dengan ribuan profesional yang menemukan pekerjaan impian mereka",
   "enterFullName": "Masukkan nama lengkap Anda",
@@ -69,7 +69,7 @@
       "jobseekerDesc": "Mencari peluang",
       "employerDesc": "Merekrut talenta"
     },
-    "subtitle": "Masuk ke akun infoloker Anda",
+    "subtitle": "Masuk ke akun lokerbaru.id Anda",
   "enterEmail": "Masukkan email Anda",
   "enterPassword": "Masukkan kata sandi Anda",
   "orContinueWith": "Atau lanjutkan dengan",
@@ -267,7 +267,7 @@
   
   "landing": {
     "hero": {
-      "title": "Temukan Pekerjaan Impian Anda dengan infoloker",
+      "title": "Temukan Pekerjaan Impian Anda dengan lokerbaru.id",
       "subtitle": "Bergabunglah dengan ribuan pencari kerja dan perusahaan yang terhubung setiap hari. Temukan kecocokan sempurna untuk tujuan karir Anda.",
       "findJobs": "Cari Lowongan Sekarang",
       "postJob": "Posting Lowongan"
